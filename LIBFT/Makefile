@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 12:04:35 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/04 16:28:43 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/04 17:11:21 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ SRCS =	ft_isalpha.c\
 		ft_strlcpy.c\
 		ft_strlcat.c\
 		ft_toupper.c\
+		ft_tolower.c\
+		ft_strchr.c\
+		ft_strrchr.c\
 
 OBJS = ${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:02:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/04 16:10:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:41:09 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,38 +65,58 @@ int main()
 	printf("\n");
 
 	printf("MEMCPY\n");
-	char *test4 = "bon";
-	char *test5 = NULL;
-	char *test6 = "bon";
-	char *test7 = NULL;
-	printf("%s\n", memcpy(test6, test7, 2));
-	printf("%s\n", ft_memcpy(test4, test5, 2));
+	char test4[4] = "bon";
+	char test5[4] = "abc";
+	char test6[4] = "bon";
+	char test7[4] = "abc";
+	printf("%s\n", memcpy(test4, test5, 2));
+	printf("%s\n", ft_memcpy(test6, test7, 2));
 	printf("\n");
 
-// 	printf("MEMMOVE\n");
-// 	char	dest1[6] = "ABCDE";
-// 	char	dest2[6] = "ABCDE";
-// 	printf("%s\n", ft_memmove(dest2, test6, 3));
-// 	printf("%s\n", dest2);
-// 	printf("%s\n", memmove(dest1, test4, 3));
-// 	printf("%s\n", dest1);
-// 	printf("\n");
+	printf("MEMMOVE\n");
+	char	dest1[6] = "ABCDE";
+	char	dest2[6] = "ABCDE";
+	printf("%s\n", ft_memmove(dest2, test6, 3));
+	printf("%s\n", dest2);
+	printf("%s\n", memmove(dest1, test4, 3));
+	printf("%s\n", dest1);
+	printf("\n");
 
-// 	printf("STRLCPY\n");
-// 	char	oui[6] = "Prout";
-// 	char	non[8] = "Bonjour";
-// 	printf("%zu\n", ft_strlcpy(oui, non, 5));
-// 	printf("%s\n", oui);
-// 	printf("%zu\n", strlcpy(oui, non, 5));
-// 	printf("%s\n", oui);
-// 	printf("\n");
+	printf("STRLCPY\n");
+	char	oui[6] = "Prout";
+	char	non[8] = "Bonjour";
+	printf("%zu\n", ft_strlcpy(oui, non, 5));
+	printf("%s\n", oui);
+	printf("%zu\n", strlcpy(oui, non, 5));
+	printf("%s\n", oui);
+	printf("\n");
 
-// 	printf("STRLCAT\n");
-// 	char	test8[6] = "Prout";
-// 	char	test9[8] = " Bonjour";
-// 	printf("%zu\n", ft_strlcat(test8, test9, 5));
-// 	printf("%s\n", test8);
-// 	printf("%zu\n", strlcat(test8, test9, 5));
-// 	printf("%s\n", test8);
-// 	printf("\n");	
+	printf("STRLCAT\n");
+	char	test8[6] = "Prout";
+	char	test9[8] = " Bonjour";
+	printf("%zu\n", ft_strlcat(test8, test9, 5));
+	printf("%s\n", test8);
+	printf("%zu\n", strlcat(test8, test9, 5));
+	printf("%s\n", test8);
+	printf("\n");
+
+	printf("TOUPPER\n");
+	printf("%d\n", toupper(99));
+	printf("%d\n", ft_toupper(99));
+	printf("\n");
+	
+	printf("TOLOWER\n");
+	printf("%d\n", tolower(67));
+	printf("%d\n", ft_tolower(67));
+	printf("\n");
+
+	printf("STRCHR\n");
+	printf("%s\n", strchr("hello World", 'l'));
+	printf("%s\n", ft_strchr("hello World", 'l'));
+	printf("\n");
+
+	printf("STRRCHR\n");
+	printf("%s\n", strrchr("hello World", '\0'));
+	printf("%s\n", ft_strrchr("hello World", '\0'));
+	printf("\n");
 }

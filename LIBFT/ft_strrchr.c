@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_toupper.c                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/04 16:34:11 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/04 16:56:17 by lrondia          ###   ########.fr       */
+/*   Created: 2022/01/04 17:15:16 by lrondia           #+#    #+#             */
+/*   Updated: 2022/01/04 17:40:17 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_toupper(int c)
+char	*ft_strrchr(const char *s, int c)
 {
-	if (c >= 'a' && c <= 'z')
-			c -= 32;
-	return (c);
+	char	cc;
+	int		i;
+	int		index;
+
+	cc = c;
+	i = 0;
+	index = -1;
+	while (s[i])
+	{
+		if (s[i] == c)
+			index = i;
+		i++;
+	}
+	if (c == '\0')
+		return ((char *)s + i);
+	if (index != -1)
+		return ((char *)s + index);
+	return (0);
 }
