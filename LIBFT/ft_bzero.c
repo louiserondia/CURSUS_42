@@ -6,14 +6,14 @@
 /*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 18:08:31 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/03 18:22:16 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/04 11:34:04 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
- void	ft_bzero(void *s, size_t n)
- {
+void	ft_bzero(void *s, size_t n)
+{
 	size_t			i;
 	unsigned char	*us;
 
@@ -24,4 +24,4 @@
 		us[i] = 0;
 		i++;
 	}
- }
+}

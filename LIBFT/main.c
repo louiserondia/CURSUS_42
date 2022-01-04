@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:02:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/03 18:25:22 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/04 16:10:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int main()
 
 	printf("MEMSET\n");
 	char test1[8] = "bonjour";
-	printf("%s\n", memset(test1, 49, 2));
-	printf("%s\n", ft_memset(test1, 49, 2));
+	printf("%s\n", memset(test1, 49, 6));
+	printf("%s\n", ft_memset(test1, 49, 6));
 	printf("\n");
 	
 	printf("BZERO\n");
@@ -64,5 +64,39 @@ int main()
 	printf("%c.\n", test3[4]);
 	printf("\n");
 
-	
+	printf("MEMCPY\n");
+	char *test4 = "bon";
+	char *test5 = NULL;
+	char *test6 = "bon";
+	char *test7 = NULL;
+	printf("%s\n", memcpy(test6, test7, 2));
+	printf("%s\n", ft_memcpy(test4, test5, 2));
+	printf("\n");
+
+// 	printf("MEMMOVE\n");
+// 	char	dest1[6] = "ABCDE";
+// 	char	dest2[6] = "ABCDE";
+// 	printf("%s\n", ft_memmove(dest2, test6, 3));
+// 	printf("%s\n", dest2);
+// 	printf("%s\n", memmove(dest1, test4, 3));
+// 	printf("%s\n", dest1);
+// 	printf("\n");
+
+// 	printf("STRLCPY\n");
+// 	char	oui[6] = "Prout";
+// 	char	non[8] = "Bonjour";
+// 	printf("%zu\n", ft_strlcpy(oui, non, 5));
+// 	printf("%s\n", oui);
+// 	printf("%zu\n", strlcpy(oui, non, 5));
+// 	printf("%s\n", oui);
+// 	printf("\n");
+
+// 	printf("STRLCAT\n");
+// 	char	test8[6] = "Prout";
+// 	char	test9[8] = " Bonjour";
+// 	printf("%zu\n", ft_strlcat(test8, test9, 5));
+// 	printf("%s\n", test8);
+// 	printf("%zu\n", strlcat(test8, test9, 5));
+// 	printf("%s\n", test8);
+// 	printf("\n");	
 }

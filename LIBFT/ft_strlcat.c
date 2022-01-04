@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/03 15:49:42 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/04 15:49:36 by lrondia          ###   ########.fr       */
+/*   Created: 2022/01/04 14:39:34 by lrondia           #+#    #+#             */
+/*   Updated: 2022/01/04 16:29:01 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(int c)
+#include "libft.h"
+
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	return (c >= 0 && c < 128);
+	size_t	i;
+	size_t	j;
+	size_t	n;
+
+	i = 0;
+	j = 0;
+	n = 0;
+	while (dst[i])
+		i++;
+	while (src[n])
+		n++;
+	if (dstsize <= i)
+		n += dstsize;
+	else
+		n += i;
+	while (src[j] && i + 1 < dstsize)
+		dst[i++] = src[j++];
+	dst[i] = '\0';
+	return (n);
 }
