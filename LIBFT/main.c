@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:02:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/04 17:41:09 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/05 18:42:27 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 int main()
 {
@@ -116,7 +117,60 @@ int main()
 	printf("\n");
 
 	printf("STRRCHR\n");
-	printf("%s\n", strrchr("hello World", '\0'));
-	printf("%s\n", ft_strrchr("hello World", '\0'));
+	printf("%s\n", strrchr("hello World", 'l'));
+	printf("%s\n", ft_strrchr("hello World", 'l'));
 	printf("\n");
+
+	printf("STRNCMP\n");
+	printf("%d\n", ft_strncmp("bondour", "bonjour", 6));
+	printf("%d\n", strncmp("bondour", "bonjour", 6));
+	printf("\n");
+
+	printf("MEMCHR\n");
+	printf("%s\n", memchr("hello World", 'l', 4));
+	printf("%s\n", ft_memchr("hello World", 'l', 4));
+	printf("\n");
+
+	printf("MEMCMP\n");
+	char testa[15] = "bonjour";
+	char testb[15] = "bonjour";
+	printf("%d\n", ft_memcmp(testa, testb, 4));
+	printf("%d\n", memcmp(testa, testb, 4));
+	printf("\n");
+
+	printf("STRNSTR\n");
+	char testc[15] = "bonjour"; 
+	char testd[15] = "ou";
+	char *null1 = NULL;
+	char *null2 = NULL;
+	printf("%s\n", strnstr(testc, testd, 7));
+	printf("%s\n", ft_strnstr(testc, testd, 7));
+	printf("\n");
+
+	printf("ATOI\n");
+	char a[] = "    -21474836475";
+	char b[] = "    -21474836475";	
+	printf("%d\n", atoi(a));
+	printf("%d\n", ft_atoi(b));
+	printf("\n");
+	
+	printf("CALLOC\n");
+	char c[] = "bonjour";
+	char d[] = "    -21474836475";	
+	printf("%s.\n", ft_calloc(2, 3));
+	printf("%s.\n", calloc(2, 3));
+	printf("\n");
+
+	printf("STRDUP\n");
+	printf("%s\n", strdup("bonjour la famille 0123456789 : ok !"));
+	printf("%s\n", ft_strdup("bonjour la famille 0123456789 : ok !"));
+	printf("\n");
+
+	printf("SUBSTR\n");
+	printf("%s\n", ft_substr("01234", 0, 5));
+	printf("\n");
+
+	printf("STRJOIN\n");
+	printf("%s\n", ft_strjoin("louise", " rondia"));
+	printf("\n");	
 }
