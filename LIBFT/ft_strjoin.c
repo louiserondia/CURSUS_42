@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 18:29:26 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/05 18:53:04 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/06 13:29:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strjoin(const char *s1, char const *s2)
 	count = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	count = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	count = ft_strlen(s1) + ft_strlen(s2);
 	ptr = malloc(sizeof(char) * (count + 1));
 	if (!ptr)
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:02:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/05 18:42:27 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/06 19:00:45 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,15 +148,13 @@ int main()
 	printf("\n");
 
 	printf("ATOI\n");
-	char a[] = "    -21474836475";
-	char b[] = "    -21474836475";	
+	char a[] = "9999555848181191";
+	char b[] = "9999555848181191";	
 	printf("%d\n", atoi(a));
 	printf("%d\n", ft_atoi(b));
 	printf("\n");
 	
 	printf("CALLOC\n");
-	char c[] = "bonjour";
-	char d[] = "    -21474836475";	
 	printf("%s.\n", ft_calloc(2, 3));
 	printf("%s.\n", calloc(2, 3));
 	printf("\n");
@@ -172,5 +170,25 @@ int main()
 
 	printf("STRJOIN\n");
 	printf("%s\n", ft_strjoin("louise", " rondia"));
-	printf("\n");	
+	printf("\n");
+
+	printf("STRTRIM\n");
+	printf("%s\n", ft_strtrim("    ", " "));
+	printf("%s\n", ft_strtrim(" yyy xy oui bonjour comment allez-vous ???xxx yx   ", " xy"));
+	printf("\n");
+
+	printf("SPLIT\n");
+	char teste[36] = " oui Bonjour comment allez-vous ???";
+	char **list = ft_split(teste, ' ');
+	while (*list)
+	{
+		printf("%s\n", *list);
+		list++;
+	}
+	printf("\n");
+
+	printf("ITOA\n");	
+	printf("%s\n", ft_itoa(-2147483648));
+	printf("\n");
+		
 }

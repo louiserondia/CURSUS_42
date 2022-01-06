@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 12:04:35 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/05 18:39:44 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/06 17:42:10 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,9 @@ SRCS =	ft_isalpha.c\
 		ft_strdup.c\
 		ft_substr.c\
 		ft_strjoin.c\
+		ft_strtrim.c\
+		ft_split.c\
+		ft_itoa.c\
 		
 
 OBJS = ${SRCS:.c=.o}
