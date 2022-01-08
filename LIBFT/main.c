@@ -15,6 +15,24 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+char	*f1(unsigned int i, char c)
+{
+    char    *e;
+   
+	e[0] = c;
+	c += i;
+	return (e);
+}
+
+char	*f2(unsigned int , char *d)
+{
+	char	*f;
+
+	f[0] = d;
+	d -= j;
+	return (f);
+}
+
 int main()
 {
 	printf("ISALPHA\n");
@@ -190,5 +208,28 @@ int main()
 	printf("ITOA\n");	
 	printf("%s\n", ft_itoa(-2147483648));
 	printf("\n");
-		
+
+
+	printf("STRMAPI\n");
+	char    a[5] = "caca";
+	ft_strmapi(a, f1);
+	printf("\n");
+
+
+	printf("STRITERI\n");
+	char    b[5] = "caca";
+	ft_striteri(b, f2);
+	printf("\n");
+
+
+	printf("PUTCHAR_FD\n");
+	ft_putstr_fd('c', 1);
+	printf("\n");
+
+
+	printf("PUTSTR_FD\n");
+	char    c[5] = "caca";
+	ft_putstr_fd(c, 1);
+	printf("\n");
+
 }

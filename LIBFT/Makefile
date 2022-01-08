@@ -38,11 +38,22 @@ SRCS =	ft_isalpha.c\
 		ft_strtrim.c\
 		ft_split.c\
 		ft_itoa.c\
-		
+		ft_strmapi.c\
+		ft_striteri.c\
+		ft_putchar_fd.c\
+		ft_putstr_fd.c\
+		ft_putendl_fd.c\
+		ft_putnbr_fd.c\
+
+BONUS_SRCS = ft_lstnew.c\
 
 OBJS = ${SRCS:.c=.o}
 
+BONUS_OBJS = ${BONUS_SRCS:.c=.o}
+
 NAME = libft.a
+
+BONUS_NAME = libft.a
 
 RM = rm -f
 
@@ -56,14 +67,21 @@ CFLAGS = -Wall -Wextra -Werror
 ${NAME}:	${OBJS}
 	ar rc ${NAME} ${OBJS}
 
+${BONUS_NAME}:	${BONUS_OBJS}
+	ar rc ${BONUS_NAME}	${BONUS_OBJS}
+
 all: ${NAME}
 
+add: ${BONUS_NAME}
+
+bonus: all add
+
 clean:
-		${RM} ${OBJS}
+		${RM} ${OBJS} ${BONUS_OBJS}
 
 fclean:	clean
-		${RM} ${NAME}
+		${RM} ${NAME} ${BONUS_NAME}
 
-re: fclean all
+re: fclean all add
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re add bonus
