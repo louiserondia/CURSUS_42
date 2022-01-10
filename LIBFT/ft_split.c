@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 13:27:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/06 19:09:33 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/10 19:15:00 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	*ft_free_all(char **lines, int size)
 		free(lines[i]);
 		i++;
 	}
+	free(lines);
 	return (NULL);
 }
 

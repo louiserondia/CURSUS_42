@@ -6,19 +6,20 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/07 21:16:39 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/07 21:16:39 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/10 14:56:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_striteri(char const *s, char (*f)(unsigned int, char))
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	int		i;
-	char	*copy;
+	int	i;
 
-	i = 0:
+	i = 0;
+	if (!s || !f)
+		return ;
 	while (s[i])
 	{
-		s[i] = f(i, s[i]);
+		f(i, s + i);
 		i++;
 	}
 }

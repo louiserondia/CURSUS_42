@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 14:44:29 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/08 14:44:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/10 19:50:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ t_list	*ft_lstnew(void *content)
 {
 	t_list	*a;
 
-	a = malloc(sizeof(content) * ft_strlen(content));
-	a = &content;
-	return (a->content);
+	a = (t_list *)malloc(sizeof(t_list));
+	if (!a)
+		return (0);
+	a->content = content;
+	a->next = NULL;
+	return (a);
 }

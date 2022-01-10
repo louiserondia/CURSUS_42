@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/03 16:02:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/06 19:00:45 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/10 18:15:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,18 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-char	*f1(unsigned int i, char c)
+char	f1(unsigned int i, char c)
 {
-    char    *e;
-   
-	e[0] = c;
-	c += i;
-	return (e);
+	c += 1;
+	return (c);
 }
 
-char	*f2(unsigned int , char *d)
+void	f2(unsigned int j, char *d)
 {
-	char	*f;
-
-	f[0] = d;
-	d -= j;
-	return (f);
+	d[j] += 1;
 }
+
+
 
 int main()
 {
@@ -211,25 +206,29 @@ int main()
 
 
 	printf("STRMAPI\n");
-	char    a[5] = "caca";
+	char	f[5] = "caca";
 	ft_strmapi(a, f1);
 	printf("\n");
 
 
 	printf("STRITERI\n");
-	char    b[5] = "caca";
+	char	g[5] = "caca";
 	ft_striteri(b, f2);
 	printf("\n");
 
 
 	printf("PUTCHAR_FD\n");
-	ft_putstr_fd('c', 1);
+	ft_putchar_fd('c', 1);
 	printf("\n");
 
 
 	printf("PUTSTR_FD\n");
-	char    c[5] = "caca";
-	ft_putstr_fd(c, 1);
+	char    h[5] = "caca";
+	ft_putstr_fd(h, 1);
+	printf("\n");
+
+	printf("LSTMAP\n");
+
 	printf("\n");
 
 }

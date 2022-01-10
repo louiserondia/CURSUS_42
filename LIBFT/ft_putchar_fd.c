@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 12:53:00 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/08 12:53:00 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/10 14:55:33 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write (fd, c, 1);
+	write (fd, &c, 1);
 }
