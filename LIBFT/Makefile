@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 12:04:35 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/10 17:09:30 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/11 10:14:56 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,10 +73,10 @@ CFLAGS = -Wall -Wextra -Werror
 .c.o:
 	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-${NAME}:	${OBJS}
+$(NAME):	${OBJS}
 	ar rc ${NAME} ${OBJS}	
 
-all: ${NAME}
+all:	$(NAME)
 
 bonus: ${BONUS_OBJS}
 	ar q ${BONUS_NAME}	${BONUS_OBJS}

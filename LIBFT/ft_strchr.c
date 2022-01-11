@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrondia <lrondia@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/04 16:57:37 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/04 17:27:09 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/11 14:57:00 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ char	*ft_strchr(const char *s, int c)
 	cc = c;
 	while (*s)
 	{
-		if (*s == c)
+		if (*s == cc)
 			return ((char *)s);
 		s++;
 	}
-	if (c == '\0')
+	if (*s == cc)
 		return ((char *)s);
 	return (0);
 }
