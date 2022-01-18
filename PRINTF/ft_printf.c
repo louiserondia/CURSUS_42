@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 16:36:59 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:50:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,20 @@ int	check_conversion(char c)
 int	check_char(const char *format, va_list arg, int *i, t_flags *flags)
 {
 	char	c;
-	va_list	copy;
 
 	c = format[*i];
-	va_copy(copy, arg);
 	(void)i;
 	while (check_conversion(c))
 	{
-		if (c == '#' || c == '+' || c == ' ')
-			sort_simple_flag(c, flags);
+		if (c == '#' || c == '+' || c == ' ' || c == '.' || c == '-'
+			|| c == '*' || (c >= '0' && c <= '9'))
+			set_flag(c, flags);
 		(*i)++;
 		c = format[*i];
 	}
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
 		|| c == 'u' || c == 'x' || c == 'X' || c == '%')
-		return (sort_char(c, arg, copy));
-
-	// else if (c == '.' || c == '-' || (c >= '0' && c <= '9'))
-	// {
-	// 	ft_sort_complex_flag(c, ...);
-	// 	return (1);
-	// }
+		return (sort_char(c, arg, flags));
 	else
 		return (0);
 }

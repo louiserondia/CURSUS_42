@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.c                                            :+:      :+:    :+:   */
+/*   flags_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 15:10:46 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:50:38 by lrondia          ###   ########.fr       */
+/*   Created: 2022/01/18 17:25:38 by lrondia           #+#    #+#             */
+/*   Updated: 2022/01/18 17:41:36 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "ft_printf.h"
 
-void	debug(t_flags *flags)
+void	check_flags(char c, t_flags *flags)
 {
-	ft_printf("sharp = %d\n", flags->is_sharp);
-	ft_printf("plus = %d\n", flags->is_plus);
-	ft_printf("space = %d\n", flags->is_space);
-	ft_printf("minus = %d\n", flags->is_minus);
-	ft_printf("zero = %d\n", flags->is_zero);
-	ft_printf("dot = %d\n", flags->is_dot);
-	ft_printf("wildcard = %d\n", flags->is_wildcard);
-	ft_printf("width = %d\n", flags->is_width);
+	check_sharp(c, flags);
+}
+
+void	check_sharp(char c, t_flags *flags)
+{
+	if ((c == 'x' || c == 'X') && flags->is_sharp)
+		add_prefix_address();
 }

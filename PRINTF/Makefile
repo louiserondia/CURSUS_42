@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 12:03:25 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/18 16:38:47 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/18 17:25:56 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ SRCS =	ft_printf.c\
 		sort_char.c\
 		utils.c\
 		conversion.c\
+		flags_bonus.c\
 		debug.c\
 
 LIB = ./LIBFT
