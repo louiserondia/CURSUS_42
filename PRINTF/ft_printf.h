@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:14:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 12:59:04 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:49:09 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ typedef struct s_flags
 	int	is_minus;
 	int	is_zero;
 	int	is_dot;
-	int	is_wildcard;
-	int	is_width;
+	int	width;
 	int	count;
 }	t_flags;
 
@@ -51,7 +50,7 @@ void	check_flags(char c, t_flags *flags, va_list arg);
 void	check_sharp(char c, t_flags *flags);
 void	check_plus(char c, t_flags *flags, va_list arg);
 void	check_space(char c, t_flags *flags, va_list arg);
-void	check_wildcard(char c, t_flags *flags, va_list arg);
+void	check_width(char c, t_flags *flags, va_list arg);
 
 
 void	debug(t_flags *flags);

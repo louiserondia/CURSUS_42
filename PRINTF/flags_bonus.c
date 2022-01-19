@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:25:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 15:29:20 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:37:41 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	check_flags(char c, t_flags *flags, va_list arg)
 {
+	check_width(c, flags, arg);
 	check_sharp(c, flags);
 	check_plus(c, flags, arg);
 	check_space(c, flags, arg);
-	check_wildcard(c, flags, arg);
 }
 
 void	check_sharp(char c, t_flags *flags)
@@ -54,27 +54,34 @@ void	check_space(char c, t_flags *flags, va_list arg)
 	}
 }
 
-void	check_wildcard(char c, t_flags *flags, va_list arg)
+#include <stdio.h>
+
+void	check_width(char c, t_flags *flags, va_list arg)
 {
 	int		i;
 	int		len;
 	int		width;
+	
 	va_list	copy;
 
-	if (!flags->is_wildcard)
+	if (flags->width <= 0 || flags->is_zero || flags->is_dot || flags->is_minus)
 		return ;
+	va_copy(copy, arg);
 	i = 0;
 	len = 0;
-	width = va_arg(arg, int);
-	va_copy(copy, arg);
+	width = flags->width;
+	if (flags->is_plus || flags->is_space)
+		len++;
+	if (flags->is_sharp)
+		len += 2;
 	if (c == 'c' || c == '%')
-		len = 1;
+		len += 1;
 	else if (c == 's')
-		len = ft_strlen(va_arg(copy, char *));
+		len += ft_strlen(va_arg(copy, char *));
 	else if (c == 'd' || c == 'u')
-		len = ft_nbrlen(va_arg(copy, int));
+		len += ft_nbrlen(va_arg(copy, int));
 	else if (c == 'x' || c == 'p')
-		len = ft_hexalen(va_arg(copy, int));
+		len += ft_hexalen(va_arg(copy, unsigned long));
 	while (i < width - len)
 	{
 		ft_putchar_fd(' ', 1);

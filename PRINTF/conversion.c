@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:35:50 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 13:32:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:27:12 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	conversion_hex(va_list arg, int (*f)(int), t_flags *flags)
 {
 	unsigned int	value;
 
-	value = va_arg(arg, unsigned int);
 	check_flags('x', flags, arg);
+	value = va_arg(arg, unsigned int);
 	ft_puthexa_fd(value, 1, f);
 	flags->count += ft_hexalen(value);
 }

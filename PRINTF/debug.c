@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:10:46 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:50:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 16:54:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	debug(t_flags *flags)
 	ft_printf("minus = %d\n", flags->is_minus);
 	ft_printf("zero = %d\n", flags->is_zero);
 	ft_printf("dot = %d\n", flags->is_dot);
-	ft_printf("wildcard = %d\n", flags->is_wildcard);
-	ft_printf("width = %d\n", flags->is_width);
+	ft_printf("width = %d\n", flags->width);
+	ft_printf("count = %d\n", flags->count);
 }

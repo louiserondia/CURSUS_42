@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 15:28:10 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 17:12:06 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	check_conversion(char c)
 {
-	if (!(c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
-			|| c == 'u' || c == 'x' || c == 'X' || c == '%'))
-		return (1);
-	return (0);
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
+			|| c == 'u' || c == 'x' || c == 'X' || c == '%')
+		return (0);
+	return (1);
 }
 
 void	check_char(const char *format, va_list arg, int *i, t_flags *flags)
@@ -25,16 +25,27 @@ void	check_char(const char *format, va_list arg, int *i, t_flags *flags)
 	char	c;
 
 	c = format[*i];
-	(void)i;
 	while (check_conversion(c))
 	{
 		if (c == '#' || c == '+' || c == ' ' || c == '.' || c == '-'
-			|| c == '*' || (c >= '0' && c <= '9'))
+			|| c == '*' || c == '0')
+		{
 			set_flag(c, flags);
-		(*i)++;
-		c = format[*i];
+			(*i)++;
+			c = format[*i];
+		}
+		else if (c >= '1' && c <= '9')
+		{
+			flags->width = 0;
+			while (c >= '0' && c <= '9')
+			{
+				flags->width = flags->width * 10 + c - '0';
+				(*i)++;
+				c = format[*i];
+			}
+		}
 	}
-	//if (!check_conversion(c))
+	
 	sort_char(c, arg, flags);
 }
 
@@ -48,8 +59,7 @@ t_flags	init_flags(void)
 	flags.is_minus = 0;
 	flags.is_zero = 0;
 	flags.is_dot = 0;
-	flags.is_wildcard = 0;
-	flags.is_width = 0;
+	flags.width = 0;
 	flags.count = 0;
 	return (flags);
 }
