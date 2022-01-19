@@ -6,32 +6,30 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:20:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 12:15:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:54:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	sort_char(char c, va_list arg, t_flags *flags)
+void	sort_char(char c, va_list arg, t_flags *flags)
 {
 	if (c == 'c')
-		return (conversion_char(arg));
+		conversion_char(arg, flags);
 	else if (c == 's')
-		return (conversion_str(arg));
+		conversion_str(arg, flags);
 	else if (c == 'd' || c == 'i')
-		return (conversion_int(arg, flags));
+		conversion_int(arg, flags);
 	else if (c == 'u')
-		return (conversion_unsigned(arg));
+		conversion_unsigned(arg, flags);
 	else if (c == 'p')
-		return (conversion_ptr(arg));
+		conversion_ptr(arg, flags);
 	else if (c == 'x')
-		return (conversion_hex(arg, ft_tolower, flags));
+		conversion_hex(arg, ft_tolower, flags);
 	else if (c == 'X')
-		return (conversion_hex(arg, ft_toupper, flags));
-	else if (c == '%')
-		return (conversion_percent());
+		conversion_hex(arg, ft_toupper, flags);
 	else
-		return (0);
+		conversion_percent(flags);
 }
 
 void	set_flag(char c, t_flags *flags)

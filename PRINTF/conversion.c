@@ -6,76 +6,77 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:35:50 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 12:27:55 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 13:32:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	conversion_char(va_list arg)
+void	conversion_char(va_list arg, t_flags *flags)
 {
 	ft_putchar_fd(va_arg(arg, int), 1);
-	return (1);
+	flags->count++;
 }
 
-int	conversion_str(va_list arg)
+void	conversion_str(va_list arg, t_flags *flags)
 {
-	int		count;
 	char	*value;
 
+	check_flags('s', flags, arg);
 	value = va_arg(arg, char *);
 	if (!value)
 	{
 		ft_putstr_fd("(null)", 1);
-		return (6);
+		flags->count += 6;
 	}
-	count = ft_strlen(value);
-	ft_putstr_fd(value, 1);
-	
-	return (count);
+	else
+	{
+		flags->count += ft_strlen(value);
+		ft_putstr_fd(value, 1);
+	}
 }
 
-int	conversion_int(va_list arg, t_flags *flags)
+void	conversion_int(va_list arg, t_flags *flags)
 {
 	int	value;
 
 	check_flags('d', flags, arg);
 	value = va_arg(arg, int);
 	ft_putnbr_fd(value, 1);
-	return (ft_nbrlen(value));
+	flags->count += ft_nbrlen(value);
 }
 
-int	conversion_unsigned(va_list arg)
+void	conversion_unsigned(va_list arg, t_flags *flags)
 {
 	int	value;
 
 	value = va_arg(arg, unsigned int);
 	ft_putunsigned_fd(value, 1);
-	return (ft_nbrlen(value));
+	flags->count += ft_nbrlen(value);
 }
 
-int	conversion_ptr(va_list arg)
+void	conversion_ptr(va_list arg, t_flags *flags)
 {
 	unsigned long	value;
 
 	value = va_arg(arg, unsigned long);
-	add_prefix_address();
+	add_prefix_address(flags);
 	ft_puthexa_fd(value, 1, ft_tolower);
-	return (ft_strlen("0xffffffffffff"));
+	flags->count += ft_strlen("0xffffffffffff");
 }
 
-int	conversion_hex(va_list arg, int (*f)(int), t_flags *flags)
+void	conversion_hex(va_list arg, int (*f)(int), t_flags *flags)
 {
 	unsigned int	value;
 
 	value = va_arg(arg, unsigned int);
 	check_flags('x', flags, arg);
 	ft_puthexa_fd(value, 1, f);
-	return (ft_hexalen(value));
+	flags->count += ft_hexalen(value);
 }
 
-int	conversion_percent(void)
+void	conversion_percent(t_flags *flags)
 {
 	ft_putchar_fd('%', 1);
-	return (1);
+	flags->count++;
 }

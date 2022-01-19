@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:49:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:47:14 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:51:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	ft_putunsigned_fd(unsigned int n, int fd)
 		ft_putchar_fd(n + '0', fd);
 }
 
-int	add_prefix_address(void)
+void	add_prefix_address(t_flags *flags)
 {
 	ft_putstr_fd("0x", 1);
-	return (2);
+	flags->count += 2;
 }

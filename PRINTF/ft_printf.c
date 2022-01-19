@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 11:56:31 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 15:28:10 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_conversion(char c)
 	return (0);
 }
 
-int	check_char(const char *format, va_list arg, int *i, t_flags *flags)
+void	check_char(const char *format, va_list arg, int *i, t_flags *flags)
 {
 	char	c;
 
@@ -34,11 +34,8 @@ int	check_char(const char *format, va_list arg, int *i, t_flags *flags)
 		(*i)++;
 		c = format[*i];
 	}
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
-		|| c == 'u' || c == 'x' || c == 'X' || c == '%')
-		return (sort_char(c, arg, flags));
-	else
-		return (0);
+	//if (!check_conversion(c))
+	sort_char(c, arg, flags);
 }
 
 t_flags	init_flags(void)
@@ -53,18 +50,17 @@ t_flags	init_flags(void)
 	flags.is_dot = 0;
 	flags.is_wildcard = 0;
 	flags.is_width = 0;
+	flags.count = 0;
 	return (flags);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	int		i;
-	int		count;
 	va_list	arg;
 	t_flags	flags;
 
 	i = 0;
-	count = 0;
 	va_start(arg, format);
 	flags = init_flags();
 	while (format[i])
@@ -72,14 +68,14 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			i++;
-			count += check_char(format, arg, &i, &flags);
+			check_char(format, arg, &i, &flags);
 		}
 		else
 		{
 			ft_putchar_fd(format[i], 1);
-			count++;
+			flags.count++;
 		}
 		i++;
 	}
-	return (count);
+	return (flags.count);
 }
