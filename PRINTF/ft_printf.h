@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:14:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:47:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:15:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,15 @@ void	ft_putunsigned_fd(unsigned int n, int fd);
 t_flags	init_flags(void);
 int		conversion_char(va_list arg);
 int		conversion_str(va_list arg);
-int		conversion_int(va_list arg);
+int		conversion_int(va_list arg, t_flags *flags);
 int		conversion_unsigned(va_list arg);
 int		conversion_ptr(va_list arg);
 int		conversion_hex(va_list arg, int (*f)(int), t_flags *flags);
 int		conversion_percent(void);
-void	check_flags(char c, t_flags *flags);
+void	check_flags(char c, t_flags *flags, va_list arg);
 void	check_sharp(char c, t_flags *flags);
+void	check_plus(char c, t_flags *flags, va_list arg);
+void	check_space(char c, t_flags *flags, va_list arg);
 
 
 void	debug(t_flags *flags);

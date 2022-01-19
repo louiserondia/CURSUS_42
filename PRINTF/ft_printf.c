@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:50:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 11:56:31 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ t_flags	init_flags(void)
 
 	flags.is_sharp = 0;
 	flags.is_plus = 0;
+	flags.is_space = 0;
 	flags.is_minus = 0;
 	flags.is_zero = 0;
-	flags.is_space = 0;
 	flags.is_dot = 0;
 	flags.is_wildcard = 0;
 	flags.is_width = 0;

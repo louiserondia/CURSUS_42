@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:20:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:47:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:15:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	sort_char(char c, va_list arg, t_flags *flags)
 	else if (c == 's')
 		return (conversion_str(arg));
 	else if (c == 'd' || c == 'i')
-		return (conversion_int(arg));
+		return (conversion_int(arg, flags));
 	else if (c == 'u')
 		return (conversion_unsigned(arg));
 	else if (c == 'p')

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:35:50 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/18 17:45:10 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/19 12:27:55 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ int	conversion_str(va_list arg)
 	}
 	count = ft_strlen(value);
 	ft_putstr_fd(value, 1);
+	
 	return (count);
 }
 
-int	conversion_int(va_list arg)
+int	conversion_int(va_list arg, t_flags *flags)
 {
 	int	value;
 
+	check_flags('d', flags, arg);
 	value = va_arg(arg, int);
 	ft_putnbr_fd(value, 1);
 	return (ft_nbrlen(value));
@@ -67,7 +69,7 @@ int	conversion_hex(va_list arg, int (*f)(int), t_flags *flags)
 	unsigned int	value;
 
 	value = va_arg(arg, unsigned int);
-	check_flags('x', flags);
+	check_flags('x', flags, arg);
 	ft_puthexa_fd(value, 1, f);
 	return (ft_hexalen(value));
 }
