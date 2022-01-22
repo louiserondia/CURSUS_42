@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags_bonus.c                                      :+:      :+:    :+:   */
+/*   check_simple_flags.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:25:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 17:37:41 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 13:58:12 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,38 +54,24 @@ void	check_space(char c, t_flags *flags, va_list arg)
 	}
 }
 
-#include <stdio.h>
-
 void	check_width(char c, t_flags *flags, va_list arg)
 {
 	int		i;
 	int		len;
 	int		width;
 	
-	va_list	copy;
-
-	if (flags->width <= 0 || flags->is_zero || flags->is_dot || flags->is_minus)
-		return ;
-	va_copy(copy, arg);
 	i = 0;
-	len = 0;
 	width = flags->width;
-	if (flags->is_plus || flags->is_space)
-		len++;
-	if (flags->is_sharp)
-		len += 2;
-	if (c == 'c' || c == '%')
-		len += 1;
-	else if (c == 's')
-		len += ft_strlen(va_arg(copy, char *));
-	else if (c == 'd' || c == 'u')
-		len += ft_nbrlen(va_arg(copy, int));
-	else if (c == 'x' || c == 'p')
-		len += ft_hexalen(va_arg(copy, unsigned long));
-	while (i < width - len)
+	len = return_len(c, flags, arg);
+	if (flags->width <= 0 || flags->is_zero || flags->is_minus)
+		return ;
+	// if (flags->precision != -1 && )
+	while (i < width - len) 
 	{
 		ft_putchar_fd(' ', 1);
 		i++;
 	}
-	flags->count += width - len;
+	if (width >= len)
+		flags->count += width - len;
 }
+

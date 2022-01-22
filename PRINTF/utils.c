@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:49:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 17:27:55 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 15:25:46 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,17 @@ void	ft_puthexa_fd(unsigned long n, int fd, int (*f)(int))
 		ft_putchar_fd(f(base[n]), fd);
 }
 
+void	ft_putunsigned_fd(unsigned int n, int fd)
+{
+	if (n >= 10)
+	{
+		ft_putunsigned_fd(n / 10, fd);
+		n = n % 10;
+	}
+	if (n < 10)
+		ft_putchar_fd(n + '0', fd);
+}
+
 int	ft_nbrlen(long n)
 {
 	int	i;
@@ -36,6 +47,19 @@ int	ft_nbrlen(long n)
 		i++;
 		n *= -1;
 	}
+	while (n > 0)
+	{
+		n /= 10;
+		i++;
+	}
+	return (i);
+}
+
+int	ft_unsignedlen(unsigned int n)
+{
+	int	i;
+
+	i = 0;
 	while (n > 0)
 	{
 		n /= 10;
@@ -59,19 +83,37 @@ int	ft_hexalen(unsigned long n)
 	return (i);
 }
 
-void	ft_putunsigned_fd(unsigned int n, int fd)
-{
-	if (n >= 10)
-	{
-		ft_putunsigned_fd(n / 10, fd);
-		n = n % 10;
-	}
-	if (n < 10)
-		ft_putchar_fd(n + '0', fd);
-}
-
 void	add_prefix_address(t_flags *flags)
 {
 	ft_putstr_fd("0x", 1);
 	flags->count += 2;
+}
+
+void	ft_putstrl(char *s, int len, t_flags *flags)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i] && i < len)
+	{
+		ft_putchar_fd(s[i], 1);
+		i++;
+		flags->count++;
+	}
+}
+
+void	print_sign(t_flags *flags, int *value)
+{
+	if (flags->is_plus && *value >= 0)
+		ft_putchar_fd('+', 1);
+	else if (flags->is_space && *value >= 0)
+		ft_putchar_fd(' ', 1);
+	else if (*value < 0)
+	{
+		ft_putchar_fd('-', 1);
+		*value *= -1;
+	}
+	flags->count++;
 }

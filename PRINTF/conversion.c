@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:35:50 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 17:27:12 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 13:51:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ void	conversion_str(va_list arg, t_flags *flags)
 	char	*value;
 
 	check_flags('s', flags, arg);
-	value = va_arg(arg, char *);
-	if (!value)
-	{
-		ft_putstr_fd("(null)", 1);
-		flags->count += 6;
-	}
+	if (flags->precision != -1)
+		check_precision('s', flags, arg);
 	else
 	{
+		value = va_arg(arg, char *);
+		if (!value)
+		{
+			ft_putstr_fd("(null)", 1);
+			flags->count += 6;
+		}
 		flags->count += ft_strlen(value);
 		ft_putstr_fd(value, 1);
 	}
@@ -41,18 +43,29 @@ void	conversion_int(va_list arg, t_flags *flags)
 	int	value;
 
 	check_flags('d', flags, arg);
-	value = va_arg(arg, int);
-	ft_putnbr_fd(value, 1);
-	flags->count += ft_nbrlen(value);
+	if (flags->precision != -1)
+		check_precision('d', flags, arg);
+	else
+	{
+		value = va_arg(arg, int);
+		ft_putnbr_fd(value, 1);
+		flags->count += ft_nbrlen(value);
+	}
 }
 
 void	conversion_unsigned(va_list arg, t_flags *flags)
 {
 	int	value;
 
-	value = va_arg(arg, unsigned int);
-	ft_putunsigned_fd(value, 1);
-	flags->count += ft_nbrlen(value);
+	check_flags('u', flags, arg);
+	if (flags->precision != -1)
+		check_precision('u', flags, arg);
+	else
+	{
+		value = va_arg(arg, unsigned int);
+		ft_putunsigned_fd(value, 1);
+		flags->count += ft_unsignedlen(value);
+	}
 }
 
 void	conversion_ptr(va_list arg, t_flags *flags)
@@ -70,9 +83,14 @@ void	conversion_hex(va_list arg, int (*f)(int), t_flags *flags)
 	unsigned int	value;
 
 	check_flags('x', flags, arg);
-	value = va_arg(arg, unsigned int);
-	ft_puthexa_fd(value, 1, f);
-	flags->count += ft_hexalen(value);
+	if (flags->precision != -1)
+		check_precision('x', flags, arg);
+	else
+	{
+		value = va_arg(arg, unsigned int);
+		ft_puthexa_fd(value, 1, f);
+		flags->count += ft_hexalen(value);
+	}
 }
 
 void	conversion_percent(t_flags *flags)

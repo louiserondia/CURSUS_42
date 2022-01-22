@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:20:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 16:49:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 12:15:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,5 @@ void	set_flag(char c, t_flags *flags)
 	if (c == '0')
 		flags->is_zero = 1;
 	if (c == '.')
-		flags->is_dot = 1;
-	debug(flags);
+		flags->precision = 0;
 }

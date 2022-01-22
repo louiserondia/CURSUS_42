@@ -6,48 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/19 17:12:06 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 13:16:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-int	check_conversion(char c)
-{
-	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
-			|| c == 'u' || c == 'x' || c == 'X' || c == '%')
-		return (0);
-	return (1);
-}
-
-void	check_char(const char *format, va_list arg, int *i, t_flags *flags)
-{
-	char	c;
-
-	c = format[*i];
-	while (check_conversion(c))
-	{
-		if (c == '#' || c == '+' || c == ' ' || c == '.' || c == '-'
-			|| c == '*' || c == '0')
-		{
-			set_flag(c, flags);
-			(*i)++;
-			c = format[*i];
-		}
-		else if (c >= '1' && c <= '9')
-		{
-			flags->width = 0;
-			while (c >= '0' && c <= '9')
-			{
-				flags->width = flags->width * 10 + c - '0';
-				(*i)++;
-				c = format[*i];
-			}
-		}
-	}
-	
-	sort_char(c, arg, flags);
-}
 
 t_flags	init_flags(void)
 {
@@ -58,10 +21,74 @@ t_flags	init_flags(void)
 	flags.is_space = 0;
 	flags.is_minus = 0;
 	flags.is_zero = 0;
-	flags.is_dot = 0;
+	flags.precision = -1;
 	flags.width = 0;
 	flags.count = 0;
 	return (flags);
+}
+
+void	reset_flags(t_flags *flags)
+{
+	flags->is_sharp = 0;
+	flags->is_plus = 0;
+	flags->is_space = 0;
+	flags->is_minus = 0;
+	flags->is_zero = 0;
+	flags->precision = 0;
+	flags->width = 0;
+}
+
+int	is_conversion(char c)
+{
+	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
+			|| c == 'u' || c == 'x' || c == 'X' || c == '%')
+		return (1);
+	return (0);
+}
+
+int	is_flag(char c)
+{
+	if (c == '#' || c == '+' || c == ' ' || c == '.' || c == '-'
+			|| c == '*' || c == '0')
+		return (1);
+	return (0);
+}
+
+int	is_num(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
+
+void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
+{
+	while (!is_conversion(c[*i]))
+	{
+		if (is_flag(c[*i]))
+		{
+			set_flag(c[*i], flags);
+			(*i)++;
+		}
+		if (flags->precision == 0)
+		{
+			while (is_num(c[*i]))
+			{
+				flags->precision = flags->precision * 10 + c[*i] - '0';
+				(*i)++;
+			}
+		}
+		else if (c[*i] >= '1' || c[*i] <= '9')
+		{
+			flags->width = 0;
+			while (is_num(c[*i]))
+			{
+				flags->width = flags->width * 10 + c[*i] - '0';
+				(*i)++;
+			}
+		}
+	}
+	sort_char(c[*i], arg, flags);
 }
 
 int	ft_printf(const char *format, ...)
@@ -79,9 +106,11 @@ int	ft_printf(const char *format, ...)
 		{
 			i++;
 			check_char(format, arg, &i, &flags);
+			//debug(&flags);
 		}
 		else
 		{
+			reset_flags(&flags);
 			ft_putchar_fd(format[i], 1);
 			flags.count++;
 		}
