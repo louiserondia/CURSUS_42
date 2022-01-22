@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:25:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 13:58:12 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:00:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,17 @@
 void	check_flags(char c, t_flags *flags, va_list arg)
 {
 	check_width(c, flags, arg);
-	check_sharp(c, flags);
+	check_sharp(c, flags, arg);
 	check_plus(c, flags, arg);
 	check_space(c, flags, arg);
 }
 
-void	check_sharp(char c, t_flags *flags)
+void	check_sharp(char c, t_flags *flags, va_list arg)
 {
-	if (c == 'x' && flags->is_sharp)
+	va_list	copy;
+
+	va_copy(copy, arg);
+	if (c == 'x' && flags->is_sharp && va_arg(copy, int))
 		add_prefix_address(flags);
 }
 
@@ -65,7 +68,6 @@ void	check_width(char c, t_flags *flags, va_list arg)
 	len = return_len(c, flags, arg);
 	if (flags->width <= 0 || flags->is_zero || flags->is_minus)
 		return ;
-	// if (flags->precision != -1 && )
 	while (i < width - len) 
 	{
 		ft_putchar_fd(' ', 1);

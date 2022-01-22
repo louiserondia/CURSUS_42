@@ -6,16 +6,18 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 17:24:22 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 13:57:47 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 20:50:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+#include <stdio.h>
+
 int	return_len(char c, t_flags *flags, va_list arg)
 {
-	int	len;
 	va_list	copy;
+	int		len;
 
 	va_copy(copy, arg);
 	len = 0;
@@ -31,10 +33,9 @@ int	return_len(char c, t_flags *flags, va_list arg)
 		len += ft_nbrlen(va_arg(copy, int));
 	else if (c == 'u')
 		len += ft_nbrlen(va_arg(copy, unsigned int));
-	if ((c == 'd' || c == 'u') && flags->precision > len)
+	if ((c == 'd' || c == 'u' || c == 'x') && flags->precision > len)
 		len = flags->precision;
 	else if (c == 'x' || c == 'p')
 		len += ft_hexalen(va_arg(copy, unsigned long));
-	// if (c == 'd' && )
 	return (len);
 }

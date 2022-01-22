@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:14:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 13:53:47 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:01:07 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_flags
 	int	is_space;
 	int	is_minus;
 	int	is_zero;
+	int	is_X;
 	int	precision;
 	int	width;
 	int	count;
@@ -30,7 +31,7 @@ typedef struct s_flags
 
 int		ft_printf(const char *format, ...);
 int		is_flag(char c);
-int		is_conversion(char c);
+int		is_conversion(char c, t_flags *flags);
 int		is_num(char c);
 void	check_char(const char *format, va_list arg, int *i, t_flags *flags);
 void	sort_char(char c, va_list arg, t_flags *flags);
@@ -54,7 +55,7 @@ void	conversion_ptr(va_list arg, t_flags *flags);
 void	conversion_hex(va_list arg, int (*f)(int), t_flags *flags);
 void	conversion_percent(t_flags *flags);
 void	check_flags(char c, t_flags *flags, va_list arg);
-void	check_sharp(char c, t_flags *flags);
+void	check_sharp(char c, t_flags *flags, va_list arg);
 void	check_plus(char c, t_flags *flags, va_list arg);
 void	check_space(char c, t_flags *flags, va_list arg);
 void	check_width(char c, t_flags *flags, va_list arg);
@@ -62,6 +63,7 @@ void	check_precision(char c, t_flags *flags, va_list arg);
 void	check_precision_int(t_flags *flags, va_list arg, int padding);
 void	check_precision_unsigned(t_flags *flags, va_list arg, int padding);
 void	check_precision_str(t_flags *flags, va_list arg);
+void	check_precision_hex(t_flags *flags, va_list arg, int padding);
 
 
 void	debug(t_flags *flags);

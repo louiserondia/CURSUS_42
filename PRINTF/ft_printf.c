@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 13:16:03 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 20:40:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_flags	init_flags(void)
 	flags.is_space = 0;
 	flags.is_minus = 0;
 	flags.is_zero = 0;
+	flags.is_X = 0;
 	flags.precision = -1;
 	flags.width = 0;
 	flags.count = 0;
@@ -34,15 +35,20 @@ void	reset_flags(t_flags *flags)
 	flags->is_space = 0;
 	flags->is_minus = 0;
 	flags->is_zero = 0;
+	flags->is_X = 0;
 	flags->precision = 0;
 	flags->width = 0;
 }
 
-int	is_conversion(char c)
+int	is_conversion(char c, t_flags *flags)
 {
 	if (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i'
 			|| c == 'u' || c == 'x' || c == 'X' || c == '%')
+	{
+		if(c == 'X')
+			flags->is_X = 1;
 		return (1);
+	}
 	return (0);
 }
 
@@ -63,7 +69,7 @@ int	is_num(char c)
 
 void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 {
-	while (!is_conversion(c[*i]))
+	while (!is_conversion(c[*i], flags))
 	{
 		if (is_flag(c[*i]))
 		{

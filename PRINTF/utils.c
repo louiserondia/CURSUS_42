@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:49:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 15:25:46 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:11:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	ft_unsignedlen(unsigned int n)
 	int	i;
 
 	i = 0;
+	if (n == 0)
+		i++;
 	while (n > 0)
 	{
 		n /= 10;
