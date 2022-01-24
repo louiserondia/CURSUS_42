@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 12:33:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 21:06:34 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/24 21:29:38 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 void	check_precision(char c, t_flags *flags, va_list arg)
 {
-	int	padding;
-	
-	padding = return_len(c, flags, arg);
 	if (c == 's')
 		check_precision_str(flags, arg);
 	else if (c == 'd')
-		check_precision_int(flags, arg, padding);
+		check_precision_int(flags, arg);
 	else if (c == 'u')
-		check_precision_unsigned(flags, arg, padding);
+		check_precision_unsigned(flags, arg);
 	else if (c == 'x')
-		check_precision_hex(flags, arg, padding);
+		check_precision_hex(flags, arg);
+	else if (c == 'p')
+		check_precision_ptr(flags, arg);
 }
 
 void	check_precision_str(t_flags *flags, va_list arg)
@@ -35,7 +34,7 @@ void	check_precision_str(t_flags *flags, va_list arg)
 	ft_putstrl(value, flags->precision, flags);
 }
 
-void	check_precision_int(t_flags *flags, va_list arg, int padding)
+void	check_precision_int(t_flags *flags, va_list arg)
 {
 	int	value;
 	int	len;
@@ -54,21 +53,17 @@ void	check_precision_int(t_flags *flags, va_list arg, int padding)
 			print_sign(flags, &value);
 			len--;
 		}
-		while (len < padding)
-		{
-			ft_putchar_fd('0', 1);
-			len++;
-		}
+		padding_zero(&len, flags->precision);
 		if(flags->precision != 0 || value != 0)
 			ft_putnbr_fd(value, 1);
 		flags->count += len;
 	}	
 }
 
-void	check_precision_unsigned(t_flags *flags, va_list arg, int padding)
+void	check_precision_unsigned(t_flags *flags, va_list arg)
 {
-	int	value;
-	int	len;
+	unsigned int	value;
+	int				len;
 
 	value = va_arg(arg, unsigned int);
 	len = ft_unsignedlen(value);
@@ -81,21 +76,17 @@ void	check_precision_unsigned(t_flags *flags, va_list arg, int padding)
 		len++;
 	else if (len <= flags->precision )
 	{
-		while (len < padding)
-		{
-			ft_putchar_fd('0', 1);
-			len++;
-		}
+		padding_zero(&len, flags->precision);
 		if (flags->precision != 0 && value)
 			ft_putunsigned_fd(value, 1);
 		flags->count += len;
 	}	
 }
 
-void	check_precision_hex(t_flags *flags, va_list arg, int padding)
+void	check_precision_hex(t_flags *flags, va_list arg)
 {
-	int	value;
-	int	len;
+	unsigned int	value;
+	int				len;
 
 	value = va_arg(arg, unsigned int);
 	len = ft_hexalen(value);
@@ -109,11 +100,7 @@ void	check_precision_hex(t_flags *flags, va_list arg, int padding)
 	}
 	else if (len <= flags->precision)
 	{
-		while (len < padding)
-		{
-			ft_putchar_fd('0', 1);
-			len++;
-		}
+		padding_zero(&len, flags->precision);
 		if(flags->precision != 0 || value != 0)
 		{
 			if (flags->is_X)
@@ -121,6 +108,30 @@ void	check_precision_hex(t_flags *flags, va_list arg, int padding)
 			else
 				ft_puthexa_fd(value, 1, ft_tolower);
 		}	
+		flags->count += len;
+	}	
+}
+
+void	check_precision_ptr(t_flags *flags, va_list arg)
+{
+	unsigned long	value;
+	int				len;
+
+	
+	value = va_arg(arg, unsigned long);
+	len = ft_strlen("ffffffffffff");
+	if (len > flags->precision && value)
+	{
+		add_prefix_address(flags);
+		ft_puthexa_fd(value, 1, ft_tolower);
+		flags->count += ft_strlen("ffffffffffff");
+	}
+	else if (len <= flags->precision)
+	{
+		add_prefix_address(flags);
+		padding_zero(&len, flags->precision);
+		if(flags->precision != 0 || value != 0)
+				ft_puthexa_fd(value, 1, ft_tolower);
 		flags->count += len;
 	}	
 }

@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 12:03:25 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/22 12:43:05 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/24 20:21:52 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,13 @@ SRCS =	ft_printf.c\
 		utils.c\
 		conversion.c\
 		check_simple_flags.c\
-		return_len.c\
+		return_padding.c\
 		check_precision.c\
+		check_zero.c\
+		check_minus.c\
 		debug.c\
 
-LIB = ./LIBFT
+LIB = ./libft
 
 OBJS = ${SRCS:.c=.o}
 
@@ -36,7 +38,10 @@ CFLAGS = -Wall -Wextra -Werror
 
 $(NAME):	${OBJS}
 		make -C $(LIB)
-		ar rcs ${NAME} ${OBJS} ./LIBFT/*.o
+		cp $(LIB)/libft.a $(NAME)
+		ar rcs ${NAME} ${OBJS}
+
+bonus: all
 
 all:	$(NAME)
 
@@ -51,4 +56,4 @@ fclean:
 
 re: fclean all add
 
-.PHONY: all clean fclean re add LIBFT
+.PHONY: all clean fclean re add bonus libft

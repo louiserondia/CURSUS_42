@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:49:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 21:11:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:21:15 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,32 @@ void	print_sign(t_flags *flags, int *value)
 		*value *= -1;
 	}
 	flags->count++;
+}
+
+int	padding_zero(int *len, int padding)
+{
+	int	i;
+
+	i = 0;
+	while (*len < padding)
+	{
+		ft_putchar_fd('0', 1);
+		(*len)++;
+		i++;
+	}
+	return (i);
+}
+
+int	padding_space(int *len, int padding)
+{
+	int	i;
+
+	i = 0;
+	while (*len < padding)
+	{
+		ft_putchar_fd(' ', 1);
+		(*len)++;
+		i++;
+	}
+	return (i);
 }

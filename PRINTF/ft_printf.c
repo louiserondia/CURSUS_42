@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 20:40:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/24 23:46:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	reset_flags(t_flags *flags)
 	flags->is_minus = 0;
 	flags->is_zero = 0;
 	flags->is_X = 0;
-	flags->precision = 0;
+	flags->precision = -1;
 	flags->width = 0;
 }
 
@@ -60,12 +60,6 @@ int	is_flag(char c)
 	return (0);
 }
 
-int	is_num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
 
 void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 {
@@ -78,7 +72,7 @@ void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 		}
 		if (flags->precision == 0)
 		{
-			while (is_num(c[*i]))
+			while (ft_isdigit(c[*i]))
 			{
 				flags->precision = flags->precision * 10 + c[*i] - '0';
 				(*i)++;
@@ -87,13 +81,13 @@ void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 		else if (c[*i] >= '1' || c[*i] <= '9')
 		{
 			flags->width = 0;
-			while (is_num(c[*i]))
+			while (ft_isdigit(c[*i]))
 			{
 				flags->width = flags->width * 10 + c[*i] - '0';
 				(*i)++;
 			}
 		}
-	}
+	}\
 	sort_char(c[*i], arg, flags);
 }
 
@@ -122,5 +116,6 @@ int	ft_printf(const char *format, ...)
 		}
 		i++;
 	}
+	va_end(arg);
 	return (flags.count);
 }

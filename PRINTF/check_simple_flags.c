@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:25:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/22 21:00:50 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/24 23:54:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	check_flags(char c, t_flags *flags, va_list arg)
 {
-	check_width(c, flags, arg);
-	check_sharp(c, flags, arg);
-	check_plus(c, flags, arg);
-	check_space(c, flags, arg);
+		check_width(c, flags, arg);
+		check_sharp(c, flags, arg);
+		check_plus(c, flags, arg);
+		check_space(c, flags, arg);
+		check_zero(c, flags, arg);
 }
 
 void	check_sharp(char c, t_flags *flags, va_list arg)
@@ -60,20 +61,23 @@ void	check_space(char c, t_flags *flags, va_list arg)
 void	check_width(char c, t_flags *flags, va_list arg)
 {
 	int		i;
-	int		len;
+	int		padding;
 	int		width;
 	
 	i = 0;
 	width = flags->width;
-	len = return_len(c, flags, arg);
+	padding = return_padding(c, flags, arg);
 	if (flags->width <= 0 || flags->is_zero || flags->is_minus)
 		return ;
-	while (i < width - len) 
+	if (c == 'p' && padding >= flags->precision)
+	{
+		padding += 2;
+	}
+	while (i < width - padding) 
 	{
 		ft_putchar_fd(' ', 1);
 		i++;
 	}
-	if (width >= len)
-		flags->count += width - len;
+	if (width >= padding)
+		flags->count += width - padding;
 }
-
