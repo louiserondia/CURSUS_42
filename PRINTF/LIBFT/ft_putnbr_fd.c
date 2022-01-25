@@ -6,13 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/08 14:24:30 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/10 14:56:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/25 17:32:45 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(long long n, int fd)
 {
 	if (n == -2147483648)
 	{

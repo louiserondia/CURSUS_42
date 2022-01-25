@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/24 23:46:03 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:04:44 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 				(*i)++;
 			}
 		}
-	}\
+	}
 	sort_char(c[*i], arg, flags);
 }
 
@@ -106,11 +106,11 @@ int	ft_printf(const char *format, ...)
 		{
 			i++;
 			check_char(format, arg, &i, &flags);
+			reset_flags(&flags);
 			//debug(&flags);
 		}
 		else
 		{
-			reset_flags(&flags);
 			ft_putchar_fd(format[i], 1);
 			flags.count++;
 		}

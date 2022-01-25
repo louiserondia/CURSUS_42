@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:49:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/24 20:21:15 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/25 19:08:33 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_putstrl(char *s, int len, t_flags *flags)
 	}
 }
 
-void	print_sign(t_flags *flags, int *value)
+void	print_sign(t_flags *flags, long long *value)
 {
 	if (flags->is_plus && *value >= 0)
 		ft_putchar_fd('+', 1);

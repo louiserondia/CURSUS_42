@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:14:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/24 23:32:13 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/25 19:10:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "./libft/libft.h"
 # include <stdarg.h>
+# include <limits.h>
 
 typedef struct s_flags
 {
@@ -44,7 +45,9 @@ void	add_prefix_address(t_flags *flags);
 void	ft_putstrl(char *s, int len, t_flags *flags);
 void	ft_putunsigned_fd(unsigned int n, int fd);
 int		return_padding(char c, t_flags *flags, va_list arg);
-void	print_sign(t_flags *flags, int *value);
+int		return_padding_str(t_flags *flags, va_list copy);
+int		return_padding_int(t_flags *flags, va_list copy);
+void	print_sign(t_flags *flags, long long *value);
 int		padding_zero(int *len, int padding);
 int		padding_space(int *len, int padding);
 void	reset_flags(t_flags *flags);
@@ -55,33 +58,29 @@ void	conversion_unsigned(va_list arg, t_flags *flags);
 void	conversion_ptr(va_list arg, t_flags *flags);
 void	conversion_hex(va_list arg, int (*f)(int), t_flags *flags);
 void	conversion_percent(va_list arg, t_flags *flags);
-void	check_flags(char c, t_flags *flags, va_list arg);
-void	check_sharp(char c, t_flags *flags, va_list arg);
-void	check_plus(char c, t_flags *flags, va_list arg);
-void	check_space(char c, t_flags *flags, va_list arg);
-void	check_width(char c, t_flags *flags, va_list arg);
-void	check_precision(char c, t_flags *flags, va_list arg);
-void	check_precision_int(t_flags *flags, va_list arg);
-void	check_precision_unsigned(t_flags *flags, va_list arg);
-void	check_precision_str(t_flags *flags, va_list arg);
-void	check_precision_hex(t_flags *flags, va_list arg);
-void	check_precision_ptr(t_flags *flags, va_list arg);
-void	check_zero(char c, t_flags *flags, va_list arg);
-void	check_zero_int(t_flags *flags, va_list arg);
-void	check_zero_unsigned(t_flags *flags, va_list arg);
-void	check_zero_hex(t_flags *flags, va_list arg);
-void	check_zero_ptr(t_flags *flags, va_list arg);
+void	check_flags(char c, t_flags *flags, va_list copy);
+void	check_sharp(char c, t_flags *flags, va_list copy);
+void	check_plus(char c, t_flags *flags, va_list copy);
+void	check_space(char c, t_flags *flags, va_list copy);
+void	check_width(char c, t_flags *flags, va_list copy);
+void	check_precision_str(t_flags *flags, char *value);
+void	check_precision_int(t_flags *flags, long long value);
+void	check_precision_unsigned(t_flags *flags, unsigned int value);
+void	check_precision_hex(t_flags *flags, unsigned int value);
+void	check_precision_ptr(t_flags *flags, unsigned long value);
+void	check_zero(char c, t_flags *flags, va_list copy);
+void	check_zero_int(t_flags *flags, va_list copy);
+void	check_zero_unsigned(t_flags *flags, va_list copy);
+void	check_zero_hex(t_flags *flags, va_list copy);
+void	check_zero_ptr(t_flags *flags, va_list copy);
 void	check_zero_percent(t_flags *flags);
-void	check_minus(char c, t_flags *flags, va_list arg);
 void	check_minus_char(t_flags *flags);
-void	check_minus_str(t_flags *flags, va_list arg);
-void	check_minus_int(t_flags *flags, va_list arg);
-void	check_minus_unsigned(t_flags *flags, va_list arg);
-void	check_minus_hex(t_flags *flags, va_list arg);
-void	check_minus_ptr(t_flags *flags, va_list arg);
+void	check_minus_str(t_flags *flags, va_list copy);
+void	check_minus_int(t_flags *flags, va_list copy);
+void	check_minus_unsigned(t_flags *flags, va_list copy);
+void	check_minus_hex(t_flags *flags, va_list copy);
+void	check_minus_ptr(t_flags *flags, va_list copy);
 void	check_minus_percent(t_flags *flags);
-
-
 
 
 void	debug(t_flags *flags);
