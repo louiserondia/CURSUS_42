@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:14:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 18:30:09 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/26 20:36:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ typedef struct s_flags
 	int	is_space;
 	int	is_minus;
 	int	is_zero;
-	int	is_X;
-	int is_negative;
+	int	is_x;
+	int	is_negative;
 	int	precision;
 	int	width;
 	int	count;
@@ -72,7 +72,7 @@ void	check_precision_hex(t_flags *flags, unsigned int value);
 void	check_precision_ptr(t_flags *flags, unsigned long value);
 void	check_zero_int(t_flags *flags, long value);
 void	check_zero_unsigned(t_flags *flags, unsigned int value);
-void	check_zero_hex(t_flags *flags,unsigned int value);
+void	check_zero_hex(t_flags *flags, unsigned int value);
 void	check_zero_percent(t_flags *flags);
 void	check_minus_char(t_flags *flags);
 void	check_minus_str(t_flags *flags, char *value);
@@ -81,8 +81,5 @@ void	check_minus_unsigned(t_flags *flags, unsigned int value);
 void	check_minus_hex(t_flags *flags, unsigned int value);
 void	check_minus_ptr(t_flags *flags, unsigned long value);
 void	check_minus_percent(t_flags *flags);
-
-
-void	debug(t_flags *flags);
 
 #endif

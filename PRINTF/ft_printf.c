@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 20:16:35 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/26 20:29:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_conversion(char c, t_flags *flags)
 		|| c == 'u' || c == 'x' || c == 'X' || c == '%')
 	{
 		if (c == 'X')
-			flags->is_X = 1;
+			flags->is_x = 1;
 		return (1);
 	}
 	return (0);
@@ -32,6 +32,15 @@ int	is_flag(char c)
 	return (0);
 }
 
+void	add_flags_digit(const char *c, int *i, int *digit)
+{
+	while (ft_isdigit(c[*i]))
+	{
+		*digit = *digit * 10 + c[*i] - '0';
+		(*i)++;
+	}
+}
+
 void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 {
 	while (!is_conversion(c[*i], flags))
@@ -42,21 +51,11 @@ void	check_char(const char *c, va_list arg, int *i, t_flags *flags)
 			(*i)++;
 		}
 		if (flags->precision == 0)
-		{
-			while (ft_isdigit(c[*i]))
-			{
-				flags->precision = flags->precision * 10 + c[*i] - '0';
-				(*i)++;
-			}
-		}
+			add_flags_digit(c, i, &flags->precision);
 		else if (c[*i] >= '1' || c[*i] <= '9')
 		{
 			flags->width = 0;
-			while (ft_isdigit(c[*i]))
-			{
-				flags->width = flags->width * 10 + c[*i] - '0';
-				(*i)++;
-			}
+			add_flags_digit(c, i, &flags->width);
 		}
 	}
 	sort_char(c[*i], arg, flags);

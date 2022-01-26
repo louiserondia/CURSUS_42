@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 12:03:25 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/26 20:09:44 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/26 20:35:25 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,24 +37,24 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
 .c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+	${CC} $(CFLAGS) -c $< -o ${<:.c=.o}
 
-$(NAME):	${OBJS}
+$(NAME):	$(OBJS)
 		make -C $(LIB)
 		cp $(LIB)/libft.a $(NAME)
-		ar rcs ${NAME} ${OBJS}
+		ar rcs $(NAME) $(OBJS)
 
 bonus: all
 
 all:	$(NAME)
 
 clean:
-	${RM} ${OBJS}
+	$(RM) $(OBJS)
 	make clean -C $(LIB)
 
 fclean:	
-	${RM} ${OBJS}
-	${RM} ${NAME}
+	$(RM) $(OBJS)
+	$(RM) $(NAME)
 	make fclean -C $(LIB)
 
 re: fclean all add

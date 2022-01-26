@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_flag.c                                        :+:      :+:    :+:   */
+/*   init_flags.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 20:07:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 20:08:04 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/26 20:29:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_flags	init_flags(void)
 	flags.is_space = 0;
 	flags.is_minus = 0;
 	flags.is_zero = 0;
-	flags.is_X = 0;
+	flags.is_x = 0;
 	flags.is_negative = 0;
 	flags.precision = -1;
 	flags.width = 0;
@@ -36,7 +36,7 @@ void	reset_flags(t_flags *flags)
 	flags->is_space = 0;
 	flags->is_minus = 0;
 	flags->is_zero = 0;
-	flags->is_X = 0;
+	flags->is_x = 0;
 	flags->is_negative = 0;
 	flags->precision = -1;
 	flags->width = 0;
