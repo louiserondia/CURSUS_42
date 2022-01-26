@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 12:04:35 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/11 10:14:56 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/26 20:00:35 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,8 @@ SRCS =	ft_isalpha.c\
 		ft_putstr_fd.c\
 		ft_putendl_fd.c\
 		ft_putnbr_fd.c\
+		ft_puthexa_fd.c\
+		ft_putunsigned_fd.c\
 
 
 BONUS_SRCS = ft_lstnew.c\

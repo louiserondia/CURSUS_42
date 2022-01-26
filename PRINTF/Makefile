@@ -6,20 +6,23 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 12:03:25 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/24 20:21:52 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/26 20:09:44 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	ft_printf.c\
 		sort_char.c\
+		init_flags.c\
 		utils.c\
-		conversion.c\
+		len.c\
+		conversion_char.c\
+		conversion_int.c\
 		check_simple_flags.c\
 		return_padding.c\
 		check_precision.c\
 		check_zero.c\
-		check_minus.c\
-		debug.c\
+		check_minus_char.c\
+		check_minus_int.c\
 
 LIB = ./libft
 

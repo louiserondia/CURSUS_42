@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 12:33:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/25 19:09:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/26 19:44:43 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_precision_str(t_flags *flags, char *value)
 	ft_putstrl(value, flags->precision, flags);
 }
 
-void	check_precision_int(t_flags *flags, long long value)
+void	check_precision_int(t_flags *flags, long value)
 {
 	int	len;
 
@@ -31,15 +31,9 @@ void	check_precision_int(t_flags *flags, long long value)
 	}
 	else if (len <= flags->precision)
 	{
-		if (flags->is_plus || flags->is_space || value < 0)
-		{
-			print_sign(flags, &value);
-			len--;
-		}
-		padding_zero(&len, flags->precision);
-		if(flags->precision != 0)
+		flags->count += len + padding_zero(len, flags->precision);
+		if (flags->precision != 0)
 			ft_putnbr_fd(value, 1);
-		flags->count += len;
 	}	
 }
 
@@ -57,10 +51,9 @@ void	check_precision_unsigned(t_flags *flags, unsigned int value)
 		len++;
 	else if (len <= flags->precision)
 	{
-		padding_zero(&len, flags->precision);
+		flags->count += len + padding_zero(len, flags->precision);
 		if (flags->precision != 0)
 			ft_putunsigned_fd(value, 1);
-		flags->count += len;
 	}	
 }
 
@@ -79,15 +72,14 @@ void	check_precision_hex(t_flags *flags, unsigned int value)
 	}
 	else if (len <= flags->precision)
 	{
-		padding_zero(&len, flags->precision);
-		if(flags->precision != 0 || value != 0)
+		flags->count += len + padding_zero(len, flags->precision);
+		if (flags->precision != 0 || value != 0)
 		{
 			if (flags->is_X)
 				ft_puthexa_fd(value, 1, ft_toupper);
 			else
 				ft_puthexa_fd(value, 1, ft_tolower);
 		}	
-		flags->count += len;
 	}	
 }
 
@@ -105,9 +97,8 @@ void	check_precision_ptr(t_flags *flags, unsigned long value)
 	else if (len <= flags->precision)
 	{
 		add_prefix_address(flags);
-		padding_zero(&len, flags->precision);
-		if(flags->precision != 0 || value != 0)
-				ft_puthexa_fd(value, 1, ft_tolower);
-		flags->count += len;
+		flags->count += len + padding_zero(len, flags->precision);
+		if (flags->precision != 0 || value != 0)
+			ft_puthexa_fd(value, 1, ft_tolower);
 	}	
 }

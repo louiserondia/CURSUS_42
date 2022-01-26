@@ -6,14 +6,18 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:20:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/24 23:46:41 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/26 19:15:35 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+#include <stdio.h>
+
 void	sort_char(char c, va_list arg, t_flags *flags)
 {
+	if (flags->precision != -1 && flags->is_zero)
+		flags->is_zero = 0;
 	if (c == 'c')
 		conversion_char(arg, flags);
 	else if (c == 's')
@@ -29,7 +33,7 @@ void	sort_char(char c, va_list arg, t_flags *flags)
 	else if (c == 'X')
 		conversion_hex(arg, ft_toupper, flags);
 	else
-		conversion_percent(arg, flags);
+		conversion_percent(flags);
 }
 
 void	set_flag(char c, t_flags *flags)

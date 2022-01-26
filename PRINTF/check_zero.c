@@ -6,70 +6,58 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 12:35:41 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/25 15:29:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/26 19:46:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	check_zero(char c, t_flags *flags, va_list copy)
+void	check_zero_int(t_flags *flags, long value)
 {
-	if (flags->is_zero && flags->precision == -1)
-	{
-		if (c == 'd')
-			check_zero_int(flags, copy);
-		else if (c == 'u')
-			check_zero_unsigned(flags, copy);
-		else if (c == 'x')
-			check_zero_hex(flags, copy);
-		else if (c == '%')
-			check_zero_percent(flags);
-	}
-}
+	int	i;
+	int	padding;
 
-void	check_zero_int(t_flags *flags, va_list copy)
-{
-	int		i;
-	int		len;
-	int		value;
-
-	value = va_arg(copy, int);
-	len = ft_nbrlen(value);
-	i =	padding_zero(&len, flags->width);
+	i = 0;
+	padding = return_padding_int(flags, value);
+	if (flags->is_negative)
+		padding++;
+	if (flags->is_zero)
+		i = padding_zero(padding, flags->width);
 	flags->count += i;
 }
 
-void	check_zero_unsigned(t_flags *flags, va_list copy)
+void	check_zero_unsigned(t_flags *flags, unsigned int value)
 {
-	int				i;
-	int				len;
-	unsigned int	value;
+	int	i;
+	int	padding;
 
-	value = va_arg(copy, unsigned int);
-	len = ft_unsignedlen(value);
-	i =	padding_zero(&len, flags->width);
+	i = 0;
+	padding = return_padding_unsigned(flags, value);
+	if (flags->is_zero)
+		i = padding_zero(padding, flags->width);
 	flags->count += i;
 }
 
-
-void	check_zero_hex(t_flags *flags, va_list copy)
+void	check_zero_hex(t_flags *flags, unsigned int value)
 {
-	int				i;
-	int				len;
-	unsigned int	value;
+	int	i;
+	int	padding;
 
-	value = va_arg(copy, unsigned int);
-	len = ft_hexalen(value);
-	i =	padding_zero(&len, flags->width);
+	i = 0;
+	padding = return_padding_hex(flags, value);
+	if (flags->is_zero)
+		i = padding_zero(padding, flags->width);
 	flags->count += i;
 }
 
 void	check_zero_percent(t_flags *flags)
 {
 	int	i;
-	int	len;
+	int	padding;
 
-	len = 1;
-	i =	padding_zero(&len, flags->width);
+	i = 0;
+	padding = 1;
+	if (flags->is_zero)
+		i = padding_zero(padding, flags->width);
 	flags->count += i;
 }
