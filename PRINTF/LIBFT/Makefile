@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 12:04:35 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/26 20:00:35 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/27 16:13:46 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS =	ft_isalpha.c\
 		ft_strlcat.c\
 		ft_toupper.c\
 		ft_tolower.c\
+		ft_strupcase.c\
 		ft_strchr.c\
 		ft_strrchr.c\
 		ft_strncmp.c\

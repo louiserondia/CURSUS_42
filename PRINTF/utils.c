@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:49:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 20:29:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:48:26 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	add_prefix_address(t_flags *flags)
 {
-	if (!flags->is_x)
+	if (!flags->is_x_maj)
 		ft_putstr_fd("0x", 1);
 	else
 		ft_putstr_fd("0X", 1);

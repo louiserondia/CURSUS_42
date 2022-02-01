@@ -6,13 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:20:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 19:15:35 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:46:15 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-#include <stdio.h>
 
 void	sort_char(char c, va_list arg, t_flags *flags)
 {

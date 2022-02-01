@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:14:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 20:36:34 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:47:23 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_flags
 	int	is_space;
 	int	is_minus;
 	int	is_zero;
-	int	is_x;
+	int	is_x_maj;
 	int	is_negative;
 	int	precision;
 	int	width;

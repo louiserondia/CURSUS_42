@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 12:03:25 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/26 20:35:25 by lrondia          ###   ########.fr        #
+#    Updated: 2022/01/28 15:40:35 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,14 +39,14 @@ CFLAGS = -Wall -Wextra -Werror
 .c.o:
 	${CC} $(CFLAGS) -c $< -o ${<:.c=.o}
 
-$(NAME):	$(OBJS)
-		make -C $(LIB)
-		cp $(LIB)/libft.a $(NAME)
-		ar rcs $(NAME) $(OBJS)
+$(NAME): $(OBJS)
+	make -C $(LIB)
+	cp $(LIB)/libft.a $(NAME)
+	ar rcs $(NAME) $(OBJS)
 
 bonus: all
 
-all:	$(NAME)
+all: $(NAME)
 
 clean:
 	$(RM) $(OBJS)
@@ -59,4 +59,4 @@ fclean:
 
 re: fclean all add
 
-.PHONY: all clean fclean re add bonus libft
+.PHONY: all clean fclean re add bonus

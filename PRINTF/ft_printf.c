@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:02:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 20:29:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/27 15:47:55 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	is_conversion(char c, t_flags *flags)
 		|| c == 'u' || c == 'x' || c == 'X' || c == '%')
 	{
 		if (c == 'X')
-			flags->is_x = 1;
+			flags->is_x_maj = 1;
 		return (1);
 	}
 	return (0);

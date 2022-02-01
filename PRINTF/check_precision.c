@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/22 12:33:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/26 20:29:14 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/01/28 15:41:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	check_precision_hex(t_flags *flags, unsigned int value)
 	len = ft_hexalen(value);
 	if (len > flags->precision && value)
 	{
-		if (flags->is_x)
+		if (flags->is_x_maj)
 			ft_puthexa_fd(value, 1, ft_toupper);
 		else
 			ft_puthexa_fd(value, 1, ft_tolower);
@@ -75,7 +75,7 @@ void	check_precision_hex(t_flags *flags, unsigned int value)
 		flags->count += len + padding_zero(len, flags->precision);
 		if (flags->precision != 0 || value != 0)
 		{
-			if (flags->is_x)
+			if (flags->is_x_maj)
 				ft_puthexa_fd(value, 1, ft_toupper);
 			else
 				ft_puthexa_fd(value, 1, ft_tolower);
@@ -94,7 +94,7 @@ void	check_precision_ptr(t_flags *flags, unsigned long value)
 		ft_puthexa_fd(value, 1, ft_tolower);
 		flags->count += ft_hexalen(value);
 	}
-	else if (len <= flags->precision)
+	else
 	{
 		add_prefix_address(flags);
 		flags->count += len + padding_zero(len, flags->precision);
