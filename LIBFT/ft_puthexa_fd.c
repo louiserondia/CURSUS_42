@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_puthexa_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/28 15:50:13 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/01 12:08:58 by lrondia          ###   ########.fr       */
+/*   Created: 2022/01/26 19:50:18 by lrondia           #+#    #+#             */
+/*   Updated: 2022/01/26 19:51:55 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int	is_new_line(char *str)
+void	ft_puthexa_fd(unsigned long n, int fd, int (*f)(int))
 {
-	int	i;
+	char	*base;
 
-	i = 0;
-	while (str[i])
+	base = "0123456789abcdef";
+	if (n >= 16)
 	{
-		if (str[i] == '\n')
-			return (1);
-		i++;
+		ft_puthexa_fd(n / 16, fd, f);
+		ft_putchar_fd(f(base[n % 16]), fd);
 	}
-	return (0);
+	else
+		ft_putchar_fd(f(base[n]), fd);
 }

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   ft_putunsigned_fd.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/28 15:50:13 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/01 12:08:58 by lrondia          ###   ########.fr       */
+/*   Created: 2022/01/26 19:54:08 by lrondia           #+#    #+#             */
+/*   Updated: 2022/01/26 19:54:33 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
-int	is_new_line(char *str)
+void	ft_putunsigned_fd(unsigned int n, int fd)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
+	if (n >= 10)
 	{
-		if (str[i] == '\n')
-			return (1);
-		i++;
+		ft_putunsigned_fd(n / 10, fd);
+		n = n % 10;
 	}
-	return (0);
+	if (n < 10)
+		ft_putchar_fd(n + '0', fd);
 }
