@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:47:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/02 17:33:42 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/02 18:41:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*cut_line(char *str)
 {
@@ -94,19 +94,21 @@ char	*read_line(int fd, char *line)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	buffer[BUFFER_SIZE];
+	static char	buffer[OPEN_MAX][BUFFER_SIZE + 1];
 
+	if (fd < 0 || fd > OPEN_MAX)
+		return (NULL);
 	line = malloc(sizeof (char) * 1);
 	if (!line)
 		return (NULL);
 	line[0] = '\0';
-	line = ft_strjoin(line, buffer);
+	line = ft_strjoin(line, buffer[fd]);
 	if (!line)
 		return (NULL);
 	line = read_line(fd, line);
 	if (!line)
 		return (NULL);
-	cut_buffer(line, buffer);
+	cut_buffer(line, buffer[fd]);
 	line = cut_line(line);
 	return (line);
 }
