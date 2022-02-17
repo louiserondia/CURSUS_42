@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lrondia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 15:08:39 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/01 16:59:02 by lrondia          ###   ########.fr       */
+/*   Created: 2022/02/14 17:18:38 by lrondia           #+#    #+#             */
+/*   Updated: 2022/02/14 20:06:16 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-t_list	*ft_lstlast(t_list *lst)
+int	main(void)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-	{
-		lst = lst->next;
-	}
-	return (lst);
+	int		a;
+	char	b;
+	char	*c;
+
+	a = -2147483648;
+	b = 'c';
+	c = "bonjour";
+	ft_printf("%d\n", ft_printf("%p\n", &a));
+	printf("%d\n", printf("%p\n", &a));
 }

@@ -2,3 +2,8 @@
 *.o
 *.a
 a.out
+main.c
+*/.DS_Store
+*.txt
+*/*.txt
+*/.DS_Store

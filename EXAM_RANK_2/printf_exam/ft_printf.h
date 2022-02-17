@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lrondia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 15:08:39 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/01 16:59:02 by lrondia          ###   ########.fr       */
+/*   Created: 2022/02/14 16:13:08 by lrondia           #+#    #+#             */
+/*   Updated: 2022/02/14 20:10:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-	{
-		lst = lst->next;
-	}
-	return (lst);
-}
+# include <unistd.h>
+# include <stdarg.h>
+
+int	ft_printf(char *format, ...);
+
+#endif

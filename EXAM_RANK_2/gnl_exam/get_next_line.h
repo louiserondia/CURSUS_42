@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
+/*   By: lrondia <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/10 15:08:39 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/01 16:59:02 by lrondia          ###   ########.fr       */
+/*   Created: 2022/02/15 12:32:51 by lrondia           #+#    #+#             */
+/*   Updated: 2022/02/15 16:59:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-	{
-		lst = lst->next;
-	}
-	return (lst);
-}
+# include <stdlib.h>
+# include <unistd.h>
+
+char	*get_next_line(int fd);
+int		ft_strlen(char	*str);
+int		ft_strchr(char c, char *str);
+char	*ft_strjoin(char *s1, char *s2);
+
+#endif
