@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 12:03:25 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/28 15:40:35 by lrondia          ###   ########.fr        #
+#    Updated: 2022/02/18 14:46:26 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,6 @@ fclean:
 	$(RM) $(NAME)
 	make fclean -C $(LIB)
 
-re: fclean all add
+re: fclean all
 
-.PHONY: all clean fclean re add bonus
+.PHONY: all clean fclean re bonus
