@@ -6,12 +6,13 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/18 14:21:13 by lrondia           #+#    #+#              #
-#    Updated: 2022/02/21 14:43:31 by lrondia          ###   ########.fr        #
+#    Updated: 2022/02/22 16:43:03 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	main.c\
 		parsing.c\
+		utils.c\
 
 NAME = push_swap
 

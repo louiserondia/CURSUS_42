@@ -6,12 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:18:51 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/21 17:56:36 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/22 16:39:07 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 void	parsing(t_data *data, char **argv)
 {
@@ -38,7 +37,7 @@ void	check_duplicate(char **args)
 		j = i + 1;
 		while (args[j])
 		{
-			if (strstr(args[i], args[j]))
+			if (same_str(args[i], args[j]))
 				ft_exit("Error\n");
 			j++;
 		}	
@@ -46,7 +45,7 @@ void	check_duplicate(char **args)
 	}
 }
 
-char **get_all_args(char **argv)
+char	**get_all_args(char **argv)
 {
 	int		i;
 	char	*all_args;
@@ -54,7 +53,7 @@ char **get_all_args(char **argv)
 
 	i = 1;
 	all_args = "";
-	while(argv[i])
+	while (argv[i])
 	{
 		all_args = ft_strjoin(all_args, argv[i]);
 		all_args = ft_strjoin(all_args, " ");
@@ -67,7 +66,6 @@ char **get_all_args(char **argv)
 void	get_into_stack(char **args, t_data *data)
 {
 	int	i;
-	int	j;
 	int	sign;
 	int	*number;
 
@@ -77,23 +75,8 @@ void	get_into_stack(char **args, t_data *data)
 	i = 0;
 	while (args[i])
 	{
-		j = 0;
 		sign = 1;
-		number[i] = 0;
-		while (args[i][j])
-		{
-			if (args[i][j] == '-' && j == 0)
-				sign *= -1;
-			else if (args[i][j] >= '0' && args[i][j] <= '9')
-				number[i] = number[i] * 10 + (args[i][j] - '0');
-			else
-				ft_exit("Error\n");
-			j++;
-		}
-		printf("number : %d\n", number[i]);
-		if (number[i] < 0 || j > 10 || number[i] > 2147483647)
-			ft_exit("Error\n");
-		number[i] *= sign;
+		number[i] = ft_atoi_restrict(args[i]);
 		ft_lstadd_back(&data->stack_a, ft_lstnew(&number[i]));
 		i++;
 	}
