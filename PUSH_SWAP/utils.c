@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:02:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/22 16:44:42 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/22 17:11:04 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	ft_atoi_restrict(char *str)
 {
-	int	i;
-	int	s;
+	int		i;
+	int		s;
 	long	res;
 
 	i = 0;

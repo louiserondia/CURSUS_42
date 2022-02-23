@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:23:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/22 16:21:21 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/22 21:58:20 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ void	check_duplicate(char **args);
 void	get_into_stack(char **args, t_data *data);
 int		ft_atoi_restrict(char *str);
 size_t	same_str(char *s1, char *s2);
+void	ft_lstdel_front(t_list **alst);
+void	swap_a(t_data *data);	// sa
+void	swap_b(t_data *data);	// sb
+void	swap_ab(t_data *data);	// ss
+void	push_a(t_data *data);
+void	push_b(t_data *data);
 
 #endif
