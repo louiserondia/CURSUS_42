@@ -6,11 +6,21 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:02:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/22 17:11:04 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/23 19:56:59 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	ft_exit(char *str)
+{
+	while (*str)
+	{
+		write(2, str, 1);
+		str++;
+	}		
+	exit (0);
+}
 
 int	ft_atoi_restrict(char *str)
 {
@@ -56,4 +66,23 @@ size_t	same_str(char *s1, char *s2)
 	if (i == ft_strlen(s1) - j && i == ft_strlen(s2) - k)
 		return (1);
 	return (0);
+}
+
+t_list	*ft_lstpenultiem(t_list *stack)
+{
+	if (!stack)
+		return (NULL);
+	while (stack->next->next)
+		stack = stack->next;
+	return (stack);
+}
+
+int	ft_lstexist(t_list *lst)
+{
+	if (lst && lst->content && lst->next)
+		return (2);
+	else if (lst && lst->content && !lst->next)
+		return (1);
+	else
+		return (0);
 }
