@@ -6,13 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:00:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 23:07:50 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/24 00:42:16 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_two (t_list **lst)
+void	sort_two(t_list **lst)
 {
 	if (*(int *)(*lst)->content > *(int *)(*lst)->next->content)
 		sa(lst);
@@ -42,5 +42,10 @@ void	sort_three(t_list **lst)
 		rra(lst);
 	}
 	else if (i > j && i > k && j < k)		// 3 1 2
-		ra(lst);gi
+		ra(lst);
 }
+
+// void	sort_four(t_list **stack_a, t_list **stack_b)
+// {
+	
+// }

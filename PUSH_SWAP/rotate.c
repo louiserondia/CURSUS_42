@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:29:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 22:46:21 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/23 23:09:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	rotate(t_list **stack)
 {
 	t_list	*elem;
-	
+
 	if (ft_lstexist(*stack) == 2)
 	{
 		elem = *stack;

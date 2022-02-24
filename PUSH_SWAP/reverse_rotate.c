@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:29:30 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 22:46:33 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/23 23:09:05 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	rrr(t_data *data)
 	if (reverse_rotate(&data->stack_a) && reverse_rotate(&data->stack_b))
 		write (1, "rrr\n", 4);
 	else
-	{ 
+	{
 		rra(&data->stack_a);
 		rrb(&data->stack_b);
 	}

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:02:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 19:56:59 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/24 01:49:01 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_atoi_restrict(char *str)
 		ft_exit("Error\n");
 	if (res > 2147483647 || res < -2147483648 || (res == -1 && s == 1))
 		ft_exit("Error\n");
+	res *= s;
 	return (res);
 }
 

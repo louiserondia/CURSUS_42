@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:23:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 22:43:48 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/24 01:30:05 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	parsing(t_data *data, char **argv);
 char	**get_all_args(char **argv);
 void	check_duplicate(char **args);
 void	get_into_stack(char **args, t_data *data);
-void	swap_a(t_data *data);	// sa
+int		*transform_in_order(int *tab, t_data *data);
+void	ft_sort_int_tab(int *tab, int size);
 
 //operations
 

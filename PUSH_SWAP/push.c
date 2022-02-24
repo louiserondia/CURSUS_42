@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:56:12 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 22:44:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/23 23:09:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	push(t_list **new, t_list **old)
 {
+	t_list	*elem;
+
 	if (ft_lstexist(*old))
 	{
-		t_list	*elem;
-
 		elem = *old;
 		*old = elem->next;
 		elem->next = NULL;
