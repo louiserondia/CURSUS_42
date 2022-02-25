@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:18:51 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/24 02:48:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/25 17:20:51 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**get_all_args(char **argv)
 	char	**args = NULL;
 
 	i = 1;
-	all_args = "";
+	all_args = ft_calloc(1, sizeof (char));
 	while (argv[i])
 	{
 		all_args = ft_strjoin(all_args, argv[i]);
@@ -46,12 +46,10 @@ char	**get_all_args(char **argv)
 	}
 	args = ft_split(all_args, ' ');
 	if (!args)
-	{
-		free (all_args);
 		ft_exit("");
-	}
-	// free (all_args);
-	 return (args);
+	if (all_args)
+		free (all_args);
+	return (args);
 }
 
 void	check_duplicate(char **args)
@@ -94,7 +92,7 @@ void	get_into_stack(char **args, t_data *data)
 		number[i] = ft_atoi_restrict(args[i]);
 		i++;
 	}
-	number = transform_in_order(number, data);
+	transform_in_order(number, data);
 	i = 0;
 	while(args[i])
 	{
@@ -108,12 +106,10 @@ void	get_into_stack(char **args, t_data *data)
 		i++;
 	}
 	free (args);
-	free (number);
+	// free (number);
 }
 
-
-
-int		*transform_in_order(int *tab, t_data *data)
+void	transform_in_order(int *tab, t_data *data)
 {
 	int	i;
 	int	j;
@@ -132,20 +128,19 @@ int		*transform_in_order(int *tab, t_data *data)
 		new_tab[i] = tab[i];
 		i++;
 	}
-	ft_sort_int_tab(tab, data->argc);
+	ft_sort_int_tab(new_tab, data->argc);
 	i = 0;
 	while (i < data->argc && j < data->argc)
 	{
-		if (new_tab[i] == tab[j])
+		if (tab[i] == new_tab[j])
 		{
-			new_tab[i] = j;
+			tab[i] = j;
 			i++;
 			j = -1;
 		}
 		j++;
 	}
-	free (tab);
-	return (new_tab);
+	free (new_tab);
 }
 
 void	ft_sort_int_tab(int *tab, int size)
