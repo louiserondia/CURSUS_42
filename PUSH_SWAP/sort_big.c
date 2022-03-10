@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 12:43:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/10 17:42:43 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/10 17:47:46 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ void	sort_big(t_list **stack_a, t_list **stack_b)
 	
 	while (*stack_a)
 	{
-		if (j == 4)
-			break;
+		// if (j == 4)
+		// 	break;
 		len = ft_lstlen(*stack_b);
 		position = new_get_position(*(int *)(*stack_a)->content, stack_b, headlist);
-		printf("position [%d]: %d\n", *(int *)(*stack_a)->content, position);
 		if (position == 0 || position == len)
 			;
 		else if (position > len / 2)
@@ -76,7 +75,7 @@ int	new_get_position(int nb, t_list **stack_b, int headlist)
 
 	i = 0;
 	lst = *stack_b;
-	while (lst && i <= headlist)
+	while (lst && i < headlist)
 	{
 		lst = lst->next;
 		i++;
@@ -90,7 +89,7 @@ int	new_get_position(int nb, t_list **stack_b, int headlist)
 	{
 		i = 0;
 		lst = *stack_b;
-		while (lst && i <= headlist && nb < *(int *)lst->content)
+		while (lst && i < headlist && nb < *(int *)lst->content)
 		{
 			lst = lst->next;
 			i++;
@@ -126,5 +125,5 @@ int	find_headlist(t_list *stack)
 		stack = stack->next;
 		i++;
 	}
-	return (i);
+	return (j);
 }
