@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:23:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/25 17:39:22 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/10 17:32:22 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		ft_atoi_restrict(char *str);
 size_t	same_str(char *s1, char *s2);
 t_list	*ft_lstpenultiem(t_list *stack);
 int		ft_lstexist(t_list *lst);
+int		ft_lstlen(t_list *lst);
 
 
 void	parsing(t_data *data, char **argv);
@@ -41,6 +42,14 @@ void	check_duplicate(char **args);
 void	get_into_stack(char **args, t_data *data);
 void	transform_in_order(int *tab, t_data *data);
 void	ft_sort_int_tab(int *tab, int size);
+int		get_indix(t_list *stack, int nb);
+int		get_position(int nb, t_list *stack_b);
+void	push_two_firsts(t_list **stack_a, t_list **stack_b);
+void	function_until_zero(t_list **stack, int position, void (*f)(t_list **));
+void	function_until_max(t_list **stack, int len, int position, void (*f)(t_list **));
+int		find_headlist(t_list *stack);
+
+int		new_get_position(int nb, t_list **stack_b, int headlist);
 
 //operations
 
@@ -60,8 +69,11 @@ void	rra(t_list **stack);					//vers le bas
 void	rrb(t_list **stack);
 void	rrr(t_data *data);
 
+int		is_sorted(t_list *lst);
+void	send_sort(t_data *data);
 void	sort_two (t_list **lst);
 void	sort_three(t_list **lst);
-void	sort_four(t_list **stack_a, t_list **stack_b);
+void	sort_five(t_data *data, t_list **stack_a, t_list **stack_b);
+void	sort_big(t_list **stack_a, t_list **stack_b);
 
 #endif

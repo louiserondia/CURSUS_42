@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:00:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/25 18:11:31 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/10 12:42:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sort_three(t_list **lst)
 	i = *(int *)(*lst)->content;
 	j = *(int *)(*lst)->next->content;
 	k = *(int *)(*lst)->next->next->content;
-	if (i < j && i < k && j > k)	// 1 3 2
+	if (i < j && i < k && j > k)			// 1 3 2
 	{
 		sa(lst);
 		ra(lst);
@@ -45,38 +45,41 @@ void	sort_three(t_list **lst)
 		ra(lst);
 }
 
-void	sort_four(t_list **stack_a, t_list **stack_b)
+int	get_indix(t_list *stack, int nb)
 {
-	int i;
-	int j;
-	int k;
-	int l;
-	
-	i = *(int *)(*stack_a)->content;
-	j = *(int *)(*stack_a)->next->content;
-	k = *(int *)(*stack_a)->next->next->content;
-	l = *(int *)(*stack_a)->next->next->next->content;
-	
-	if (i == 0 && j == 1 && k == 2 && l == 3)
-		return ;
-	if (i == 0)
-		pb(stack_a, stack_b);
-	else if (j == 0)
+	int	i;
+
+	i = 0;
+	while (stack)
 	{
-		sa(stack_a);
-		pb(stack_a, stack_b);
+		if (*(int *)stack->content == nb)
+			break ;
+		stack = stack->next;
+		i++;
 	}
-	else if (k == 0)
+	return (i);
+}
+
+void	sort_five(t_data *data, t_list **stack_a, t_list **stack_b)
+{
+	int	i;
+
+	i = get_indix(*stack_a, 0);
+	if (i > data->argc / 2)
+		function_until_max(stack_a, data->argc, i, rra);
+	else if (i <= data->argc / 2)
+		function_until_zero(stack_a, i, ra);
+	pb(stack_a, stack_b);
+	if (data->argc == 5)
 	{
-		rra(stack_a);
-		rra(stack_a);
-		pb(stack_a, stack_a);
-	}
-	else
-	{
-		rra(stack_a);
+		i = get_indix(*stack_a, 1);
+		if (i > data->argc / 2)
+			function_until_max(stack_a, data->argc, i, rra);
+		else if (i <= data->argc / 2)
+			function_until_zero(stack_a, i, ra);
 		pb(stack_a, stack_b);
 	}
 	sort_three(stack_a);
+	pa(stack_b, stack_a);
 	pa(stack_b, stack_a);
 }

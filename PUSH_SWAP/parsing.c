@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:18:51 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/25 17:20:51 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/01 17:58:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	parsing(t_data *data, char **argv)
 {
 	int		i;
-	char	**args = NULL;
+	char	**args;
 
 	i = 0;
+	args = NULL;
 	args = get_all_args(argv);
 	while (args[i])
 		i++;
@@ -30,9 +31,10 @@ char	**get_all_args(char **argv)
 {
 	int		i;
 	char	*all_args;
-	char	**args = NULL;
+	char	**args;
 
 	i = 1;
+	args = NULL;
 	all_args = ft_calloc(1, sizeof (char));
 	while (argv[i])
 	{
@@ -76,14 +78,14 @@ void	check_duplicate(char **args)
 
 void	get_into_stack(char **args, t_data *data)
 {
-	int	i;
-	int	*number;
+	int		i;
+	int		*number;
 	t_list	*new;
 
 	number = malloc(sizeof (int) * data->argc);
 	if (!number)
 	{
-		free (args);	
+		free (args);
 		ft_exit("");
 	}
 	i = 0;
@@ -94,7 +96,7 @@ void	get_into_stack(char **args, t_data *data)
 	}
 	transform_in_order(number, data);
 	i = 0;
-	while(args[i])
+	while (args[i])
 	{
 		new = ft_lstnew(&number[i]);
 		if (!new)
@@ -106,14 +108,13 @@ void	get_into_stack(char **args, t_data *data)
 		i++;
 	}
 	free (args);
-	// free (number);
 }
 
 void	transform_in_order(int *tab, t_data *data)
 {
 	int	i;
 	int	j;
-	int *new_tab;
+	int	*new_tab;
 
 	i = 0;
 	j = 0;
