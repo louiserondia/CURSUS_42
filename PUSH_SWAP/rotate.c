@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 15:29:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 23:09:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/11 20:57:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,21 @@ int	rotate(t_list **stack)
 	return (0);
 }
 
-void	ra(t_list **stack)
+void	ra(t_data *data)
 {
-	if (rotate(stack))
-		write(1, "ra\n", 3);
+	rotate(&data->stack_a);
+	write(1, "ra\n", 3);
 }
 
-void	rb(t_list **stack)
+void	rb(t_data *data)
 {
-	if (rotate(stack))
-		write(1, "rb\n", 3);
+	rotate(&data->stack_b);
+	write(1, "rb\n", 3);
 }
 
 void	rr(t_data *data)
 {
-	if (rotate(&data->stack_a) && rotate(&data->stack_b))
-		write(1, "rr\n", 3);
-	else
-	{
-		ra(&data->stack_a);
-		rb(&data->stack_b);
-	}
+	ra(data);
+	rb(data);
+	write(1, "rr\n", 3);
 }

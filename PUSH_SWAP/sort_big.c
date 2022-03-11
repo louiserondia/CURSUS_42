@@ -6,80 +6,85 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 12:43:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/10 17:47:46 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/11 21:14:37 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_big(t_list **stack_a, t_list **stack_b)
+void	sort_big(t_data *data)
 {
-	int	position;
-	int	len;
-	int headlist;
-	int	j;
+	t_action	best;
+	int			headlist;
 
-	position = 0;
-	push_two_firsts(stack_a, stack_b);
-	headlist = find_headlist(*stack_b);
-	j = 0;
-	
-	while (*stack_a)
+	push_two_firsts(data);
+	headlist = find_headlist(data->stack_b);
+	while (data->stack_a)
 	{
-		// if (j == 4)
-		// 	break;
-		len = ft_lstlen(*stack_b);
-		position = new_get_position(*(int *)(*stack_a)->content, stack_b, headlist);
-		if (position == 0 || position == len)
-			;
-		else if (position > len / 2)
-			function_until_max(stack_b, len, position, rrb);
-		else if (position <= len / 2)
-			function_until_zero(stack_b, position, rb);
-		pb(stack_a, stack_b);
-		headlist = find_headlist(*stack_b);
-		j++;
+		best = find_best_action(best, data, headlist);
+		make_actions(best, data);
+		pb(data);
+		headlist = find_headlist(data->stack_b);
 	}
 }
 
-int	ft_lstlen(t_list *lst)
+int	get_score(t_action action, t_data *data)
 {
-	int	i;
+	int	len_a;
+	int	len_b;
+
+	len_a = ft_lstlen(data->stack_a);
+	len_b = ft_lstlen(data->stack_b);
+	if (action.pos_a > len_a / 2 && action.pos_b > len_b / 2)
+	{
+		if (action.pos_b > action.pos_a)
+			return (len_a - action.pos_a);
+		else
+			return (len_b - action.pos_b);
+	}
+	if (action.pos_a <= len_a / 2 && action.pos_b <= len_b / 2)
+	{
+		if (action.pos_a > action.pos_b)
+			return (len_a - action.pos_a);
+		else
+			return (len_b - action.pos_b);
+	}
+	if (action.pos_a > len_a / 2)
+		action.pos_a = len_a - action.pos_a;
+	if (action.pos_b > len_b / 2)
+		action.pos_b = len_b - action.pos_b;
+	return (action.pos_a + action.pos_b);
+}
+
+t_action	find_best_action(t_action best, t_data *data, int headlist)
+{
+	int			i;
+	int			content;
+	t_action	action;
 
 	i = 0;
-	while (lst)
+	while (data->stack_a)
 	{
+		content = *(int *)data->stack_a->content;
+		action.pos_a = i;
+		action.pos_b = get_position(content, &data->stack_b, headlist);
+		if (get_score(action, data) < get_score(best, data))
+			best = action;
 		i++;
-		lst = lst->next;
+		data->stack_a = data->stack_a->next;	
 	}
-	return (i);
+	return (best);
 }
 
-int	get_position(int nb, t_list *stack_b)
-{
-	int	i;
-
-	i = 0;
-	while (stack_b && nb < *(int *)stack_b->content)
-	{
-		i++;
-		stack_b = stack_b->next;
-	}
-	return (i);
-}
-
-int	new_get_position(int nb, t_list **stack_b, int headlist)
+int	get_position(int nb, t_list **stack_b, int headlist)
 {
 	int		i;
 	t_list *lst;
 
 	i = 0;
 	lst = *stack_b;
-	while (lst && i < headlist)
-	{
+	while (lst && i++ < headlist)
 		lst = lst->next;
-		i++;
-	}
 	while (lst && nb < *(int *)lst->content)
 	{
 		i++;
@@ -89,21 +94,18 @@ int	new_get_position(int nb, t_list **stack_b, int headlist)
 	{
 		i = 0;
 		lst = *stack_b;
-		while (lst && i < headlist && nb < *(int *)lst->content)
-		{
+		while (lst && i++ < headlist && nb < *(int *)lst->content)
 			lst = lst->next;
-			i++;
-		}
 	}
 	return (i);
 }
 
-void	push_two_firsts(t_list **stack_a, t_list **stack_b)
+void	push_two_firsts(t_data *data)
 {
-	pb(stack_a, stack_b);
-	pb(stack_a, stack_b);
-	if (*(int *)(*stack_b)->content < *(int *)(*stack_b)->next->content)
-		sa(stack_b);
+	pb(data);
+	pb(data);
+	if (is_sorted(data->stack_b))
+		sb(data);
 }
 
 int	find_headlist(t_list *stack)

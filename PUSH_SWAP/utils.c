@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:02:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/10 17:00:39 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/11 21:10:01 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,20 +88,15 @@ int	ft_lstexist(t_list *lst)
 		return (0);
 }
 
-void	function_until_max(t_list **stack, int len, int position, void (*f)(t_list **))
+int	ft_lstlen(t_list *lst)
 {
-	while (position < len)
-	{
-		f(stack);
-		position++;
-	}
-}
+	int	i;
 
-void	function_until_zero(t_list **stack, int position, void (*f)(t_list **))
-{
-	while (position > 0)
+	i = 0;
+	while (lst)
 	{
-		f(stack);
-		position--;
+		i++;
+		lst = lst->next;
 	}
+	return (i);
 }

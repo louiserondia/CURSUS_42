@@ -6,43 +6,76 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:00:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/10 12:42:57 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/11 21:11:52 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sort_two(t_list **lst)
-{
-	if (*(int *)(*lst)->content > *(int *)(*lst)->next->content)
-		sa(lst);
-}
-
-void	sort_three(t_list **lst)
+void	sort_three(t_data *data)
 {
 	int	i;
 	int	j;
 	int	k;
 
-	i = *(int *)(*lst)->content;
-	j = *(int *)(*lst)->next->content;
-	k = *(int *)(*lst)->next->next->content;
+	i = *(int *)data->stack_b->content;
+	j = *(int *)data->stack_a->next->content;
+	k = *(int *)data->stack_a->next->next->content;
 	if (i < j && i < k && j > k)			// 1 3 2
 	{
-		sa(lst);
-		ra(lst);
+		sa(data);
+		ra(data);
 	}
 	else if (i < j && i > k  && j > k)		// 2 3 1
-		rra(lst);
+		rra(data);
 	else if (i > j && i < k && j < k)		// 2 1 3
-		sa(lst);
+		sa(data);
 	else if (i > j && i > k && j > k)		// 3 2 1
 	{
-		sa(lst);
-		rra(lst);
+		sa(data);
+		rra(data);
 	}
 	else if (i > j && i > k && j < k)		// 3 1 2
-		ra(lst);
+		ra(data);
+}
+
+
+void	sort_five(t_data *data)
+{
+	int	i;
+	int	len;
+
+	i = get_indix(data->stack_a, 0);
+	len = ft_lstlen(data->stack_a);
+	if (i > data->argc / 2)
+	{		
+		while (i++ < len)
+			rra(data);
+	}
+	else if (i <= data->argc / 2)
+	{
+		while (i-- < 0)
+		ra(data);
+	}
+	pb(data);
+	if (data->argc == 5)
+	{
+		i = get_indix(data->stack_a, 1);
+		if (i > data->argc / 2)
+		{
+			while (i++ < len)
+				rra(data);
+		}
+		else if (i <= data->argc / 2)
+		{
+			while (i-- < 0)
+			ra(data);
+		}
+		pb(data);
+	}
+	sort_three(data);
+	pa(data);
+	pa(data);
 }
 
 int	get_indix(t_list *stack, int nb)
@@ -60,26 +93,8 @@ int	get_indix(t_list *stack, int nb)
 	return (i);
 }
 
-void	sort_five(t_data *data, t_list **stack_a, t_list **stack_b)
-{
-	int	i;
 
-	i = get_indix(*stack_a, 0);
-	if (i > data->argc / 2)
-		function_until_max(stack_a, data->argc, i, rra);
-	else if (i <= data->argc / 2)
-		function_until_zero(stack_a, i, ra);
-	pb(stack_a, stack_b);
-	if (data->argc == 5)
-	{
-		i = get_indix(*stack_a, 1);
-		if (i > data->argc / 2)
-			function_until_max(stack_a, data->argc, i, rra);
-		else if (i <= data->argc / 2)
-			function_until_zero(stack_a, i, ra);
-		pb(stack_a, stack_b);
-	}
-	sort_three(stack_a);
-	pa(stack_b, stack_a);
-	pa(stack_b, stack_a);
-}
+	// function_until_zero(&data->stack_a, i, ra);
+	// function_until_max(&data->stack_a, data->argc, i, rra);
+	// function_until_max(data, &data->stack_a, data->argc, i, rra);
+	// function_until_zero(&data->stack_a, i, ra);

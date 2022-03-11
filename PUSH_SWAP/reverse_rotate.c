@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:29:30 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/23 23:09:05 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/11 20:57:44 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,22 @@ int	reverse_rotate(t_list **stack)
 	return (0);
 }
 
-void	rra(t_list **stack)
+void	rra(t_data *data)
 {
-	if (reverse_rotate(stack))
-		write(1, "rra\n", 4);
+	reverse_rotate(&data->stack_a);
+	write(1, "rra\n", 4);
 }
 
-void	rrb(t_list **stack)
+void	rrb(t_data *data)
 {
-	if (reverse_rotate(stack))
-		write(1, "rrb\n", 4);
+	reverse_rotate(&data->stack_b);
+	write(1, "rrb\n", 4);
 }
 
 void	rrr(t_data *data)
 {
-	if (reverse_rotate(&data->stack_a) && reverse_rotate(&data->stack_b))
-		write (1, "rrr\n", 4);
-	else
-	{
-		rra(&data->stack_a);
-		rrb(&data->stack_b);
-	}
+	rra(data);
+	rrb(data);
+	write (1, "rrr\n", 4);
+
 }

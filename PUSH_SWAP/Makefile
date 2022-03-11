@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/18 14:21:13 by lrondia           #+#    #+#              #
-#    Updated: 2022/03/02 12:45:11 by lrondia          ###   ########.fr        #
+#    Updated: 2022/03/11 21:14:55 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS =	main.c\
 		reverse_rotate.c\
 		sort_little.c\
 		sort_big.c\
+		make_actions.c\
 
 NAME = push_swap
 
