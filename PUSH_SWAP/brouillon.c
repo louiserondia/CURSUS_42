@@ -26,12 +26,27 @@ while (*stack_b)
 	j++;
 
 
+
+
+
+
+
 0) fonction qui calcule la tete de liste 
 1) faire un compteur de position qui commence a la tete de liste
 
 
 
 		printf("head : %d\n", headlist);
+
+
+
+
+
+
+
+
+
+
 
 
 if (position == 0)
@@ -42,6 +57,19 @@ if (position == 0)
 			function_until_max(stack_b, len + 1, position, rb);
 		else if (position <= len / 2)
 			function_until_zero(stack_b, position, rrb);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void	function_until_max(t_list **stack, int len, int position, void (*f)(t_list **))
@@ -61,6 +89,16 @@ void	function_until_zero(t_list **stack, int position, void (*f)(t_list **))
 		position--;
 	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -89,6 +127,21 @@ int	compare_firsts(t_list **stack_a, t_list **stack_b, int headlist)
 	}
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -156,6 +209,8 @@ int	compare_rotate_all(t_list **stack_a, t_list **stack_b, int headlist)
 
 
 
+
+
 operation_b = get_position(*(int *)lst->content, stack_b, headlist);
 if (operation_b == 0 || operation_b == ft_lstlen(*stack_b))
 	;
@@ -164,4 +219,64 @@ else if (operation_b > ft_lstlen(*stack_b) / 2)
 else if (operation_b <= ft_lstlen(*stack_b) / 2)
 	function_until_zero(stack_b, operation_b, rb);
 
+
+
+
+
+
+
+
+void	push_two_firsts(t_data *data)
+{
+	pb(data);
+	pb(data);
+	if (!is_sorted(data->stack_b))
+		sb(data);
+}
+
+
+
+	// printf("headlist :%d\n", headlist);
+		// printf("get score action :%d\n", score1);
+		// printf("get score best :%d\n", score2);
+		// printf("action pos_a :%d\n", action.pos_a);
+		// printf("action pos_b :%d\n", action.pos_b);
+		// printf("best pos_a :%d\n", best.pos_a);
+		// printf("best pos_b :%d\n\n", best.pos_b);
+		// printf("i :%d\n", i);
+		// printf("len / 2 :%d\n", len / 2);
+
+while (i < len_a - best.pos_a && i < len_b - best.pos_b)
+	{
+		rrr(data);
+		i++;
+	}
+	while (i < best.pos_a)
+	{
+		rra(data);
+		i++;
+	}
+	while (i < best.pos_b)
+	{
+		rrb(data);
+		i++;
+	}
+
+
+
+	while (i < best.pos_a && i < best.pos_b)
+	{
+		rrr(data);
+		i++;
+	}
+	while (i < best.pos_a)
+	{
+		rra(data);
+		i++;
+	}
+	while (i < best.pos_b)
+	{
+		rrb(data);
+		i++;
+	}
 

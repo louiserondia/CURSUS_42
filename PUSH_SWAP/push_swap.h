@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:23:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/11 21:14:15 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/12 17:15:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,16 @@ void	get_into_stack(char **args, t_data *data);
 void	transform_in_order(int *tab, t_data *data);
 void	ft_sort_int_tab(int *tab, int size);
 int		get_indix(t_list *stack, int nb);
-void	push_two_firsts(t_data *data);
 int		find_headlist(t_list *stack);
 int		get_position(int nb, t_list **stack_b, int headlist);
 int		get_score(t_action action, t_data *data);
-t_action	find_best_action(t_action best, t_data *data, int headlist);
 void	make_actions(t_action best, t_data *data);
 void	action_a(int i, t_data *data);
 void	action_b(int i, t_data *data);
 void	double_rotate(t_action best, t_data *data);
 void	double_reverse_rotate(t_action best, t_data *data, int len_a, int len_b);
+void	push_all_back(t_data *data);
+t_action	find_best_action(t_action best, t_data *data);
 
 //operations
 

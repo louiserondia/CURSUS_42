@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:00:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/11 21:11:52 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/12 19:32:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	sort_three(t_data *data)
 	int	j;
 	int	k;
 
-	i = *(int *)data->stack_b->content;
+	i = *(int *)data->stack_a->content;
 	j = *(int *)data->stack_a->next->content;
 	k = *(int *)data->stack_a->next->next->content;
 	if (i < j && i < k && j > k)			// 1 3 2
@@ -55,7 +55,7 @@ void	sort_five(t_data *data)
 	else if (i <= data->argc / 2)
 	{
 		while (i-- < 0)
-		ra(data);
+			ra(data);
 	}
 	pb(data);
 	if (data->argc == 5)
@@ -69,7 +69,7 @@ void	sort_five(t_data *data)
 		else if (i <= data->argc / 2)
 		{
 			while (i-- < 0)
-			ra(data);
+				ra(data);
 		}
 		pb(data);
 	}
