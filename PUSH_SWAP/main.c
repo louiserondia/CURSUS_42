@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:15:43 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/14 19:26:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 19:40:14 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ int	main(int argc, char **argv)
 	int		i;
 
 	i = 0;
-	(void) argv;
+	if (argc == 1)
+		return(0);
 	data.stack_a = NULL;
 	data.stack_b = NULL;
-	if (argc <= 1)
-		ft_exit("Error\n");
 	parsing(&data, argv);
 	if (is_sorted(data.stack_a))
 		return (0);
