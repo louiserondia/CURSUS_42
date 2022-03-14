@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:18:51 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/01 17:58:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 19:23:24 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 void	parsing(t_data *data, char **argv)
 {
-	int		i;
+	int		nb_arg;
 	char	**args;
 
-	i = 0;
+	nb_arg = 0;
 	args = NULL;
 	args = get_all_args(argv);
-	while (args[i])
-		i++;
-	data->argc = i;
+	while (args[nb_arg])
+		nb_arg++;
 	check_duplicate(args);
-	get_into_stack(args, data);
+	get_into_stack(args, data, nb_arg);
 }
 
 char	**get_all_args(char **argv)
@@ -54,63 +53,36 @@ char	**get_all_args(char **argv)
 	return (args);
 }
 
-void	check_duplicate(char **args)
+void	get_into_stack(char **args, t_data *data, int nb_arg)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (args[i])
-	{
-		j = i + 1;
-		while (args[j])
-		{
-			if (same_str(args[i], args[j]))
-			{
-				free (args);
-				ft_exit("Error\n");
-			}
-			j++;
-		}	
-		i++;
-	}
-}
-
-void	get_into_stack(char **args, t_data *data)
-{
-	int		i;
-	int		*number;
-	t_list	*new;
-
-	number = malloc(sizeof (int) * data->argc);
-	if (!number)
+	data->number = malloc(sizeof (int) * nb_arg);
+	if (!data->number)
 	{
 		free (args);
 		ft_exit("");
 	}
-	i = 0;
 	while (args[i])
 	{
-		number[i] = ft_atoi_restrict(args[i]);
+		if (args[i][0] == '-' && args[i][1] == '\0')
+			ft_exit("Error\n");
+		data->number[i] = ft_atoi_restrict(args[i]);
 		i++;
 	}
-	transform_in_order(number, data);
+	transform_in_order(data->number, nb_arg);
+	create_new_list(data, args);
 	i = 0;
 	while (args[i])
 	{
-		new = ft_lstnew(&number[i]);
-		if (!new)
-		{
-			free (args);
-			ft_exit("");
-		}
-		ft_lstadd_back(&data->stack_a, new);
+		free (args[i]);
 		i++;
 	}
 	free (args);
 }
 
-void	transform_in_order(int *tab, t_data *data)
+void	transform_in_order(int *tab, int nb_arg)
 {
 	int	i;
 	int	j;
@@ -118,20 +90,15 @@ void	transform_in_order(int *tab, t_data *data)
 
 	i = 0;
 	j = 0;
-	new_tab = malloc(sizeof (int) * data->argc);
+	new_tab = malloc(sizeof (int) * nb_arg);
 	if (!new_tab)
 	{
 		free (tab);
 		ft_exit("");
 	}
-	while (i < data->argc)
-	{
-		new_tab[i] = tab[i];
-		i++;
-	}
-	ft_sort_int_tab(new_tab, data->argc);
-	i = 0;
-	while (i < data->argc && j < data->argc)
+	copy_tab(tab, new_tab, nb_arg);
+	ft_sort_int_tab(new_tab, nb_arg);
+	while (i < nb_arg && j < nb_arg)
 	{
 		if (tab[i] == new_tab[j])
 		{
@@ -142,30 +109,4 @@ void	transform_in_order(int *tab, t_data *data)
 		j++;
 	}
 	free (new_tab);
-}
-
-void	ft_sort_int_tab(int *tab, int size)
-
-{
-	int	i;
-	int	j;
-	int	temp;
-
-	i = 0;
-	j = 0;
-	while (j < size)
-	{
-		while (i < size - 1)
-		{
-			if (tab[i] > tab[i + 1])
-			{
-				temp = tab[i + 1];
-				tab[i + 1] = tab[i];
-				tab[i] = temp;
-			}
-			i++;
-		}
-		j++;
-		i = 0;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 17:00:05 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/10 17:09:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 15:29:46 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ int	swap(t_list **stack)
 	return (0);
 }
 
-void	sa(t_list **stack)
+void	sa(t_data *data)
 {
-	swap(stack);
+	swap(&data->stack_a);
 	write (1, "sa\n", 3);
 }
 
-void	sb(t_list **stack)
+void	sb(t_data *data)
 {
-	swap(stack);
+	swap(&data->stack_a);
 	write (1, "sb\n", 3);
 }
 

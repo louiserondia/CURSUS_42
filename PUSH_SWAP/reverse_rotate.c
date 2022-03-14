@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 17:29:30 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/12 19:24:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 15:57:02 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ void	rrr(t_data *data)
 	reverse_rotate(&data->stack_a);
 	reverse_rotate(&data->stack_b);
 	write (1, "rrr\n", 4);
-
 }

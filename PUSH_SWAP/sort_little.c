@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:00:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/12 19:32:50 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 15:55:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,23 @@ void	sort_three(t_data *data)
 	i = *(int *)data->stack_a->content;
 	j = *(int *)data->stack_a->next->content;
 	k = *(int *)data->stack_a->next->next->content;
-	if (i < j && i < k && j > k)			// 1 3 2
+	if (i < j && i < k && j > k)
 	{
 		sa(data);
 		ra(data);
 	}
-	else if (i < j && i > k  && j > k)		// 2 3 1
+	else if (i < j && i > k && j > k)
 		rra(data);
-	else if (i > j && i < k && j < k)		// 2 1 3
+	else if (i > j && i < k && j < k)
 		sa(data);
-	else if (i > j && i > k && j > k)		// 3 2 1
+	else if (i > j && i > k && j > k)
 	{
 		sa(data);
 		rra(data);
 	}
-	else if (i > j && i > k && j < k)		// 3 1 2
+	else if (i > j && i > k && j < k)
 		ra(data);
 }
-
 
 void	sort_five(t_data *data)
 {
@@ -47,35 +46,37 @@ void	sort_five(t_data *data)
 
 	i = get_indix(data->stack_a, 0);
 	len = ft_lstlen(data->stack_a);
-	if (i > data->argc / 2)
-	{		
-		while (i++ < len)
-			rra(data);
-	}
-	else if (i <= data->argc / 2)
+	operations_five(data, i, len);
+	if (len == 5)
 	{
-		while (i-- < 0)
-			ra(data);
-	}
-	pb(data);
-	if (data->argc == 5)
-	{
+		len = ft_lstlen(data->stack_a);
 		i = get_indix(data->stack_a, 1);
-		if (i > data->argc / 2)
-		{
-			while (i++ < len)
-				rra(data);
-		}
-		else if (i <= data->argc / 2)
-		{
-			while (i-- < 0)
-				ra(data);
-		}
-		pb(data);
+		operations_five(data, i, len);
 	}
 	sort_three(data);
 	pa(data);
 	pa(data);
+}
+
+void	operations_five(t_data *data, int i, int len)
+{
+	if (i > len / 2)
+	{		
+		while (i < len)
+		{
+			rra(data);
+			i++;
+		}
+	}
+	else
+	{
+		while (i > 0)
+		{
+			ra(data);
+			i--;
+		}
+	}
+	pb(data);
 }
 
 int	get_indix(t_list *stack, int nb)
@@ -92,9 +93,3 @@ int	get_indix(t_list *stack, int nb)
 	}
 	return (i);
 }
-
-
-	// function_until_zero(&data->stack_a, i, ra);
-	// function_until_max(&data->stack_a, data->argc, i, rra);
-	// function_until_max(data, &data->stack_a, data->argc, i, rra);
-	// function_until_zero(&data->stack_a, i, ra);

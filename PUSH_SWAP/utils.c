@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 16:02:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/11 21:10:01 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 19:28:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ int	ft_atoi_restrict(char *str)
 	{
 		res = res * 10 + str[i] - '0';
 		i++;
+		if (res > INT_MAX && !(res == (long)INT_MAX + 1 && s == -1))
+			ft_exit("Error\n");
 	}
 	if (str[i] != '\0')
-		ft_exit("Error\n");
-	if (res > 2147483647 || res < -2147483648 || (res == -1 && s == 1))
 		ft_exit("Error\n");
 	res *= s;
 	return (res);
@@ -67,36 +67,4 @@ size_t	same_str(char *s1, char *s2)
 	if (i == ft_strlen(s1) - j && i == ft_strlen(s2) - k)
 		return (1);
 	return (0);
-}
-
-t_list	*ft_lstpenultiem(t_list *stack)
-{
-	if (!stack)
-		return (NULL);
-	while (stack->next->next)
-		stack = stack->next;
-	return (stack);
-}
-
-int	ft_lstexist(t_list *lst)
-{
-	if (lst && lst->content && lst->next)
-		return (2);
-	else if (lst && lst->content && !lst->next)
-		return (1);
-	else
-		return (0);
-}
-
-int	ft_lstlen(t_list *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
 }

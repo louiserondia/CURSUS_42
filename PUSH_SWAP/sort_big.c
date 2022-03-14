@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/02 12:43:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/12 17:59:09 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 19:28:41 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,6 @@ void	sort_big(t_data *data)
 		pb(data);
 	}
 	push_all_back(data);
-}
-
-void	push_all_back(t_data *data)
-{
-	int	headlist;
-
-	headlist = find_headlist(data->stack_b);
-	if (headlist <= ft_lstlen(data->stack_b) / 2)
-	{
-		while (headlist-- > 0)
-			rb(data);
-	}
-	else
-	{
-		while (headlist++ < ft_lstlen(data->stack_b))
-			rrb(data);
-	}
-	while (data->stack_b)
-		pa(data);
 }
 
 t_action	find_best_action(t_action best, t_data *data)
@@ -68,7 +49,7 @@ t_action	find_best_action(t_action best, t_data *data)
 		if (get_score(action, data) < get_score(best, data))
 			best = action;
 		i++;
-		lst = lst->next;	
+		lst = lst->next;
 	}
 	return (best);
 }
@@ -103,7 +84,7 @@ int	get_score(t_action action, t_data *data)
 int	get_position(int nb, t_list **stack_b, int headlist)
 {
 	int		i;
-	t_list *lst;
+	t_list	*lst;
 
 	i = 0;
 	lst = *stack_b;
@@ -124,26 +105,21 @@ int	get_position(int nb, t_list **stack_b, int headlist)
 	return (i - 1);
 }
 
-int	find_headlist(t_list *stack)
+void	push_all_back(t_data *data)
 {
-	int	i;
-	int	j;
-	int	max;
-	t_list	*lst;
+	int	headlist;
 
-	i = 0;
-	j = 0;
-	max = 0;
-	lst = stack;
-	while (lst)
+	headlist = find_headlist(data->stack_b);
+	if (headlist <= ft_lstlen(data->stack_b) / 2)
 	{
-		if (max < *(int *)lst->content)
-		{
-			j = i;
-			max = *(int *)lst->content;
-		}	
-		lst = lst->next;
-		i++;
+		while (headlist-- > 0)
+			rb(data);
 	}
-	return (j);
+	else
+	{
+		while (headlist++ < ft_lstlen(data->stack_b))
+			rrb(data);
+	}
+	while (data->stack_b)
+		pa(data);
 }
