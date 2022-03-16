@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:15:43 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/14 19:40:14 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/16 21:42:47 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 
 	i = 0;
 	if (argc == 1)
-		return(0);
+		return (0);
 	data.stack_a = NULL;
 	data.stack_b = NULL;
 	parsing(&data, argv);
@@ -29,21 +29,6 @@ int	main(int argc, char **argv)
 	free (data.number);
 	ft_lstclear(&data.stack_a, NULL);
 	ft_lstclear(&data.stack_b, NULL);
-}
-
-int	is_sorted(t_list *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		if (*(int *)lst->content != i)
-			return (0);
-		lst = lst->next;
-		i++;
-	}
-	return (1);
 }
 
 void	send_sort(t_data *data)

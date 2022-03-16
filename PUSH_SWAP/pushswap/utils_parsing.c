@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 19:22:15 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/14 19:33:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/16 17:35:32 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,19 @@ void	create_new_list(t_data *data, char **args)
 		ft_lstadd_back(&data->stack_a, new);
 		i++;
 	}
+}
+
+int	is_sorted(t_list *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		if (*(int *)lst->content != i)
+			return (0);
+		lst = lst->next;
+		i++;
+	}
+	return (1);
 }

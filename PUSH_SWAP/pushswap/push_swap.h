@@ -6,17 +6,20 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/18 13:23:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/14 19:31:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/16 21:42:22 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+# define BUFFER_SIZE 4
+
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
+# include "../bonus/get_next_line.h"
 
 typedef struct s_data
 {
@@ -87,5 +90,14 @@ void		send_sort(t_data *data);
 void		sort_three(t_data *data);
 void		sort_five(t_data *data);
 void		sort_big(t_data *data);
+
+//			bonus
+
+void		parsing_terminal(t_data *data);
+void		*sort_operations(t_data *data, char *line);
+void		operation_swap(t_data *data, char *line);
+void		operation_push(t_data *data, char *line);
+void		operation_rotate(t_data *data, char *line);
+void		operation_reverse_rotate(t_data *data, char *line);
 
 #endif
