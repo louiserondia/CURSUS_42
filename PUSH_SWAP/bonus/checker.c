@@ -6,17 +6,18 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:02:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/16 21:49:21 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/17 12:44:43 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pushswap/push_swap.h"
+#include "../mandatory/push_swap.h"
 
 void	parsing_terminal(t_data *data)
 {
 	char	*line;
 
-	line = (char *)1;
+	line = malloc (sizeof (char) * 1);
+	line[0] = '\0';
 	while (line)
 	{
 		line = get_next_line(0);
@@ -27,6 +28,19 @@ void	parsing_terminal(t_data *data)
 		}
 		free (line);
 	}
+}
+
+void	is_empty(void)
+{
+	char	*line;
+
+	line = get_next_line(0);
+	if (!line)
+		write (1, "OK\n", 3);
+	else
+		write (1, "KO\n", 3);
+	free (line);
+	exit (1);
 }
 
 void	*sort_operations(t_data *data, char *line)
@@ -57,7 +71,7 @@ int	main(int argc, char **argv)
 	data.stack_b = NULL;
 	parsing(&data, argv);
 	if (is_sorted(data.stack_a))
-		return (0);
+		is_empty();
 	parsing_terminal(&data);
 	if (is_sorted(data.stack_a))
 		write (1, "OK\n", 3);
@@ -66,5 +80,4 @@ int	main(int argc, char **argv)
 	free (data.number);
 	ft_lstclear(&data.stack_a, NULL);
 	ft_lstclear(&data.stack_b, NULL);
-	// system("leaks checker");
 }

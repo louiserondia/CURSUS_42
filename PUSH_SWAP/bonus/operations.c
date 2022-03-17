@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:17:28 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/16 21:43:23 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/17 12:18:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pushswap/push_swap.h"
+#include "../mandatory/push_swap.h"
 
 void	operation_swap(t_data *data, char *line)
 {

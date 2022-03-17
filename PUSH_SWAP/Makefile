@@ -6,28 +6,28 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/02/18 14:21:13 by lrondia           #+#    #+#              #
-#    Updated: 2022/03/16 21:24:06 by lrondia          ###   ########.fr        #
+#    Updated: 2022/03/17 11:54:38 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS =			pushswap/main.c					pushswap/push.c\
-				pushswap/utils.c				pushswap/swap.c\
-				pushswap/parsing.c				pushswap/rotate.c\
-				pushswap/utils_list.c			pushswap/sort_big.c\
-				pushswap/sort_little.c			pushswap/make_actions.c\
-				pushswap/utils_parsing.c		pushswap/reverse_rotate.c\
+SRCS =			mandatory/main.c				mandatory/push.c\
+				mandatory/utils.c				mandatory/swap.c\
+				mandatory/parsing.c				mandatory/rotate.c\
+				mandatory/utils_list.c			mandatory/sort_big.c\
+				mandatory/sort_little.c			mandatory/make_actions.c\
+				mandatory/utils_parsing.c		mandatory/reverse_rotate.c\
 
 BONUS_SCRS =	bonus/checker.c\
 				bonus/operations.c\
 				bonus/get_next_line.c\
-				pushswap/swap.c\
-				pushswap/push.c\
-				pushswap/utils.c\
-				pushswap/rotate.c\
-				pushswap/parsing.c\
-				pushswap/utils_list.c\
-				pushswap/utils_parsing.c\
-				pushswap/reverse_rotate.c\
+				mandatory/swap.c\
+				mandatory/push.c\
+				mandatory/utils.c\
+				mandatory/rotate.c\
+				mandatory/parsing.c\
+				mandatory/utils_list.c\
+				mandatory/utils_parsing.c\
+				mandatory/reverse_rotate.c\
 				
 NAME = push_swap
 BONUS_NAME = checker
@@ -54,8 +54,10 @@ libft:
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L $(LIB) -lft
 
-bonus:	libft $(BONUS_OBJS)
+$(BONUS_NAME):	$(BONUS_OBJS)
 	$(CC) $(CFLAGS) -o $(BONUS_NAME) $(BONUS_OBJS) -L $(LIB) -lft
+
+bonus:	libft $(BONUS_NAME)
 
 clean:
 	make clean -C $(LIB)

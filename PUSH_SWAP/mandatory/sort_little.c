@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 21:00:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/16 21:33:48 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/17 12:16:45 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ void	sort_five(t_data *data)
 		operations_five(data, i, len);
 	}
 	sort_three(data);
-	if (len == 5)
-		pa(data);
+	pa(data);
 	pa(data);
 }
 
