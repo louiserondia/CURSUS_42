@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:50:13 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/02 15:16:06 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/16 18:40:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strchr(const char *s, int c)
 	char	cc;
 
 	cc = c;
+	if (!s)
+		return (0);
 	while (*s)
 	{
 		if (*s == cc)
@@ -32,7 +34,7 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
-	int		count;
+	size_t	count;
 	char	*ptr;
 
 	i = 0;
@@ -56,32 +58,12 @@ char	*ft_strjoin(char *s1, char *s2)
 
 size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!str)
 		return (0);
 	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	if (dstsize > 0)
-	{	
-		while (src[i] && i < dstsize - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
-		i = 0;
-	}
-	while (src[i])
 		i++;
 	return (i);
 }

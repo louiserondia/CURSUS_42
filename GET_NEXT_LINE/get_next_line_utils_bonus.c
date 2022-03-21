@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:50:13 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/02 18:42:03 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/03 19:10:04 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strjoin(char *s1, char *s2)
 
 size_t	ft_strlen(const char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (!str)

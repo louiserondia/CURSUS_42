@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:47:14 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/02 18:41:57 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/02/03 18:53:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,43 @@ void	cut_buffer(char *str, char *buffer)
 char	*read_line(int fd, char *line)
 {
 	int		nbytes;
-	char	temp[BUFFER_SIZE + 1];
+	char	*temp;
 
 	nbytes = BUFFER_SIZE;
+	temp = malloc(sizeof (char) * (BUFFER_SIZE + 1));
+	if (!temp)
+		return (NULL);
 	temp[0] = '\0';
-	while (!ft_strchr(line, '\n') && nbytes == BUFFER_SIZE)
+	if (!read_with_temp(&nbytes, &temp, fd, &line))
+		return (NULL);
+	if (nbytes == 0 && line [0] == '\0' && temp && line)
 	{
-		nbytes = read(fd, temp, BUFFER_SIZE);
-		if (nbytes == -1)
-		{
-			free (line);
-			return (NULL);
-		}
-		temp[nbytes] = '\0';
-		line = ft_strjoin(line, temp);
-		if (!line)
-			return (NULL);
-	}
-	if (nbytes == 0 && line [0] == '\0')
-	{
+		free (temp);
 		free (line);
 		return (NULL);
 	}
+	if (temp)
+		free (temp);
 	return (line);
+}
+
+int	read_with_temp(int *nbytes, char **temp, int fd, char **line)
+{
+	while (!ft_strchr(*line, '\n') && *nbytes == BUFFER_SIZE)
+	{
+		*nbytes = read(fd, *temp, BUFFER_SIZE);
+		if (*nbytes == -1)
+		{
+			free (*line);
+			free (*temp);
+			return (0);
+		}
+		(*temp)[*nbytes] = '\0';
+		*line = ft_strjoin(*line, *temp);
+		if (!line)
+			return (0);
+	}
+	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -96,7 +110,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	buffer[OPEN_MAX][BUFFER_SIZE + 1];
 
-	if (fd < 0 || fd > OPEN_MAX)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = malloc(sizeof (char) * 1);
 	if (!line)
