@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:02:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/17 12:44:43 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/21 11:12:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 	if (is_sorted(data.stack_a))
 		is_empty();
 	parsing_terminal(&data);
-	if (is_sorted(data.stack_a))
+	if (is_sorted(data.stack_a) && !ft_lstexist(data.stack_b))
 		write (1, "OK\n", 3);
 	else
 		write (1, "KO\n", 3);
