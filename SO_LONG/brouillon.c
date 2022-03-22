@@ -55,3 +55,12 @@
 
 
 
+	
+		if (data->line[i - 1] == 'E')
+			exit (1);
+		data->line[i] = '0';
+		data->line[i - 1] = 'P';
+		mlx_clear_window(data->mlx, data->win);
+		read_map(data, &data->dim, data->line);
+
+
