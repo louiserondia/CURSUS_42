@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/22 20:36:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 12:42:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ typedef struct s_dim
 	int	y;
 	int	max_x;
 	int	max_y;
-	int	pos_me;
 }	t_dim;
 
 typedef struct s_flow
@@ -48,8 +47,8 @@ typedef struct s_img
 	char	*snow_path;
 	void	*tree;
 	char	*tree_path;
-	void	*wood;
-	char	*wood_path;
+	void	*brieuc;
+	char	*brieuc_path;
 	void	*flower;
 	char	*flower_path;
 	void	*me;
@@ -68,16 +67,21 @@ typedef struct s_data
 }	t_data;
 
 int		ft_key_hook(int keycode, t_data *data);
+char	*get_map_in_line(char *argv);
+void	init_sprites(t_data *data);
 void	read_map(t_data *data, t_dim *dimensions, char *line);
-void	ft_exit(char *str);
-int		ft_strcmp(char *s1, char *s2);
-void	*ft_memset(void *b, int c, size_t len);
 void	set_obstacle(t_data *data, t_dim *dimensions);
 void	set_character(t_data *data, t_dim *dimensions);
 void	set_end(t_data *data, t_dim *dimensions);
 void	set_collectible(t_data *data, t_dim *dimensions);
+
 int		errors(char *line);
-void	count_horizontal(char *line);
-void	error_name(char *argv);
+void	check_wall(char *line);
+void	check_error_name(char *argv);
+
+void	ft_exit(char *str);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_strchrlen(char *str, char c);
+void	*ft_memset(void *b, int c, size_t len);
 
 #endif

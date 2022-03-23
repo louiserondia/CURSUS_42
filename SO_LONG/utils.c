@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/22 20:34:23 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 12:49:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,21 @@ int	ft_strcmp(char *s1, char *s2)
 	return (0);
 }
 
+int	ft_strchrlen(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	if (str[i] == '\0')
+		return (i);
+	return (0);
+}
 
 void	*ft_memset(void *b, int c, size_t len)
 {
