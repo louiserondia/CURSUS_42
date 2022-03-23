@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:02:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 12:13:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:07:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 int	find_position_me(char *line)
 {

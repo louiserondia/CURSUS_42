@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:54:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 12:16:48 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:07:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 void	read_in_file(t_data *data)
 {

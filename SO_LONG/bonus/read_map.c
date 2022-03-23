@@ -6,11 +6,30 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:52:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 12:15:51 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 18:12:20 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long_bonus.h"
+
+void	check_error_name(char *argv)
+{
+	int		i;
+	int		j;
+	char	end[5];
+
+	i = ft_strlen(argv) - 1;
+	j = 0;
+	while (j < 4 && i > 0)
+	{
+		end[j] = argv[i];
+		i--;
+		j++;
+	}
+	end[j] = '\0';
+	if (!ft_strcmp(end, "reb."))
+		ft_exit("Error\nWrong file name\n");
+}
 
 char	*get_map_in_line(char *argv)
 {
@@ -70,6 +89,9 @@ void	place_tiles(t_data *data, t_dim *dimensions, char tile)
 	}
 	else if (tile == 'E')
 		set_end(data, dimensions);
+	else if (tile == 'M')
+		set_monster(data, dimensions);
+		
 }
 
 void	read_map(t_data *data, t_dim *dimensions, char *line)
@@ -80,6 +102,11 @@ void	read_map(t_data *data, t_dim *dimensions, char *line)
 	dimensions->x = 0;
 	dimensions->y = 0;
 	data->flow.max = 0;
+	if (data->flow.heart_count == 0)
+	{
+		free (data->line);
+		exit (1);
+	}
 	init_map(data, dimensions);
 	while (line[i])
 	{

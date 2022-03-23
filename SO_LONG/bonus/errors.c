@@ -6,53 +6,39 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 19:25:32 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 14:00:22 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 18:09:47 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long_bonus.h"
 
-void	check_error_name(char *argv)
+void	compare_horizontal(char *line, int *i, int *j, int max)
 {
-	int		i;
-	int		j;
-	char	end[5];
-
-	i = ft_strlen(argv) - 1;
-	j = 0;
-	while (j < 4 && i > 0)
+	*j = 0;
+	while (line[*i] && line[*i] != '\n')
 	{
-		end[j] = argv[i];
-		i--;
-		j++;
+		(*i)++;
+		(*j)++;
 	}
-	end[j] = '\0';
-	if (!ft_strcmp(end, "reb."))
-		ft_exit("Error\nWrong file name\n");
+	if (line[*i] == '\n' && (*j) != max)
+	{
+		free (line);
+		ft_exit("Error\nIncorrect map\n");
+	}
+	else if (line[*i] == '\n' && (*j) == max)
+		(*i)++;
 }
 
-void	count_horizontal(char *line)
+void	count_horizontal(int max, char *line)
 {
 	int	i;
 	int	j;
-	int	old;
 
 	i = 0;
 	j = 0;
-	old = 0;
-	while (line[old] != '\n')
-		old++;
-	while (line[i])
-	{
-		j = ft_strchrlen(line + i, '\n');
-		i += j + 1;
-		if (j != old)
-		{
-			free (line);
-			ft_exit("Error\nIncorrect map\n");
-		}
-	}
-	if (line[i] == '\0' && j != old)
+	while (line && line[i])
+		compare_horizontal(line, &i, &j, max);
+	if (line[i] == '\0' && (j != max || line[i - 1] == '\n'))
 	{
 		free (line);
 		ft_exit("Error\nIncorrect map\n");
@@ -94,7 +80,7 @@ void	other_characters(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != 'P' && line[i] != 'E' && line[i] != 'C'
+		if (line[i] != 'P' && line[i] != 'E' && line[i] != 'C' && line[i] != 'M'
 			&& line[i] != '0' && line[i] != '1' && line[i] != '\n')
 		{
 			free (line);
@@ -104,11 +90,10 @@ void	other_characters(char *line)
 	}
 }
 
-int	errors(char *line)
+void	errors(t_data data, char *line)
 {
-	count_horizontal(line);
+	count_horizontal(data.dim.max_x, line);
 	check_wall(line);
 	enough_elements(line);
 	other_characters(line);
-	return (1);
 }

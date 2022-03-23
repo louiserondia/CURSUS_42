@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 12:21:57 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 12:24:42 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 16:07:13 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long.h"
 
 void	obstacles_first_line(char *line)
 {

@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 12:49:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 18:09:59 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../so_long_bonus.h"
 
 void	ft_exit(char *str)
 {
@@ -37,22 +37,6 @@ int	ft_strcmp(char *s1, char *s2)
 	}
 	if (s1[i] == '\0' && s2[i] == '\0')
 		return (1);
-	return (0);
-}
-
-int	ft_strchrlen(char *str, char c)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	if (str[i] == '\0')
-		return (i);
 	return (0);
 }
 

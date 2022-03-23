@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 15:25:07 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/23 17:37:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,59 @@ typedef struct s_dim
 	int	max_y;
 }	t_dim;
 
+// typedef struct s_flow
+// {
+// 	int		count;
+// 	int		max;
+// 	void	*me_1flower;
+// 	char	*me_1flower_path;
+// 	void	*me_2flower;
+// 	char	*me_2flower_path;
+// 	void	*me_3flower;
+// 	char	*me_3flower_path;
+// 	void	*me_4flower;
+// 	char	*me_4flower_path;
+// }	t_flow;
+
 typedef struct s_flow
 {
-	int		count;
+	int		flow_count;
+	int		heart_count;
 	int		max;
-	void	*me_1flower;
-	char	*me_1flower_path;
-	void	*me_2flower;
-	char	*me_2flower_path;
-	void	*me_3flower;
-	char	*me_3flower_path;
-	void	*me_4flower;
-	char	*me_4flower_path;
+	void	*flow0_heart1;
+	char	*flow0_heart1_path;
+	void	*flow0_heart2;
+	char	*flow0_heart2_path;
+	void	*flow0_heart3;
+	char	*flow0_heart3_path;
+
+	void	*flow1_heart1;
+	char	*flow1_heart1_path;
+	void	*flow1_heart2;
+	char	*flow1_heart2_path;
+	void	*flow1_heart3;
+	char	*flow1_heart3_path;
+
+	void	*flow2_heart1;
+	char	*flow2_heart1_path;
+	void	*flow2_heart2;
+	char	*flow2_heart2_path;
+	void	*flow2_heart3;
+	char	*flow2_heart3_path;
+
+	void	*flow3_heart1;
+	char	*flow3_heart1_path;
+	void	*flow3_heart2;
+	char	*flow3_heart2_path;
+	void	*flow3_heart3;
+	char	*flow3_heart3_path;
+
+	void	*flow4_heart1;
+	char	*flow4_heart1_path;
+	void	*flow4_heart2;
+	char	*flow4_heart2_path;
+	void	*flow4_heart3;
+	char	*flow4_heart3_path;
 }	t_flow;
 
 typedef struct s_img
@@ -53,7 +94,15 @@ typedef struct s_img
 	char	*flower_path;
 	void	*me;
 	char	*me_path;
+	void	*chimere;
+	char	*chimere_path;
 }	t_img;
+
+// typedef struct	s_screen
+// {
+// 	void	*heart;
+// 	char	*heart_path;
+// }
 
 typedef struct s_data
 {
@@ -74,6 +123,7 @@ void	set_obstacle(t_data *data, t_dim *dimensions);
 void	set_character(t_data *data, t_dim *dimensions);
 void	set_end(t_data *data, t_dim *dimensions);
 void	set_collectible(t_data *data, t_dim *dimensions);
+void	set_monster(t_data *data, t_dim *dimensions);
 
 void	errors(t_data data, char *line);
 void	check_wall(char *line);
