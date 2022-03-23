@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 12:22:56 by lrondia           #+#    #+#              #
-#    Updated: 2022/03/23 12:22:10 by lrondia          ###   ########.fr        #
+#    Updated: 2022/03/23 13:57:20 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ PRINTF = ./ft_printf
 
 NAME = so_long
 
+all: printf $(NAME)
+
+printf:
+	make -C $(PRINTF)
 
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L $(MLX) -lmlx $(FRAMEWORK) ft_printf/libftprintf.a
@@ -39,16 +43,13 @@ $(NAME):	$(OBJS)
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: printf $(NAME)
-
-printf:
-	make -C $(PRINTF)
-
 clean:
 	rm -f $(OBJS)
+	make clean -C $(PRINTF)
 
 fclean:	clean
 	rm -f $(NAME)
+	rm -f ft_printf/libftprintf.a
 
 re: fclean all
 
