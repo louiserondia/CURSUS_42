@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:02:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 18:26:55 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/24 17:05:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,15 @@ int	find_position(char *line, char c)
 
 void	move_of_one_tile(t_data *data, int present, int next)
 {
-	if ((data->line[next] == 'E' && data->flow.max == 0) || data->flow.heart_count == 0)
+	if ((data->line[next] == 'E' && data->flow.max == 0) || data->heart.count_me == 0)
 	{
 		free (data->line);
 		exit (1);
 	}
 	else if (data->line[next] == 'M')
-		data->flow.heart_count--;
+		data->heart.count_me--;
 	else if (data->line[next] == 'C')
-		data->flow.flow_count++;
+		data->flow.count++;
 	if (data->line[next] != 'E' && data->line[next] != 'M')
 	{
 		data->line[present] = '0';
@@ -52,7 +52,7 @@ void	move_of_one_tile(t_data *data, int present, int next)
 void	move_one_tile_monster(t_data *data, int present, int next)
 {
 	if (data->line[next] == 'P')
-		data->flow.heart_count--;
+		data->heart.count_me--;
 	if (data->line[next] == '0')
 	{	
 		data->line[present] = '0';
@@ -72,9 +72,17 @@ int	ft_key_hook_monster(int keycode, t_data *data)
 	up = monster - data->dim.max_x - 1;
 	down = monster + data->dim.max_x + 1;
 	if (keycode == 123 && data->line[monster - 1] != '1')
+	{
+		data->monster.left = 1;
+		data->monster.right = 0;
 		move_one_tile_monster(data, monster, monster - 1);
+	}
 	else if (keycode == 124 && data->line[monster + 1] != '1')
+	{
+		data->monster.left = 0;
+		data->monster.right = 1;
 		move_one_tile_monster(data, monster, monster + 1);
+	}
 	else if (keycode == 126 && data->line[up] != '1')
 		move_one_tile_monster(data, monster, up);
 	else if (keycode == 125 && data->line[down] != '1')
@@ -82,14 +90,12 @@ int	ft_key_hook_monster(int keycode, t_data *data)
 	return (keycode);
 }
 
-
 int	ft_key_hook(int keycode, t_data *data)
 {
 	int	me;
 	int	up;
 	int	down;
 
-	ft_printf("key %d\n", keycode);
 	me = find_position(data->line, 'P');
 	up = me - data->dim.max_x - 1;
 	down = me + data->dim.max_x + 1;

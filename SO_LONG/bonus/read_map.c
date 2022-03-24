@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:52:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 18:12:20 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/24 17:53:22 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	init_map(t_data *data, t_dim *dimensions)
 
 void	place_tiles(t_data *data, t_dim *dimensions, char tile)
 {
+	// set_number(data, dimensions);
 	if (tile == '1')
 		set_obstacle(data, dimensions);
 	else if (tile == 'P')
@@ -102,7 +103,7 @@ void	read_map(t_data *data, t_dim *dimensions, char *line)
 	dimensions->x = 0;
 	dimensions->y = 0;
 	data->flow.max = 0;
-	if (data->flow.heart_count == 0)
+	if (data->heart.count_me == 0)
 	{
 		free (data->line);
 		exit (1);

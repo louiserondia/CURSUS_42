@@ -6,96 +6,55 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:08:42 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 18:21:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/24 17:41:17 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long_bonus.h"
 
-void	set_obstacle(t_data *data, t_dim *dimensions)
+void	set_obstacle(t_data *data, t_dim *dim)
 {
 	mlx_put_image_to_window(data->mlx, data->win, data->img.tree,
-		dimensions->x, dimensions->y);
+		dim->x, dim->y);
+}
+
+void	set_number(t_data *data, t_dim *dim)
+{
+	(void) dim;
+	mlx_put_image_to_window(data->mlx, data->win, data->number.one,
+		64, 32);
 }
 
 void	set_character(t_data *data, t_dim *dim)
 {
-	if (data->flow.flow_count == 0)
-	{
-		if (data->flow.heart_count == 1)
-			mlx_put_image_to_window(data->mlx, data->win, data->flow.flow0_heart1,
-				dim->x, dim->y);
-		else if (data->flow.heart_count == 2)
-			mlx_put_image_to_window(data->mlx, data->win, data->flow.flow0_heart2,
-				dim->x, dim->y);
-		else if (data->flow.heart_count == 3)	
-			mlx_put_image_to_window(data->mlx, data->win, data->flow.flow0_heart3,
-				dim->x, dim->y);
-	}
-	else if (data->flow.flow_count == 1)
-	{
-		if (data->flow.heart_count == 1)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow1_heart1,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 2)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow1_heart2,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 3)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow1_heart3,
-			dim->x, dim->y);
-	}
-	else if (data->flow.flow_count == 2)
-	{
-		if (data->flow.heart_count == 1)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow2_heart1,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 2)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow2_heart2,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 3)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow2_heart3,
-			dim->x, dim->y);
-	}
-	else if (data->flow.flow_count == 3)
-	{
-		if (data->flow.heart_count == 1)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow3_heart1,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 2)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow3_heart2,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 3)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow3_heart3,
-			dim->x, dim->y);
-	}
-	else if (data->flow.flow_count >= 4)
-	{
-		if (data->flow.heart_count == 1)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow4_heart1,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 2)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow4_heart2,
-			dim->x, dim->y);
-		else if (data->flow.heart_count == 3)
-		mlx_put_image_to_window(data->mlx, data->win, data->flow.flow4_heart3,
-			dim->x, dim->y);
-	}
+	if (data->flow.count == 0)
+		set_character_0flow(data, dim);
+	else if (data->flow.count == 1)
+		set_character_1flow(data, dim);
+	else if (data->flow.count == 2)
+		set_character_2flow(data, dim);
+	else if (data->flow.count == 3)
+		set_character_3flow(data, dim);
+	else if (data->flow.count >= 4)
+		set_character_4flow(data, dim);
 }
 
-void	set_end(t_data *data, t_dim *dimensions)
+void	set_end(t_data *data, t_dim *dim)
 {
 	mlx_put_image_to_window(data->mlx, data->win, data->img.brieuc,
-		dimensions->x, dimensions->y);
+		dim->x, dim->y);
 }
 
-void	set_collectible(t_data *data, t_dim *dimensions)
+void	set_collectible(t_data *data, t_dim *dim)
 {
 	mlx_put_image_to_window(data->mlx, data->win, data->img.flower,
-		dimensions->x + 24, dimensions->y + 32);
+		dim->x + 24, dim->y + 32);
 }
 
-void	set_monster(t_data *data, t_dim *dimensions)
+void	set_monster(t_data *data, t_dim *dim)
 {
-	mlx_put_image_to_window(data->mlx, data->win, data->img.chimere,
-		dimensions->x, dimensions->y);
+	if (data->monster.left == 1)
+		set_monster_left(data, dim);
+	else if (data->monster.right == 1)
+		set_monster_right(data, dim);
 }
