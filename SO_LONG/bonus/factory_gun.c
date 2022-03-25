@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 18:14:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 18:58:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:20:43 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	set_gun(t_data *data, t_dim *dim)
 
 	i = data->gun.gun_nb;
 	create_gun_tab(data, gun);
-	mlx_put_image_to_window(data->mlx, data->win, gun[1],
+	mlx_put_image_to_window(data->mlx, data->win, gun[i],
 				dim->x, dim->y);
 }
