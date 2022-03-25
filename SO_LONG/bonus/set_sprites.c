@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:08:42 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/24 17:41:17 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/25 19:01:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ void	set_obstacle(t_data *data, t_dim *dim)
 		dim->x, dim->y);
 }
 
-void	set_number(t_data *data, t_dim *dim)
-{
-	(void) dim;
-	mlx_put_image_to_window(data->mlx, data->win, data->number.one,
-		64, 32);
-}
-
 void	set_character(t_data *data, t_dim *dim)
 {
+	if (data->gun.time > 0)
+	{
+		set_gun(data, dim);
+		return ;
+	}
 	if (data->flow.count == 0)
 		set_character_0flow(data, dim);
 	else if (data->flow.count == 1)

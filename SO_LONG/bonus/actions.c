@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:02:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/24 17:05:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:10:59 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ int	ft_key_hook(int keycode, t_data *data)
 		move_of_one_tile(data, me, up);
 	else if (keycode == 1 && data->line[down] != '1')
 		move_of_one_tile(data, me, down);
+	else if (keycode == 49)
+	{
+		data->gun.time = 1;	
+		animate_gun(data);
+	}
 	else if (keycode == 53)
 	{
 		free (data->line);

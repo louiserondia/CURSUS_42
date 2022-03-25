@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/24 17:39:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/25 18:26:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ typedef struct s_dim
 
 typedef struct s_num
 {
+	void	*table;
+	char	*table_path;
+	void	*zero;
+	char	*zero_path;
 	void	*one;
 	char	*one_path;
 	void	*two;
@@ -37,6 +41,16 @@ typedef struct s_num
 	char	*three_path;
 	void	*four;
 	char	*four_path;
+	void	*five;
+	char	*five_path;
+	void	*six;
+	char	*six_path;
+	void	*seven;
+	char	*seven_path;
+	void	*eight;
+	char	*eight_path;
+	void	*nine;
+	char	*nine_path;
 }	t_num;
 
 typedef struct s_flow
@@ -77,6 +91,26 @@ typedef struct s_monst
 	char	*chimere_right_path;
 }	t_monst;
 
+typedef struct s_gun
+{
+	int		time;
+	int		gun_nb;
+	void	*gun1;
+	char	*gun1_path;
+	void	*gun2;
+	char	*gun2_path;
+	void	*gun3;
+	char	*gun3_path;
+	void	*gun4;
+	char	*gun4_path;
+	void	*gun5;
+	char	*gun5_path;
+	void	*gun6;
+	char	*gun6_path;
+	void	*gun7;
+	char	*gun7_path;
+}	t_gun;
+
 typedef struct s_img
 {
 	void	*snow;
@@ -101,6 +135,7 @@ typedef struct s_data
 	t_heart	heart;
 	t_monst	monster;
 	t_num	number;
+	t_gun	gun;
 }	t_data;
 
 int		ft_key_hook(int keycode, t_data *data);
@@ -113,7 +148,9 @@ void	set_end(t_data *data, t_dim *dim);
 void	set_collectible(t_data *data, t_dim *dim);
 void	set_monster(t_data *data, t_dim *dim);
 void	set_hearts(t_data *data, t_dim *dim, int count);
-void	set_number(t_data *data, t_dim *dim);
+void	set_table(t_data *data);
+void	set_number(t_data *data, int i, int x);
+void	set_gun(t_data *data, t_dim *dim);
 
 void	set_character_0flow(t_data *data, t_dim *dim);
 void	set_character_1flow(t_data *data, t_dim *dim);
@@ -124,6 +161,8 @@ void	set_character_4flow(t_data *data, t_dim *dim);
 void	set_monster_left(t_data *data, t_dim *dim);
 void	set_monster_right(t_data *data, t_dim *dim);
 
+int		animate_gun(t_data *data);
+
 void	errors(t_data data, char *line);
 void	check_wall(char *line);
 void	check_error_name(char *argv);
@@ -131,5 +170,6 @@ void	check_error_name(char *argv);
 void	ft_exit(char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	*ft_memset(void *b, int c, size_t len);
+int		find_position(char *line, char c);
 
 #endif

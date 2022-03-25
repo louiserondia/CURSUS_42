@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 12:22:56 by lrondia           #+#    #+#              #
-#    Updated: 2022/03/24 16:21:29 by lrondia          ###   ########.fr        #
+#    Updated: 2022/03/25 18:18:01 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,9 @@ BONUS_SRCS = bonus/main.c\
 			bonus/error_wall.c\
 			bonus/factory_me.c\
 			bonus/factory_monster.c\
+			bonus/factory_gun.c\
+			bonus/number.c\
+			bonus/animation.c\
 			get_next_line/get_next_line.c\
 			get_next_line/get_next_line_utils.c\
 

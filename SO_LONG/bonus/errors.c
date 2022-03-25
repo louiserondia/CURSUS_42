@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 19:25:32 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 18:09:47 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:18:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void	enough_elements(char *line)
 			collectible++;
 		i++;
 	}
-	if (end != 1 || character != 1 || collectible < 1)
+	if (end < 1 || character != 1 || collectible < 1)
 	{
 		free (line);
-		ft_exit("Error\nMissing elements\n");
+		ft_exit("Error\nWrong amount of elements\n");
 	}
 }
 
