@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:33:19 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 19:24:34 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/29 17:44:38 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,44 @@ void	get_coordinates(t_data *data)
 	data->dim.y *= 64;
 }
 
+void	attack_gun(t_data *data)
+{
+	int	monster;
+	int	me;
+	int	y;
+
+	monster = find_position(data->line, 'M');
+	me = find_position(data->line, 'P');
+	y = me / data->dim.max_x;
+	if (data->gun.time == 0)
+		return ;
+	if (data->flow.orientation == 0 && monster < me
+		&& monster > (data->dim.max_x * y))
+		data->heart.count_monster--;
+	else if (data->flow.orientation == 1 && monster > me
+		&& monster < (data->dim.max_x * (y + 1)))
+		data->heart.count_monster--;
+}
+
 int	animate_gun(t_data *data)
 {
 	get_coordinates(data);
 	if (data->gun.time >= 1)
 	{
 		data->gun.time++;
-		if (data->gun.time < 10)
-		{
-			ft_printf("%d\n", data->gun.time);
-			data->gun.gun_nb = 6;
-			mlx_clear_window(data->mlx, data->win);
-			read_map(data, &data->dim, data->line);
-		}
-		else if (data->gun.time < 20)
-		{
-			ft_printf("ok2\n");
-			data->gun.gun_nb = 5;
-			mlx_clear_window(data->mlx, data->win);
-			read_map(data, &data->dim, data->line);
-		}
-		else if (data->gun.time > 20000)
+		if (data->gun.time < 14)
+			data->gun.gun_nb = 6 - (data->gun.time / 2);
+		else if (data->gun.time > 24 && data->gun.time < 36)
+			data->gun.gun_nb = (data->gun.time / 2) - 12;
+		else if (data->gun.time == 36)
+			attack_gun(data);
+		else if (data->gun.time > 36)
 		{
 			data->gun.time = 0;
 			data->gun.gun_nb = 0;
-			mlx_clear_window(data->mlx, data->win);
-			read_map(data, &data->dim, data->line);
-		}	
-		// while (data->gun.time < 100000)
-		// {
-		// 	mlx_put_image_to_window(data->mlx, data->win, data->gun.gun5,
-		// 		data->dim.x, data->dim.y);
-		// 	data->gun.time++;
-		// }
+		}
+		mlx_clear_window(data->mlx, data->win);
+		read_map(data, &data->dim, data->line);
 		return (1);
 	}
 	else

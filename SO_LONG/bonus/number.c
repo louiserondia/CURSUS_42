@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 13:19:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 15:14:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/29 17:46:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,5 @@ void	set_number(t_data *data, int i, int x)
 	}
 	if (i < 10)
 		mlx_put_image_to_window(data->mlx, data->win, tab[i],
-		x, 32);
+			x, 32);
 }

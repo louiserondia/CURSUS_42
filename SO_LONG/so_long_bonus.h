@@ -6,12 +6,12 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 18:26:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/29 17:42:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # include <mlx.h>
 # include <stdlib.h>
@@ -30,43 +30,28 @@ typedef struct s_dim
 typedef struct s_num
 {
 	void	*table;
-	char	*table_path;
 	void	*zero;
-	char	*zero_path;
 	void	*one;
-	char	*one_path;
 	void	*two;
-	char	*two_path;
 	void	*three;
-	char	*three_path;
 	void	*four;
-	char	*four_path;
 	void	*five;
-	char	*five_path;
 	void	*six;
-	char	*six_path;
 	void	*seven;
-	char	*seven_path;
 	void	*eight;
-	char	*eight_path;
 	void	*nine;
-	char	*nine_path;
 }	t_num;
 
 typedef struct s_flow
 {
 	int		count;
 	int		max;
+	int		orientation;
 	void	*flow0;
-	char	*flow0_path;
 	void	*flow1;
-	char	*flow1_path;
 	void	*flow2;
-	char	*flow2_path;
 	void	*flow3;
-	char	*flow3_path;
 	void	*flow4;
-	char	*flow4_path;
 }	t_flow;
 
 typedef struct s_heart
@@ -74,53 +59,47 @@ typedef struct s_heart
 	int		count_me;
 	int		count_monster;
 	void	*heart1;
-	char	*heart1_path;
 	void	*heart2;
-	char	*heart2_path;
 	void	*heart3;
-	char	*heart3_path;
 }	t_heart;
 
 typedef struct s_monst
 {
-	int		left;
-	int		right;
+	int		orientation;
 	void	*chimere_left;
-	char	*chimere_left_path;
 	void	*chimere_right;
-	char	*chimere_right_path;
 }	t_monst;
 
 typedef struct s_gun
 {
 	int		time;
 	int		gun_nb;
-	void	*gun1;
-	char	*gun1_path;
-	void	*gun2;
-	char	*gun2_path;
-	void	*gun3;
-	char	*gun3_path;
-	void	*gun4;
-	char	*gun4_path;
-	void	*gun5;
-	char	*gun5_path;
-	void	*gun6;
-	char	*gun6_path;
-	void	*gun7;
-	char	*gun7_path;
+	void	*left0;
+	void	*left1;
+	void	*left2;
+	void	*left3;
+	void	*left4;
+	void	*left5;
+	void	*left6;
+	void	*right0;
+	void	*right1;
+	void	*right2;
+	void	*right3;
+	void	*right4;
+	void	*right5;
+	void	*right6;
+	void	*right7;
+	void	*flame_left;
+	void	*flame_right;
 }	t_gun;
 
 typedef struct s_img
 {
 	void	*snow;
-	char	*snow_path;
 	void	*tree;
-	char	*tree_path;
 	void	*brieuc;
-	char	*brieuc_path;
+	void	*brieuc_happy;
 	void	*flower;
-	char	*flower_path;
 }	t_img;
 
 typedef struct s_data
@@ -142,6 +121,8 @@ int		ft_key_hook(int keycode, t_data *data);
 char	*get_map_in_line(char *argv);
 void	init_sprites(t_data *data);
 void	read_map(t_data *data, t_dim *dimensions, char *line);
+int		animate_gun(t_data *data);
+
 void	set_obstacle(t_data *data, t_dim *dim);
 void	set_character(t_data *data, t_dim *dim);
 void	set_end(t_data *data, t_dim *dim);
@@ -151,17 +132,7 @@ void	set_hearts(t_data *data, t_dim *dim, int count);
 void	set_table(t_data *data);
 void	set_number(t_data *data, int i, int x);
 void	set_gun(t_data *data, t_dim *dim);
-
-void	set_character_0flow(t_data *data, t_dim *dim);
-void	set_character_1flow(t_data *data, t_dim *dim);
-void	set_character_2flow(t_data *data, t_dim *dim);
-void	set_character_3flow(t_data *data, t_dim *dim);
-void	set_character_4flow(t_data *data, t_dim *dim);
-
-void	set_monster_left(t_data *data, t_dim *dim);
-void	set_monster_right(t_data *data, t_dim *dim);
-
-int		animate_gun(t_data *data);
+void	set_flame(t_data *data, t_dim *dim);
 
 void	errors(t_data data, char *line);
 void	check_wall(char *line);

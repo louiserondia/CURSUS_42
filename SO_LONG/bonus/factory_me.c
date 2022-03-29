@@ -6,42 +6,43 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 15:18:00 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 17:35:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/29 17:41:19 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long_bonus.h"
 
-void	set_character_0flow(t_data *data, t_dim *dim)
+void	create_flow_tab(t_data *data, void **tab)
 {
-	mlx_put_image_to_window(data->mlx, data->win, data->flow.flow0,
+	tab[0] = data->flow.flow0;
+	tab[1] = data->flow.flow1;
+	tab[2] = data->flow.flow2;
+	tab[3] = data->flow.flow3;
+	tab[4] = data->flow.flow4;
+}
+
+void	set_character(t_data *data, t_dim *dim)
+{
+	int		i;
+	void	*flow[5];
+
+	if (data->gun.time > 0)
+	{
+		set_hearts(data, dim, data->heart.count_me);
+		if (data->gun.time > 14 && data->gun.time < 20)
+			set_flame(data, dim);
+		set_gun(data, dim);
+	}
+	else
+	{
+		i = data->flow.count;
+		create_flow_tab(data, flow);
+		if (i <= 4)
+			mlx_put_image_to_window(data->mlx, data->win, flow[i],
 				dim->x, dim->y);
-	set_hearts(data, dim, data->heart.count_me);
-}
-
-void	set_character_1flow(t_data *data, t_dim *dim)
-{
-	mlx_put_image_to_window(data->mlx, data->win, data->flow.flow1,
-			dim->x, dim->y);
-	set_hearts(data, dim, data->heart.count_me);
-}
-
-void	set_character_2flow(t_data *data, t_dim *dim)
-{	
-	mlx_put_image_to_window(data->mlx, data->win, data->flow.flow2,
-		dim->x, dim->y);
-	set_hearts(data, dim, data->heart.count_me);
-}
-void	set_character_3flow(t_data *data, t_dim *dim)
-{
-	mlx_put_image_to_window(data->mlx, data->win, data->flow.flow3,
-			dim->x, dim->y);
-	set_hearts(data, dim, data->heart.count_me);
-}
-
-void	set_character_4flow(t_data *data, t_dim *dim)
-{
-	mlx_put_image_to_window(data->mlx, data->win, data->flow.flow4,
-			dim->x, dim->y);
-	set_hearts(data, dim, data->heart.count_me);
+		else
+			mlx_put_image_to_window(data->mlx, data->win, flow[4],
+				dim->x, dim->y);
+		set_hearts(data, dim, data->heart.count_me);
+	}
 }

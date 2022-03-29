@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:52:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 18:22:21 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/29 17:47:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_map_in_line(char *argv)
 			ft_exit("Error\n");
 		if (buffer)
 			free (buffer);
-	}	
+	}
 	return (line);
 }
 
@@ -63,7 +63,7 @@ void	init_map(t_data *data, t_dim *dimensions)
 	int	y;
 
 	y = 0;
-	while (y < dimensions->max_y)
+	while (y <= dimensions->max_y)
 	{
 		x = 0;
 		while (x < dimensions->max_x)
@@ -85,15 +85,24 @@ void	place_tiles(t_data *data, t_dim *dimensions, char tile)
 	else if (tile == 'P')
 		set_character(data, dimensions);
 	else if (tile == 'C')
-	{
-		data->flow.max++;
 		set_collectible(data, dimensions);
-	}
 	else if (tile == 'E')
 		set_end(data, dimensions);
-	else if (tile == 'M')
+	else if (tile == 'M' && data->heart.count_monster > 0)
 		set_monster(data, dimensions);
-		
+}
+
+void	count_flowers(t_data *data, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 'C')
+			data->flow.max++;
+		i++;
+	}
 }
 
 void	read_map(t_data *data, t_dim *dimensions, char *line)
@@ -110,6 +119,7 @@ void	read_map(t_data *data, t_dim *dimensions, char *line)
 		exit (1);
 	}
 	init_map(data, dimensions);
+	count_flowers(data, data->line);
 	while (line[i])
 	{
 		place_tiles(data, dimensions, line[i]);
