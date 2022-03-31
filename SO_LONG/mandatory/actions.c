@@ -6,13 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:02:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 16:07:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:51:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long.h"
 
-int	find_position_me(char *line)
+int	find_position(char *line, char c)
 {
 	int	i;
 	int	pos;
@@ -20,7 +20,7 @@ int	find_position_me(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == 'P')
+		if (line[i] == c)
 			pos = i;
 		i++;
 	}
@@ -30,10 +30,7 @@ int	find_position_me(char *line)
 void	move_of_one_tile(t_data *data, int present, int next)
 {
 	if (data->line[next] == 'E' && data->flow.max == 0)
-	{
-		free (data->line);
-		exit (1);
-	}
+		ft_destroy_all(data);
 	else if (data->line[next] == 'C')
 		data->flow.count++;
 	if (data->line[next] != 'E')
@@ -53,7 +50,7 @@ int	ft_key_hook(int keycode, t_data *data)
 	int	up;
 	int	down;
 
-	me = find_position_me(data->line);
+	me = find_position(data->line, 'P');
 	up = me - data->dim.max_x - 1;
 	down = me + data->dim.max_x + 1;
 	if (keycode == 0 && data->line[me - 1] != '1')
@@ -65,9 +62,6 @@ int	ft_key_hook(int keycode, t_data *data)
 	else if (keycode == 1 && data->line[down] != '1')
 		move_of_one_tile(data, me, down);
 	else if (keycode == 53)
-	{
-		free (data->line);
-		exit (1);
-	}
+		ft_destroy_all(data);
 	return (keycode);
 }

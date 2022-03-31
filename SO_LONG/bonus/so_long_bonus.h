@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 17:42:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:55:00 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "ft_printf/ft_printf.h"
-# include "get_next_line/get_next_line.h"
+# include "../ft_printf/ft_printf.h"
+# include "../get_next_line/get_next_line.h"
 
 typedef struct s_dim
 {
@@ -134,11 +134,18 @@ void	set_number(t_data *data, int i, int x);
 void	set_gun(t_data *data, t_dim *dim);
 void	set_flame(t_data *data, t_dim *dim);
 
+void	create_flow_tab(t_data *data, void **tab);
+void	create_number_tab(t_data *data, void **tab);
+void	create_gun_left_tab(t_data *data, void **tab);
+void	create_gun_right_tab(t_data *data, void **tab);
+void	create_other_tab(t_data *data, void **tab);
+
 void	errors(t_data data, char *line);
 void	check_wall(char *line);
 void	check_error_name(char *argv);
+void	ft_destroy_all(t_data *data);
 
-void	ft_exit(char *str);
+void	ft_exit(char *line, char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	*ft_memset(void *b, int c, size_t len);
 int		find_position(char *line, char c);

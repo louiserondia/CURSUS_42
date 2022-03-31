@@ -6,26 +6,23 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 16:13:41 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 18:05:10 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long_bonus.h"
+#include "so_long_bonus.h"
 
-void	ft_exit(char *str)
+void	ft_exit(char *line, char *str)
 {
 	while (*str)
 	{
 		write(2, str, 1);
 		str++;
-	}	
+	}
+	if (line)
+		free (line);
 	exit (0);
 }
-
-// void	ft_destroy_all(t_data *data)
-// {
-	
-// }
 
 int	ft_strcmp(char *s1, char *s2)
 {

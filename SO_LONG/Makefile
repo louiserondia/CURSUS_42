@@ -6,33 +6,34 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/21 12:22:56 by lrondia           #+#    #+#              #
-#    Updated: 2022/03/29 16:25:43 by lrondia          ###   ########.fr        #
+#    Updated: 2022/03/31 18:19:35 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	mandatory/main.c\
+		mandatory/read_map.c\
 		mandatory/actions.c\
 		mandatory/utils.c\
-		mandatory/read_map.c\
-		mandatory/init_sprites.c\
-		mandatory/set_sprites.c\
-		mandatory/errors.c\
-		mandatory/error_wall.c\
+		mandatory/errors/errors.c\
+		mandatory/errors/error_wall.c\
+		mandatory/factory/init_sprites.c\
+		mandatory/factory/set_sprites.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c\
 
 BONUS_SRCS = bonus/main.c\
-			bonus/actions.c\
-			bonus/utils.c\
 			bonus/read_map.c\
-			bonus/init_sprites.c\
-			bonus/set_sprites.c\
-			bonus/errors.c\
-			bonus/error_wall.c\
-			bonus/factory_me.c\
-			bonus/factory_gun.c\
-			bonus/number.c\
+			bonus/actions.c\
 			bonus/animation.c\
+			bonus/utils.c\
+			bonus/destroy.c\
+			bonus/errors/errors.c\
+			bonus/errors/error_wall.c\
+			bonus/factory/init_sprites.c\
+			bonus/factory/factory_me.c\
+			bonus/factory/factory_gun.c\
+			bonus/factory/factory_other.c\
+			bonus/factory/factory_number.c\
 			get_next_line/get_next_line.c\
 			get_next_line/get_next_line_utils.c\
 

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:08:42 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 16:07:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 18:21:26 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ void	set_character(t_data *data, t_dim *dim)
 
 void	set_end(t_data *data, t_dim *dimensions)
 {
-	mlx_put_image_to_window(data->mlx, data->win, data->img.brieuc,
-		dimensions->x, dimensions->y);
+	if (data->flow.max == 0)
+		mlx_put_image_to_window(data->mlx, data->win, data->img.brieuc_happy,
+			dimensions->x, dimensions->y);
+	else
+		mlx_put_image_to_window(data->mlx, data->win, data->img.brieuc,
+			dimensions->x, dimensions->y);
 }
 
 void	set_collectible(t_data *data, t_dim *dimensions)

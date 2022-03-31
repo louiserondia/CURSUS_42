@@ -6,20 +6,54 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 16:07:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:53:17 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long.h"
 
-void	ft_exit(char *str)
+void	ft_exit(char *line, char *str)
 {
+	if (line)
+		free (line);
 	while (*str)
 	{
 		write(2, str, 1);
 		str++;
 	}		
 	exit (0);
+}
+
+void	create_tab(t_data *data, void **tab)
+{
+	tab[0] = data->img.snow;
+	tab[1] = data->img.tree;
+	tab[2] = data->img.brieuc;
+	tab[3] = data->img.flower;
+	tab[4] = data->img.me;
+	tab[5] = data->flow.me_1flower;
+	tab[6] = data->flow.me_2flower;
+	tab[7] = data->flow.me_3flower;
+	tab[8] = data->flow.me_4flower;
+}
+
+void	ft_destroy_all(t_data *data)
+{
+	int		i;
+	void	*tab[9];
+
+	i = 0;
+	create_tab(data, tab);
+	if (data->line)
+		free (data->line);
+	while (i < 9)
+	{
+		mlx_destroy_image(data->mlx, tab[i]);
+		i++;
+	}
+	mlx_destroy_window(data->mlx, data->win);
+	free (data->mlx);
+	exit (1);
 }
 
 int	ft_strcmp(char *s1, char *s2)

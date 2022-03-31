@@ -6,30 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:52:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 17:47:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:55:33 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long_bonus.h"
-
-void	check_error_name(char *argv)
-{
-	int		i;
-	int		j;
-	char	end[5];
-
-	i = ft_strlen(argv) - 1;
-	j = 0;
-	while (j < 4 && i > 0)
-	{
-		end[j] = argv[i];
-		i--;
-		j++;
-	}
-	end[j] = '\0';
-	if (!ft_strcmp(end, "reb."))
-		ft_exit("Error\nWrong file name\n");
-}
+#include "so_long_bonus.h"
 
 char	*get_map_in_line(char *argv)
 {
@@ -41,7 +22,7 @@ char	*get_map_in_line(char *argv)
 	fd = open(argv, O_RDONLY);
 	line = malloc(sizeof (char) * 1);
 	if (!line)
-		ft_exit("Error\n");
+		exit(0);
 	line[0] = '\0';
 	while (line)
 	{
@@ -50,7 +31,7 @@ char	*get_map_in_line(char *argv)
 			break ;
 		line = ft_strjoin(line, buffer);
 		if (!line)
-			ft_exit("Error\n");
+			exit(0);
 		if (buffer)
 			free (buffer);
 	}

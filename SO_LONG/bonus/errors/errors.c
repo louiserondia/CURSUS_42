@@ -6,27 +6,32 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 19:25:32 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/25 15:18:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 18:16:00 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long_bonus.h"
 
-void	compare_horizontal(char *line, int *i, int *j, int max)
+void	check_error_name(char *argv)
 {
-	*j = 0;
-	while (line[*i] && line[*i] != '\n')
+	int		i;
+	int		j;
+	char	end[5];
+
+	i = ft_strlen(argv) - 1;
+	j = 0;
+	while (j < 4 && i > 0)
 	{
-		(*i)++;
-		(*j)++;
+		end[j] = argv[i];
+		i--;
+		j++;
 	}
-	if (line[*i] == '\n' && (*j) != max)
+	end[j] = '\0';
+	if (!ft_strcmp(end, "reb."))
 	{
-		free (line);
-		ft_exit("Error\nIncorrect map\n");
+		ft_printf("Error\nWrong file name\n");
+		exit(0);
 	}
-	else if (line[*i] == '\n' && (*j) == max)
-		(*i)++;
 }
 
 void	count_horizontal(int max, char *line)
@@ -35,14 +40,21 @@ void	count_horizontal(int max, char *line)
 	int	j;
 
 	i = 0;
-	j = 0;
 	while (line && line[i])
-		compare_horizontal(line, &i, &j, max);
-	if (line[i] == '\0' && (j != max || line[i - 1] == '\n'))
 	{
-		free (line);
-		ft_exit("Error\nIncorrect map\n");
+		j = 0;
+		while (line && line[i] && line[i] != '\n')
+		{
+			i++;
+			j++;
+		}
+		if (line[i] == '\n' && j != max)
+			ft_exit(line, "Error\nIncorrect map\n");
+		else if (line[i] == '\n' && j == max)
+			i++;
 	}
+	if (line[i] == '\0' && (j != max || line[i - 1] == '\n'))
+		ft_exit(line, "Error\nIncorrect map\n");
 }
 
 void	enough_elements(char *line)
@@ -51,11 +63,13 @@ void	enough_elements(char *line)
 	int	end;
 	int	character;
 	int	collectible;
+	int	monster;
 
 	i = 0;
 	end = 0;
 	character = 0;
 	collectible = 0;
+	monster = 0;
 	while (line[i])
 	{
 		if (line[i] == 'E')
@@ -64,13 +78,12 @@ void	enough_elements(char *line)
 			character++;
 		else if (line[i] == 'C')
 			collectible++;
+		else if (line[i] == 'M')
+			monster++;
 		i++;
 	}
-	if (end < 1 || character != 1 || collectible < 1)
-	{
-		free (line);
-		ft_exit("Error\nWrong amount of elements\n");
-	}
+	if (end < 1 || character != 1 || collectible < 1 || monster > 1)
+		ft_exit(line, "Error\nWrong amount of elements\n");
 }
 
 void	other_characters(char *line)
@@ -82,10 +95,7 @@ void	other_characters(char *line)
 	{
 		if (line[i] != 'P' && line[i] != 'E' && line[i] != 'C' && line[i] != 'M'
 			&& line[i] != '0' && line[i] != '1' && line[i] != '\n')
-		{
-			free (line);
-			ft_exit("Error\nIncorrect map\n");
-		}
+			ft_exit(line, "Error\nIncorrect map\n");
 		i++;
 	}
 }

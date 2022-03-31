@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 11:59:24 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 17:22:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:55:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long_bonus.h"
+#include "so_long_bonus.h"
 
 void	get_dimensions(t_dim *dimensions, char *line)
 {
@@ -34,10 +34,7 @@ void	get_dimensions(t_dim *dimensions, char *line)
 	if (line[i] == '\0')
 		dimensions->max_y++;
 	if (dimensions->max_y == dimensions->max_x)
-	{
-		free (line);
-		ft_exit ("Error\nIncorrect map\n");
-	}
+		ft_exit(line, "Error\nIncorrect map\n");
 }
 
 int	main(int argc, char **argv)
@@ -45,7 +42,10 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-		ft_exit("Error\nWrong number of arguments\n");
+	{
+		ft_printf("Error\nWrong number of arguments\n");
+		exit(0);
+	}
 	ft_memset(&data, 0, sizeof (t_data));
 	data.mlx = mlx_init();
 	data.line = get_map_in_line(argv[1]);

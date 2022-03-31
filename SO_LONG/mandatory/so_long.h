@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/23 15:25:07 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:46:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <mlx.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "ft_printf/ft_printf.h"
-# include "get_next_line/get_next_line.h"
+# include "../ft_printf/ft_printf.h"
+# include "../get_next_line/get_next_line.h"
 
 typedef struct s_dim
 {
@@ -32,27 +32,19 @@ typedef struct s_flow
 	int		count;
 	int		max;
 	void	*me_1flower;
-	char	*me_1flower_path;
 	void	*me_2flower;
-	char	*me_2flower_path;
 	void	*me_3flower;
-	char	*me_3flower_path;
 	void	*me_4flower;
-	char	*me_4flower_path;
 }	t_flow;
 
 typedef struct s_img
 {
 	void	*snow;
-	char	*snow_path;
 	void	*tree;
-	char	*tree_path;
 	void	*brieuc;
-	char	*brieuc_path;
+	void	*brieuc_happy;
 	void	*flower;
-	char	*flower_path;
 	void	*me;
-	char	*me_path;
 }	t_img;
 
 typedef struct s_data
@@ -79,8 +71,10 @@ void	errors(t_data data, char *line);
 void	check_wall(char *line);
 void	check_error_name(char *argv);
 
-void	ft_exit(char *str);
+void	ft_exit(char *line, char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	*ft_memset(void *b, int c, size_t len);
+void	create_tab(t_data *data, void **tab);
+void	ft_destroy_all(t_data *data);
 
 #endif

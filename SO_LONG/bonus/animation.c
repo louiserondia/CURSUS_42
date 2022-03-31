@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:33:19 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 17:44:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 17:55:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long_bonus.h"
+#include "so_long_bonus.h"
 
 void	get_coordinates(t_data *data)
 {
@@ -61,8 +61,6 @@ int	animate_gun(t_data *data)
 		}
 		mlx_clear_window(data->mlx, data->win);
 		read_map(data, &data->dim, data->line);
-		return (1);
 	}
-	else
-		return (0);
+	return (0);
 }

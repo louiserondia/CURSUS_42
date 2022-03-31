@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   number.c                                           :+:      :+:    :+:   */
+/*   factory_number.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 13:19:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 17:46:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 18:15:46 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	set_table(t_data *data)
 		64, 32);
 }
 
-void	create_tab(t_data *data, void **tab)
+void	create_number_tab(t_data *data, void **tab)
 {
 	tab[0] = data->number.zero;
 	tab[1] = data->number.one;
@@ -36,7 +36,7 @@ void	set_number(t_data *data, int i, int x)
 {
 	void	*tab[10];
 
-	create_tab(data, tab);
+	create_number_tab(data, tab);
 	if (i >= 10)
 	{
 		set_number(data, i / 10, x - 16);

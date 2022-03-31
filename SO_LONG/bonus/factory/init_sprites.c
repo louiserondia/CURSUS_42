@@ -6,13 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:54:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/29 17:45:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 18:15:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long_bonus.h"
 
-void	read_flow_in_file(t_data *data)
+void	read_me_in_file(t_data *data)
 {
 	int	width;
 	int	height;
@@ -27,13 +27,6 @@ void	read_flow_in_file(t_data *data)
 			"sprites/flow/me_3flow.xpm", &width, &height);
 	data->flow.flow4 = mlx_xpm_file_to_image(data->mlx,
 			"sprites/flow/me_4flow.xpm", &width, &height);
-}
-
-void	read_heart_in_file(t_data *data)
-{
-	int	width;
-	int	height;
-
 	data->heart.heart1 = mlx_xpm_file_to_image(data->mlx,
 			"sprites/heart/1heart.xpm", &width, &height);
 	data->heart.heart2 = mlx_xpm_file_to_image(data->mlx,
@@ -117,7 +110,7 @@ void	read_gun_right_in_file(t_data *data)
 			"sprites/gun/flame_right.xpm", &width, &height);
 }
 
-void	read_in_file(t_data *data)
+void	init_sprites(t_data *data)
 {
 	int	width;
 	int	height;
@@ -136,13 +129,7 @@ void	read_in_file(t_data *data)
 			"sprites/chimere_left.xpm", &width, &height);
 	data->monster.chimere_right = mlx_xpm_file_to_image(data->mlx,
 			"sprites/chimere_right.xpm", &width, &height);
-}
-
-void	init_sprites(t_data *data)
-{
-	read_in_file(data);
-	read_flow_in_file(data);
-	read_heart_in_file(data);
+	read_me_in_file(data);
 	read_number_in_file(data);
 	read_gun_left_in_file(data);
 	read_gun_right_in_file(data);
