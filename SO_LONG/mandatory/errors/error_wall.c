@@ -6,11 +6,23 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 12:21:57 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 18:21:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:15:22 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
+
+void	ft_exit(char *line, char *str)
+{
+	if (line)
+		free (line);
+	while (*str)
+	{
+		write(2, str, 1);
+		str++;
+	}		
+	exit (0);
+}
 
 void	obstacles_first_line(char *line)
 {

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:33:19 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 17:55:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:24:27 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ void	attack_gun(t_data *data)
 
 	monster = find_position(data->line, 'M');
 	me = find_position(data->line, 'P');
-	y = me / data->dim.max_x;
+	y = me / (data->dim.max_x + 1);
 	if (data->gun.time == 0)
 		return ;
 	if (data->flow.orientation == 0 && monster < me
 		&& monster > (data->dim.max_x * y))
 		data->heart.count_monster--;
 	else if (data->flow.orientation == 1 && monster > me
-		&& monster < (data->dim.max_x * (y + 1)))
+		&& monster < (data->dim.max_x + 1) * (y + 1))
 		data->heart.count_monster--;
 }
 

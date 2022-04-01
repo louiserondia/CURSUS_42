@@ -6,23 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 17:53:17 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:15:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	ft_exit(char *line, char *str)
-{
-	if (line)
-		free (line);
-	while (*str)
-	{
-		write(2, str, 1);
-		str++;
-	}		
-	exit (0);
-}
 
 void	create_tab(t_data *data, void **tab)
 {
@@ -89,4 +77,17 @@ void	*ft_memset(void *b, int c, size_t len)
 		i++;
 	}
 	return (ub);
+}
+
+void	count_flowers(t_data *data, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 'C')
+			data->flow.max++;
+		i++;
+	}
 }

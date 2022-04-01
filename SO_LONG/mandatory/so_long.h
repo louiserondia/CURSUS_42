@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 17:46:34 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:16:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int		ft_key_hook(int keycode, t_data *data);
 char	*get_map_in_line(char *argv);
 void	init_sprites(t_data *data);
 void	read_map(t_data *data, t_dim *dimensions, char *line);
+void	get_dimensions(t_dim *dimensions, char *line);
+void	count_flowers(t_data *data, char *line);
 void	set_obstacle(t_data *data, t_dim *dimensions);
 void	set_character(t_data *data, t_dim *dimensions);
 void	set_end(t_data *data, t_dim *dimensions);

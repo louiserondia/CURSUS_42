@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:52:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 17:37:06 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:15:48 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,29 @@ void	place_tiles(t_data *data, t_dim *dimensions, char tile)
 		set_end(data, dimensions);
 }
 
-void	count_flowers(t_data *data, char *line)
+void	get_dimensions(t_dim *dimensions, char *line)
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	dimensions->max_x = 0;
+	dimensions->max_y = 0;
+	while (line[i] && line[i] != '\n')
 	{
-		if (line[i] == 'C')
-			data->flow.max++;
+		dimensions->max_x++;
 		i++;
 	}
+	i = 0;
+	while (line && line[i])
+	{
+		if (line[i] == '\n')
+			dimensions->max_y++;
+		i++;
+	}
+	if (line[i] == '\0')
+		dimensions->max_y++;
+	if (dimensions->max_y == dimensions->max_x)
+		ft_exit (line, "Error\nIncorrect map\n");
 }
 
 void	read_map(t_data *data, t_dim *dimensions, char *line)

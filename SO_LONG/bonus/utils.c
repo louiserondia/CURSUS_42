@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 18:05:10 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:10:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,17 @@ int	find_position(char *line, char c)
 		i++;
 	}
 	return (pos);
+}
+
+void	count_flowers(t_data *data, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 'C')
+			data->flow.max++;
+		i++;
+	}
 }

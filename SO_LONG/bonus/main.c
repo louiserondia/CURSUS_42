@@ -6,36 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 11:59:24 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 17:55:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 12:13:23 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
-
-void	get_dimensions(t_dim *dimensions, char *line)
-{
-	int	i;
-
-	i = 0;
-	dimensions->max_x = 0;
-	dimensions->max_y = 0;
-	while (line[i] && line[i] != '\n')
-	{
-		dimensions->max_x++;
-		i++;
-	}
-	i = 0;
-	while (line && line[i])
-	{
-		if (line[i] == '\n')
-			dimensions->max_y++;
-		i++;
-	}
-	if (line[i] == '\0')
-		dimensions->max_y++;
-	if (dimensions->max_y == dimensions->max_x)
-		ft_exit(line, "Error\nIncorrect map\n");
-}
 
 int	main(int argc, char **argv)
 {

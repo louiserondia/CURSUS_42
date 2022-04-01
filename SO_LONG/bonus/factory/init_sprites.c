@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:54:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 18:15:53 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/31 18:50:36 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,19 @@ void	init_sprites(t_data *data)
 	int	height;
 
 	data->img.snow = mlx_xpm_file_to_image(data->mlx,
-			"sprites/snow_new.xpm", &width, &height);
+			"sprites/other/snow_new.xpm", &width, &height);
 	data->img.tree = mlx_xpm_file_to_image(data->mlx,
-			"sprites/tree.xpm", &width, &height);
+			"sprites/other/tree.xpm", &width, &height);
 	data->img.brieuc = mlx_xpm_file_to_image(data->mlx,
-			"sprites/brieuc.xpm", &width, &height);
+			"sprites/other/brieuc.xpm", &width, &height);
 	data->img.brieuc_happy = mlx_xpm_file_to_image(data->mlx,
-			"sprites/brieuc_happy.xpm", &width, &height);
+			"sprites/other/brieuc_happy.xpm", &width, &height);
 	data->img.flower = mlx_xpm_file_to_image(data->mlx,
-			"sprites/flower.xpm", &width, &height);
+			"sprites/other/flower.xpm", &width, &height);
 	data->monster.chimere_left = mlx_xpm_file_to_image(data->mlx,
-			"sprites/chimere_left.xpm", &width, &height);
+			"sprites/other/chimere_left.xpm", &width, &height);
 	data->monster.chimere_right = mlx_xpm_file_to_image(data->mlx,
-			"sprites/chimere_right.xpm", &width, &height);
+			"sprites/other/chimere_right.xpm", &width, &height);
 	read_me_in_file(data);
 	read_number_in_file(data);
 	read_gun_left_in_file(data);
