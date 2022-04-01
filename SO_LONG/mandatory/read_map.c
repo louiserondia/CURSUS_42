@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 11:52:21 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/01 12:15:48 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 14:13:02 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_map_in_line(char *argv)
 	fd = open(argv, O_RDONLY);
 	line = malloc(sizeof (char) * 1);
 	if (!line)
-		exit(0);
+		exit(EXIT_FAILURE);
 	line[0] = '\0';
 	while (line)
 	{
@@ -31,7 +31,7 @@ char	*get_map_in_line(char *argv)
 			break ;
 		line = ft_strjoin(line, buffer);
 		if (!line)
-			exit(0);
+			exit(EXIT_FAILURE);
 		if (buffer)
 			free (buffer);
 	}	
@@ -90,8 +90,6 @@ void	get_dimensions(t_dim *dimensions, char *line)
 	}
 	if (line[i] == '\0')
 		dimensions->max_y++;
-	if (dimensions->max_y == dimensions->max_x)
-		ft_exit (line, "Error\nIncorrect map\n");
 }
 
 void	read_map(t_data *data, t_dim *dimensions, char *line)

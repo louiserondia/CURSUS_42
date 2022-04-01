@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 12:29:33 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/01 12:16:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 20:33:47 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ void	ft_exit(char *line, char *str);
 int		ft_strcmp(char *s1, char *s2);
 void	*ft_memset(void *b, int c, size_t len);
 void	create_tab(t_data *data, void **tab);
-void	ft_destroy_all(t_data *data);
+int		ft_destroy_all(t_data *data);
 
 #endif

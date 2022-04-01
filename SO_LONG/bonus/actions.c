@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:02:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 19:06:03 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 20:31:40 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	move_of_one_tile(t_data *data, int present, int next, int keycode)
 		data->line[present] = '0';
 		data->line[next] = 'P';
 		data->operations++;
-		ft_printf("%d\n", data->operations);
 	}
 	mlx_clear_window(data->mlx, data->win);
 	read_map(data, &data->dim, data->line);
@@ -58,6 +57,8 @@ int	ft_key_hook_monster(int keycode, t_data *data)
 	monster = find_position(data->line, 'M');
 	up = monster - data->dim.max_x - 1;
 	down = monster + data->dim.max_x + 1;
+	if (monster == 0)
+		return (0);
 	if (data->heart.count_monster == 0)
 		data->line[monster] = '0';
 	if (keycode == 123 && data->line[monster - 1] != '1')

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 18:04:58 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 18:11:59 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 20:33:27 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_destroy_img(t_data *data, int max, void **tab)
 	}
 }
 
-void	ft_destroy_all(t_data *data)
+int	ft_destroy_all(t_data *data)
 {
 	void	*tab[10];
 
@@ -55,5 +55,6 @@ void	ft_destroy_all(t_data *data)
 	ft_destroy_img(data, 9, tab);
 	mlx_destroy_window(data->mlx, data->win);
 	free (data->mlx);
-	exit (1);
+	exit (EXIT_SUCCESS);
+	return (0);
 }

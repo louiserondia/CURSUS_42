@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/01 12:10:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 20:32:02 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_exit(char *line, char *str)
 	}
 	if (line)
 		free (line);
-	exit (0);
+	exit (EXIT_FAILURE);
 }
 
 int	ft_strcmp(char *s1, char *s2)
@@ -65,6 +65,7 @@ int	find_position(char *line, char c)
 	int	pos;
 
 	i = 0;
+	pos = 0;
 	while (line[i])
 	{
 		if (line[i] == c)

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 19:25:32 by lrondia           #+#    #+#             */
-/*   Updated: 2022/03/31 18:21:31 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 14:11:54 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_error_name(char *argv)
 	if (!ft_strcmp(end, "reb."))
 	{
 		ft_printf("Error\nWrong file name\n");
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 }
 

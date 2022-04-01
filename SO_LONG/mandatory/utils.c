@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 19:06:25 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/01 12:15:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 20:33:56 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	create_tab(t_data *data, void **tab)
 	tab[8] = data->flow.me_4flower;
 }
 
-void	ft_destroy_all(t_data *data)
+int	ft_destroy_all(t_data *data)
 {
 	int		i;
 	void	*tab[9];
@@ -41,7 +41,8 @@ void	ft_destroy_all(t_data *data)
 	}
 	mlx_destroy_window(data->mlx, data->win);
 	free (data->mlx);
-	exit (1);
+	exit (EXIT_SUCCESS);
+	return (0);
 }
 
 int	ft_strcmp(char *s1, char *s2)

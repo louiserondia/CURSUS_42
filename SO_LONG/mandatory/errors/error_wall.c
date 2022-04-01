@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 12:21:57 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/01 12:15:22 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/01 13:59:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_exit(char *line, char *str)
 		write(2, str, 1);
 		str++;
 	}		
-	exit (0);
+	exit (EXIT_FAILURE);
 }
 
 void	obstacles_first_line(char *line)
