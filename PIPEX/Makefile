@@ -6,12 +6,13 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/11 12:13:43 by lrondia           #+#    #+#              #
-#    Updated: 2022/04/13 14:28:48 by lrondia          ###   ########.fr        #
+#    Updated: 2022/04/13 18:44:52 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	main.c\
 		ft_split.c\
+		here_doc.c\
 		utils.c\
 		exit.c\
 		get_next_line/get_next_line.c\
