@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/28 15:50:13 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/12 19:16:31 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/13 13:16:05 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	ptr[i] = '\0';
 	free (s1);
 	return (ptr);
+}
+
+size_t	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
