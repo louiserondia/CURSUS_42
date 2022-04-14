@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:57:08 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/13 19:04:20 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/14 19:42:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**write_path(int fd[2], char **envp, char **cmd)
 	return (path);
 }
 
-char	*get_path(int fd[2], char **envp, char **cmd)
+char	*get_path(int *fd, char **envp, char **cmd)
 {
 	int		i;
 	char	**path;

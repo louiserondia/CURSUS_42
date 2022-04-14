@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:27:28 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/13 16:46:10 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/14 19:53:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,14 @@ void	ft_exit(int fd[2], char **cmd, char *path, char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_close(int fd[2], int ids[5], int max)
+void	ft_close(int *fd)
 {
 	int	i;
 
 	i = 0;
-	close(fd[0]);
-	close(fd[1]);
-	while (i < max - 1)
+	while (fd[i] != -1)
 	{
-		waitpid(ids[i], NULL, 0);
+		close(fd[i]);
 		i++;
 	}
 }
