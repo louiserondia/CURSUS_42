@@ -6,128 +6,89 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:02:19 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/14 20:01:19 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/19 20:25:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	first_action(int *fd, char *cmd_name, char *file1, char **envp)
-{
-	char	**cmd;
-	char	*path;
-	int		file_id;
-
-	file_id = open(file1, O_RDONLY);
-	if (file_id == -1)
-		ft_exit(fd, NULL, NULL, "open failed\n");
-	cmd = ft_split(cmd_name, ' ');
-	path = get_path(fd, envp, cmd);
-	dup2(file_id, STDIN_FILENO);
-	dup2(fd[1], STDOUT_FILENO);
-	ft_close(fd);
-	if (execve(path, cmd, envp) < 0)
-		ft_exit(fd, cmd, path, "execve failed\n");
-}
-
-void	next_action(int *fd, char **argv, int i, char **envp)
-{
-	char	**cmd;
-	char	*path;
-
-	cmd = ft_split(argv[i + 2], ' ');
-	path = get_path(fd, envp, cmd);
-	dup2(fd[i * 2 - 2], STDIN_FILENO);
-	dup2(fd[i * 2 + 1], STDOUT_FILENO);
-	ft_close(fd);
-
-	if (execve(path, cmd, envp) < 0)
-		ft_exit(fd, cmd, path, "execve failed");
-}
-
-void	last_action(int *fd, char **argv, int i, char **envp)
-{
-	char	**cmd;
-	char	*path;
-	int		file_id;
-
-	file_id = open(argv[i + 3], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (file_id == -1)
-		ft_exit(fd, NULL, NULL, "open failed\n");
-	cmd = ft_split(argv[i + 2], ' ');
-	path = get_path(fd, envp, cmd);
-	printf("i %d\n", i);
-	printf("i %d\n", (i * 2 - 2));
-	//dup2(fd[i * 2 - 2], STDIN_FILENO);
-	dup2(fd[0], STDOUT_FILENO);
-	dup2(file_id, STDOUT_FILENO);
-	ft_close(fd);
-	if (execve(path, cmd, envp) < 0)
-		ft_exit(fd, cmd, path, "execve failed");
-}
-
-
-int	*create_tab(int argc)
+void	create_tab(t_info *info)
 {
 	int	i;
-	int	*fd;
-	int	nb_args;
 
 	i = 0;
-	nb_args = argc - 3;
-	fd = malloc(sizeof(int) * (nb_args - 1) * 2 + 1);
-	if (!fd)
+	info->fd = malloc(sizeof(int) * (info->max - 1) * 2);
+	if (!info->fd)
 		exit(EXIT_FAILURE);
-	while (i < nb_args - 1)
+	while (i < info->max - 1)
 	{
-		pipe(fd + (i * 2));
+		pipe(info->fd + (i * 2));
 		i++;
 	}
-	fd[(nb_args - 1) * 2 + 1] = -1;
-	return (fd);
 }
 
-int	ft_fork(int *fd, int max, int i, char **argv, char **envp)
+void	ft_fork(t_info *info, int i)
 {
-	int	fork_id;
-
+	char	*name;
+	int		fork_id;
+	
+	name = info->argv[1];
 	fork_id = fork();
 	if (fork_id == -1)
-		ft_exit(fd, NULL, NULL, "Error\n");
+		ft_exit(info, NULL, NULL, "Error\n");
+	else if (!fork_id && i == 0 && is_here_doc(name))
+		first_action(info, info->argv[3], info->argv[1]);
 	else if (!fork_id && i == 0)
-		first_action((fd), argv[i + 2], argv[1], envp);
-	else if (!fork_id && i < max)
-		next_action(fd, argv, i, envp);
-	else if (!fork_id && i == max)
-		last_action(fd, argv, i, envp);
-	else if (!fork_id && i == 0)
-		last_action_heredoc(fd, argv[max - 1], argv[max], envp);
-	return(fork_id);
+		first_action(info, info->argv[2], info->argv[1]);
+	else if (!fork_id && i < info->max - 1)
+		next_action(info, i);
+	else if (!fork_id && i == info->max - 1)
+		last_action(info, i);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	fork_and_wait(t_info *info)
 {
 	int	i;
-	int	*fd;
 
 	i = 0;
-	if (argc < 5)
-		return (1);
-	if (!ft_strncmp(argv[1], "here_doc", ft_strlen(argv[1])))
-		ft_here_doc(argc, argv, envp);
-	fd = create_tab(argc);
-	while (i < argc - 3)
+	while (i < info->max)
 	{
-		ft_fork(fd, argc - 4, i, argv, envp);
+		ft_fork(info, i);
 		i++;
 	}
-	ft_close(fd);
-	free (fd);
+	ft_close(info);
+	free (info->fd);
 	i = 0;
-	while (i < argc - 3)
+	while (i < info->max)
 	{
 		waitpid(-1, NULL, 0);
 		i++;
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_info	info;
+
+	info.argv = argv;
+	info.envp = envp;
+	if (argc < 5)
+		return (1);
+	if (is_here_doc(argv[1]))
+	{
+		info.max = argc - 4;
+		info.last_id = open(info.argv[info.max + 3], 
+			O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (info.last_id == -1)
+			ft_exit(&info, NULL, NULL, "open failed\n");
+		ft_here_doc(&info);
+	}
+	info.max = argc - 3;
+	info.last_id = open(info.argv[info.max + 2], 
+			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (info.last_id == -1)
+		ft_exit(&info, NULL, NULL, "open failed\n");
+	create_tab(&info);
+	fork_and_wait(&info);
 	return (0);
 }

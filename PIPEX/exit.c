@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:27:28 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/14 19:53:50 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/19 20:32:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,30 @@ void	ft_free_matrix(char **matrix)
 	}
 }
 
-void	ft_exit(int fd[2], char **cmd, char *path, char *str)
+void	ft_exit(t_info *info, char **cmd, char *path, char *str)
 {
-	close(fd[0]);
-	close(fd[1]);
+	ft_close(info);
 	perror(str);
-	if (cmd)
-		ft_free_matrix(cmd);
 	if (path)
 		free (path);
+	if (cmd)
+		ft_free_matrix(cmd);
+	if (info->fd)
+		free(info->fd);
+	// if (info->argv)
+	// 	free(info->argv);
+		system("leaks pipex");
 	exit(EXIT_FAILURE);
 }
 
-void	ft_close(int *fd)
+void	ft_close(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	while (fd[i] != -1)
+	while (i < (info->max - 1) * 2)
 	{
-		close(fd[i]);
+		close(info->fd[i]);
 		i++;
 	}
 }

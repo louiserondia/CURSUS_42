@@ -6,11 +6,12 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/11 12:13:43 by lrondia           #+#    #+#              #
-#    Updated: 2022/04/13 18:44:52 by lrondia          ###   ########.fr        #
+#    Updated: 2022/04/19 19:40:22 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	main.c\
+		action.c\
 		ft_split.c\
 		here_doc.c\
 		utils.c\
@@ -29,6 +30,8 @@ NAME = pipex
 
 all: $(NAME)
 
+bonus: $(NAME)
+
 $(NAME):	$(OBJS)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
@@ -40,6 +43,7 @@ clean:
 
 fclean:	clean
 	rm -f $(NAME)
+
 re: fclean all
 
 .PHONY: all clean fclean re
