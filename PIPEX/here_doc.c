@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 18:09:59 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/19 19:01:19 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/20 17:14:05 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@ void	read_stdin(t_info *info, int file_id)
 			&& ft_strlen(line) - 1 == ft_strlen(info->argv[2])))
 	{
 		write (file_id, line, ft_strlen(line));
-		line = get_next_line(0);
 		free (line);
+		line = get_next_line(0);
 	}
+	if (line)
+		free (line);
 }
 
 void	ft_here_doc(t_info *info)
@@ -38,4 +40,9 @@ void	ft_here_doc(t_info *info)
 	fork_and_wait(info);
 	unlink(info->argv[1]);
 	exit (EXIT_SUCCESS);
+}
+
+int	is_here_doc(char *name)
+{
+	return (!ft_strncmp(name, "here_doc", ft_strlen(name)));
 }

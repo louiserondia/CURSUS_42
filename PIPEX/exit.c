@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 14:27:28 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/19 20:32:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/20 17:04:36 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ void	ft_free_matrix(char **matrix)
 
 void	ft_exit(t_info *info, char **cmd, char *path, char *str)
 {
-	ft_close(info);
+	if (info)
+		ft_close(info);
 	perror(str);
 	if (path)
 		free (path);
 	if (cmd)
 		ft_free_matrix(cmd);
-	if (info->fd)
+	if (info && info->fd)
 		free(info->fd);
-	// if (info->argv)
-	// 	free(info->argv);
-		system("leaks pipex");
 	exit(EXIT_FAILURE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 18:02:19 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/19 20:25:39 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/20 17:18:19 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_fork(t_info *info, int i)
 {
 	char	*name;
 	int		fork_id;
-	
+
 	name = info->argv[1];
 	fork_id = fork();
 	if (fork_id == -1)
@@ -77,17 +77,17 @@ int	main(int argc, char **argv, char **envp)
 	if (is_here_doc(argv[1]))
 	{
 		info.max = argc - 4;
-		info.last_id = open(info.argv[info.max + 3], 
-			O_WRONLY | O_CREAT | O_APPEND, 0644);
+		info.last_id = open(info.argv[info.max + 3],
+				O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (info.last_id == -1)
-			ft_exit(&info, NULL, NULL, "open failed\n");
+			ft_exit(NULL, NULL, NULL, "open failed\n");
 		ft_here_doc(&info);
 	}
 	info.max = argc - 3;
-	info.last_id = open(info.argv[info.max + 2], 
+	info.last_id = open(info.argv[info.max + 2],
 			O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (info.last_id == -1)
-		ft_exit(&info, NULL, NULL, "open failed\n");
+		ft_exit(NULL, NULL, NULL, "open failed\n");
 	create_tab(&info);
 	fork_and_wait(&info);
 	return (0);

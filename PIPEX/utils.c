@@ -6,57 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:57:08 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/19 20:24:07 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/20 17:16:13 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	**write_path(t_info *info, char **cmd)
-{
-	int		i;
-	char	**path;
-
-	i = 0;
-	while (info->envp[i] && !ft_strnstr(info->envp[i], "PATH=", 
-		ft_strlen(info->envp[i])))
-		i++;
-	path = ft_split(info->envp[i] + 5, ':');
-	if (!path)
-		ft_exit(info, cmd, NULL, "");
-	i = 0;
-	while (path[i])
-	{
-		path[i] = ft_strjoin(path[i], "/");
-		path[i] = ft_strjoin(path[i], cmd[0]);
-		if (!path[i])
-			ft_exit(info, cmd, NULL, "");
-		i++;
-	}
-	return (path);
-}
-
-char	*get_path(t_info *info, char **cmd)
-{
-	int		i;
-	char	**path;
-	char	*right_path;
-
-	i = 0;
-	if (access(cmd[0], X_OK) != -1)
-		return (cmd[0]);
-	path = write_path(info, cmd);
-	while (path[i] && access(path[i], X_OK) == -1)
-		i++;
-	right_path = ft_strdup(path[i]);
-	if (!right_path)
-	{
-		ft_free_matrix(path);
-		ft_exit(info, cmd, NULL, "");
-	}
-	ft_free_matrix(path);
-	return (right_path);
-}
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
@@ -133,9 +87,4 @@ char	*ft_strdup(const char *src)
 	}
 	ptr[i] = '\0';
 	return (ptr);
-}
-
-int	is_here_doc(char *name)
-{
-	return (!ft_strncmp(name, "here_doc", ft_strlen(name)));
 }

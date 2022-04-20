@@ -6,11 +6,12 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/11 12:13:43 by lrondia           #+#    #+#              #
-#    Updated: 2022/04/19 19:40:22 by lrondia          ###   ########.fr        #
+#    Updated: 2022/04/20 17:14:53 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	main.c\
+		path.c\
 		action.c\
 		ft_split.c\
 		here_doc.c\

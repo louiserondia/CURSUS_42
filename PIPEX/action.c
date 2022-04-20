@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 19:30:54 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/19 20:29:41 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/20 17:10:32 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	last_action(t_info *info, int i)
 	else
 		cmd = ft_split(info->argv[i + 2], ' ');
 	if (!cmd)
-		ft_exit(info, cmd, NULL, "open failed\n");
+		ft_exit(info, cmd, NULL, "");
 	path = get_path(info, cmd);
 	dup2(info->fd[i * 2 - 2], STDIN_FILENO);
 	dup2(info->last_id, STDOUT_FILENO);
