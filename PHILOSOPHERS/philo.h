@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:17:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/02 14:04:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/02 17:05:56 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <unistd.h>
 
 typedef struct s_philo
 {
-	int	state;						//0 = thinking	1 = eating	2 = sleeping
-	int	left_fork;					//0 = free		1 = taken	-> left fork for each philo 
-	int	nb_fork_in_hand;			//0, 1 or 2
+	int		state;				//0 = thinking	1 = eating	2 = sleeping
+	int		left_fork;			//0 = free		1 = taken	-> left fork
+	int		nb_fork_in_hand;	//0, 1 or 2
+	time_t	last_meal;
 }	t_philo;
 
 typedef struct s_table
@@ -38,6 +40,8 @@ typedef struct s_table
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
+	int				current_philo;
+	int				someone_died;
 }	t_table;
 
 // utils
@@ -46,6 +50,7 @@ int		ft_strlen(char *str);
 int		is_digit(char *str);
 int		ft_atoi_restrict(char *str);
 void	ft_printf_state(t_table *table);
+time_t	time_now(void);
 
 // algo
 
@@ -53,7 +58,10 @@ int		parsing(int argc, char **argv);
 int		initialization(t_table *table, int argc, char **argv);
 int		ft_create_threads(t_table *table);
 int		ft_create_mutexes(t_table *table);
+void	ft_lock_mutex(t_table *table);
+void	ft_unlock_mutex(t_table *table);
 int		ft_destroy(t_table *table);
-void	*action(t_table *table);
+int		action(t_table *table);
+int		is_dead(t_table *table);
 
 #endif

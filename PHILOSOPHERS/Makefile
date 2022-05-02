@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/27 16:40:12 by lrondia           #+#    #+#              #
-#    Updated: 2022/05/02 12:18:18 by lrondia          ###   ########.fr        #
+#    Updated: 2022/05/02 14:16:32 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ SRCS = 	main.c\
 		utils.c\
 		initialization.c\
 		thread_mutex.c\
+		action.c\
 
 OBJS = $(SRCS:.c=.o)
 

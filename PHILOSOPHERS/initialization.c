@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 12:12:40 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/02 12:18:46 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/02 14:56:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	initialization(t_table *table, int argc, char **argv)
 		table->philo[i] = malloc(sizeof(t_philo *));
 		if (!table->philo[i])
 			return (0);
+		table->philo[i]->last_meal = time_now();
 		i++;
 	}
 	return (1);

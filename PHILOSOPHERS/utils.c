@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:07:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/02 12:16:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/02 16:48:24 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,31 @@ int	ft_atoi_restrict(char *str)
 	return (res);
 }
 
-void	ft_printf_state(t_table *table)
+time_t	time_now(void)
 {
-	int				i;
-	int				res;
+	time_t			res;
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
 	res = (time.tv_sec * 1000) + (time.tv_usec / 1000);
+	return (res);
+}
+
+void	ft_printf_state(t_table *table)
+{
+	int		i;
+	time_t	res;
+
 	i = 0;
+	res = time_now();
 	while (i < table->nb_philo)
 	{
 		if (table->philo[i]->state == 0)
-			printf("%d %d is thinking\n", res, i);
+			printf("%ld %d is thinking\n", res, i);
 		else if (table->philo[i]->state == 1)
-			printf("%d %d is eating\n", res, i);
+			printf("%ld %d is eating\n", res, i);
 		else if (table->philo[i]->state == 2)
-			printf("%d %d is sleeping\n", res, i);
+			printf("%ld %d is sleeping\n", res, i);
 		i++;
 	}
 }
