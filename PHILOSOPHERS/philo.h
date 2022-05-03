@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:17:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/02 17:05:56 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/03 16:50:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,23 @@
 # include <pthread.h>
 # include <unistd.h>
 
+struct s_table;
+
 typedef struct s_philo
 {
+	int		id;
 	int		state;				//0 = thinking	1 = eating	2 = sleeping
-	int		left_fork;			//0 = free		1 = taken	-> left fork
 	int		nb_fork_in_hand;	//0, 1 or 2
 	time_t	last_meal;
+	struct s_table *table;
 }	t_philo;
 
 typedef struct s_table
 {
 	t_philo			**philo;
 	pthread_t		*tid;
-	pthread_mutex_t	*mid;
+	pthread_mutex_t	mid;
+	int				*fork;
 	int				nb_philo;
 	int				nb_meals;
 	time_t			time_to_die;
@@ -61,7 +65,7 @@ int		ft_create_mutexes(t_table *table);
 void	ft_lock_mutex(t_table *table);
 void	ft_unlock_mutex(t_table *table);
 int		ft_destroy(t_table *table);
-int		action(t_table *table);
+int		action(t_philo *philo);
 int		is_dead(t_table *table);
 
 #endif
