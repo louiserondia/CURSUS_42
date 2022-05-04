@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:17:22 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/03 17:02:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/04 18:55:23 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (table.nb_philo % 2 == 0)
 		handle_even_nb_philo(&table);
-	if (pthread_mutex_init(&table.mid, NULL) != 0)
+	if (!ft_create_mutexes(&table))
 		return (0);
 	if (!ft_create_threads(&table))
 		return (1);
@@ -33,6 +33,5 @@ int	main(int argc, char **argv)
 		return (1);
 	if (!ft_destroy(&table))
 		return (1);
-	// ft_printf_state(&table);
 	return (0);
 }
