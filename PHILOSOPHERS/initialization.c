@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 12:12:40 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/04 16:10:44 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:20:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int	initialization(t_table *table, int argc, char **argv)
 		table->philo[i].table = table;
 		i++;
 	}
+	table->start_time = time_now();
 	return (1);
 }

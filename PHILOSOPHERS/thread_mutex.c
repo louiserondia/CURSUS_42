@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 12:12:04 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/04 18:59:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:52:26 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,15 @@ int	ft_destroy(t_table *table)
 		i++;
 	}
 	i = 0;
+	pthread_mutex_destroy(&table->prints);
 	while (i < table->nb_philo)
 	{
 		pthread_mutex_destroy(&table->fork[i]);
 		i++;
 	}
+	free (table->philo);
+	free (table->tid);
+	free (table->fork);
 	return (1);
 }
 
@@ -69,9 +73,7 @@ int	ft_create_mutexes(t_table *table)
 			return (0);
 		i++;
 	}
-	if (pthread_mutex_init(&table->prints[0], NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(&table->prints[1], NULL) != 0)
+	if (pthread_mutex_init(&table->prints, NULL) != 0)
 		return (0);
 	return (1);
 }
@@ -79,11 +81,13 @@ int	ft_create_mutexes(t_table *table)
 void	mutex_for_prints(t_philo *philo, pthread_mutex_t mutex, char *str)
 {
 	int		phi;
-	time_t	now;
+	int		now;
 
-	phi = philo->id;
-	now = time_now();
+	if (philo->table->someone_died == 1)
+		return ;
+	phi = philo->id + 1;
+	now = time_now() - philo->table->start_time;
 	pthread_mutex_lock(&mutex);
-	printf("%ld %d %s\n", now, phi, str);
+	printf("%d %d %s", now, phi, str);
 	pthread_mutex_unlock(&mutex);
 }
