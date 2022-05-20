@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:17:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/13 19:54:54 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/20 16:53:23 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <stdatomic.h>
+# include <stdbool.h>
 
 struct	s_table;
 
@@ -30,6 +31,7 @@ typedef struct s_philo
 	int				id;
 	int				state;
 	atomic_int		last_meal;
+	atomic_int		nb_meals;
 	struct s_table	*table;
 }	t_philo;
 
@@ -40,12 +42,13 @@ typedef struct s_table
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	prints;
 	atomic_int		nb_philo;
-	int				nb_meals;
+	atomic_int		total_meals;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				start_time;
-	atomic_int		someone_died;
+	atomic_bool		are_full;
+	atomic_bool		someone_died;
 }	t_table;
 
 // utils
@@ -68,6 +71,7 @@ void	ft_unlock_mutex(t_table *table);
 int		ft_destroy(t_table *table);
 int		thread(t_philo *philo);
 void	is_dead(t_table *table);
+void	are_their_belly_full(t_table *table);
 void	mutex_for_prints(t_philo *philo, pthread_mutex_t mutex, char *str);
 
 #endif
