@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 12:12:40 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/13 19:20:39 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/20 17:56:17 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	initialization(t_table *table, int argc, char **argv)
 	table->time_to_eat = ft_atoi_restrict(argv[3]);
 	table->time_to_sleep = ft_atoi_restrict(argv[4]);
 	if (argc == 6)
-		table->nb_meals = ft_atoi_restrict(argv[5]);
+		table->total_meals = ft_atoi_restrict(argv[5]);
 	table->philo = malloc(sizeof(t_philo) * table->nb_philo);
 	if (!table->philo)
 		return (0);

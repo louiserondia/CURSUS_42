@@ -6,47 +6,67 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 14:13:51 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/20 16:49:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/22 20:10:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	eat_and_sleep(t_philo *philo)
 {
-	int	phi;
-	int	next;
-
-	phi = philo->id;
-	next = phi + 1;
-	if (phi == philo->table->nb_philo - 1)
-		next = 0;
 	while (philo->table->someone_died == 0 && philo->table->are_full == 0)
 	{
 		if (philo->table->nb_philo == 1)
 			continue ;
-		pthread_mutex_lock(&philo->table->fork[phi]);
-		mutex_for_prints(philo, philo->table->prints, "has taken a fork\n");
-		pthread_mutex_lock(&philo->table->fork[next]);
-		mutex_for_prints(philo, philo->table->prints, "has taken a fork\n");
-		mutex_for_prints(philo, philo->table->prints, "is eating\n");
+		sem_wait(philo->table->sem_fork);
+		sem_for_prints(philo, "has taken a fork\n");
+		sem_wait(philo->table->sem_fork);
+		sem_for_prints(philo, "has taken a fork\n");
 		philo->last_meal = time_now();
+		sem_for_prints(philo, "is eating\n");
 		philo->nb_meals++;
 		ft_sleep(philo->table, philo->table->time_to_eat);
-		pthread_mutex_unlock(&philo->table->fork[phi]);
-		pthread_mutex_unlock(&philo->table->fork[next]);
-		mutex_for_prints(philo, philo->table->prints, "is sleeping\n");
+		sem_post(philo->table->sem_fork);
+		sem_post(philo->table->sem_fork);
+		sem_for_prints(philo, "is sleeping\n");
 		ft_sleep(philo->table, philo->table->time_to_sleep);
-		mutex_for_prints(philo, philo->table->prints, "is thinking\n");
-		are_their_belly_full(philo->table);
+		sem_for_prints(philo, "is thinking\n");
 	}
-	return ;
+	exit (1);
 }
 
-int	thread(t_philo *philo)
+void	child(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		ft_sleep(philo->table, 50);
+	// pthread_create(&philo->table->dead, NULL, (void *)is_dead, philo->table);
+	// pthread_create(&philo->table->full, NULL, 
+	// 	(void *)are_their_belly_full, philo->table);
 	eat_and_sleep(philo);
-	return (1);
+	// if (pthread_join(philo->table->dead, NULL) != 0)
+	// 	return (0);
+	// if (pthread_join(philo->table->full, NULL) != 0)
+	// 	return (0);
+}
+
+void	fork_and_wait(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		table->pid[i] = fork();
+		if (table->pid[i] < 0)
+			exit (0);
+		else if (table->pid[i] == 0)
+			child(&table->philo[i]);
+		i++;
+	}
+	i = 0;
+	while (i < table->nb_philo)
+	{
+		waitpid(table->pid[i], NULL, 0);
+		i++;
+	}
 }

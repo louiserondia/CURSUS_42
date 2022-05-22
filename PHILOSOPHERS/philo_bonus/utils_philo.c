@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:58:59 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/20 16:53:33 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/22 20:10:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	time_now(void)
 {
@@ -36,8 +36,12 @@ void	is_dead(t_table *table)
 		{
 			if (now > table->philo[i].last_meal + table->time_to_die)
 			{
-				mutex_for_prints(&table->philo[i], table->prints, "is dead\n");
+				sem_wait(table->sem_dead);
+				sem_for_prints(&table->philo[i], "is dead\n");
 				table->someone_died = 1;
+				exit (1);
+				sem_post(table->sem_dead);
+				
 			}
 			i++;
 		}
@@ -68,8 +72,22 @@ void	ft_sleep(t_table *table, int time)
 	while (table->someone_died == 0)
 	{
 		now = time_now();
-		if (now - start > time)
+		if (now - start >= time)
 			break ;
 		usleep(100);
 	}
+}
+
+void	sem_for_prints(t_philo *philo, char *str)
+{
+	int		phi;
+	int		now;
+
+	if (philo->table->someone_died == 1)
+		return ;
+	phi = philo->id + 1;
+	now = time_now() - philo->table->start_time;
+	sem_wait(philo->table->sem_print);
+	printf("%d %d %s", now, phi, str);
+	sem_post(philo->table->sem_print);
 }
