@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 18:22:53 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/22 20:04:55 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/23 18:57:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,13 @@
 # include <unistd.h>
 # include <stdatomic.h>
 # include <stdbool.h>
-
-typedef struct s_philo
-{
-	int				id;
-	int				state;
-	int				last_meal;
-	int				nb_meals;
-	struct s_table	*table;
-}	t_philo;
+# include <signal.h>
 
 typedef struct s_table
 {
-	t_philo			*philo;
+	int				id;
+	atomic_long		last_meal;
+	int				nb_meals;
 	sem_t			*sem_fork;
 	sem_t			*sem_dead;
 	sem_t			*sem_print;
@@ -48,7 +42,7 @@ typedef struct s_table
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				start_time;
+	long			start_time;
 	atomic_bool		are_full;
 	atomic_bool		someone_died;
 }	t_table;
@@ -58,14 +52,14 @@ void	fork_and_wait(t_table *table);
 void	are_their_belly_full(t_table *table);
 void	is_dead(t_table *table);
 void	ft_destroy(t_table *table);
-void	sem_for_prints(t_philo *philo, char *str);
-
+void	sem_for_prints(t_table *table, char *str);
+void	child(t_table *table, int id);
 
 //	UTILS
 
 int		is_digit(char *str);
 int		ft_atoi_restrict(char *str);
-int		time_now(void);
+long	time_now(void);
 void	ft_sleep(t_table *table, int time);
 
 #endif

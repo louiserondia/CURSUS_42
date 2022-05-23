@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:17:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/22 16:18:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/23 17:37:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo
 {
 	int				id;
 	int				state;
-	atomic_int		last_meal;
+	atomic_long		last_meal;
 	atomic_int		nb_meals;
 	struct s_table	*table;
 }	t_philo;
@@ -46,7 +46,7 @@ typedef struct s_table
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				start_time;
+	long			start_time;
 	atomic_bool		are_full;
 	atomic_bool		someone_died;
 }	t_table;
@@ -58,7 +58,7 @@ int		is_digit(char *str);
 int		ft_atoi_restrict(char *str);
 void	ft_printf_state(t_table *table);
 void	ft_sleep(t_table *table, int time);
-int		time_now(void);
+long	time_now(void);
 
 // algo
 

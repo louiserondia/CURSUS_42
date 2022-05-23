@@ -6,15 +6,15 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:58:59 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/22 20:10:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/23 18:57:42 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-int	time_now(void)
+long	time_now(void)
 {
-	int				res;
+	long			res;
 	struct timeval	time;
 
 	gettimeofday(&time, NULL);
@@ -24,25 +24,24 @@ int	time_now(void)
 
 void	is_dead(t_table *table)
 {
-	int	i;
-	int	now;
+	int		i;
+	long	now;
 
 	while (table->someone_died == 0 && table->are_full == 0)
 	{
 		usleep(1000);
 		i = 0;
-		now = time_now();
 		while (i < table->nb_philo)
 		{
-			if (now > table->philo[i].last_meal + table->time_to_die)
+			now = time_now();
+			sem_wait(table->sem_dead);
+			if (now >= table->last_meal + table->time_to_die)
 			{
-				sem_wait(table->sem_dead);
-				sem_for_prints(&table->philo[i], "is dead\n");
+				sem_for_prints(table, "is dead\n");
 				table->someone_died = 1;
 				exit (1);
-				sem_post(table->sem_dead);
-				
 			}
+			sem_post(table->sem_dead);
 			i++;
 		}
 	}
@@ -55,7 +54,7 @@ void	are_their_belly_full(t_table *table)
 	i = 0;
 	while (i < table->nb_philo)
 	{
-		if (table->philo[i].nb_meals != table->total_meals)
+		if (table->nb_meals != table->total_meals)
 			break ;
 		i++;
 	}
@@ -78,16 +77,16 @@ void	ft_sleep(t_table *table, int time)
 	}
 }
 
-void	sem_for_prints(t_philo *philo, char *str)
+void	sem_for_prints(t_table *table, char *str)
 {
 	int		phi;
 	int		now;
 
-	if (philo->table->someone_died == 1)
+	if (table->someone_died == 1)
 		return ;
-	phi = philo->id + 1;
-	now = time_now() - philo->table->start_time;
-	sem_wait(philo->table->sem_print);
+	phi = table->id + 1;
+	now = time_now() - table->start_time;
+	sem_wait(table->sem_print);
 	printf("%d %d %s", now, phi, str);
-	sem_post(philo->table->sem_print);
+	sem_post(table->sem_print);
 }

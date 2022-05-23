@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 12:12:04 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/22 17:53:02 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/23 17:44:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ void	mutex_for_prints(t_philo *philo, pthread_mutex_t mutex, char *str)
 	int		phi;
 	int		now;
 
-	if (philo->table->someone_died == 1)
-		return ;
 	phi = philo->id + 1;
 	now = time_now() - philo->table->start_time;
 	pthread_mutex_lock(&mutex);
+	if (philo->table->someone_died == 1)
+		return ;
 	printf("%d %d %s", now, phi, str);
 	pthread_mutex_unlock(&mutex);
 }
