@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 16:33:19 by lrondia           #+#    #+#             */
-/*   Updated: 2022/04/01 12:24:27 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/30 16:16:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	animate_gun(t_data *data)
 			data->gun.gun_nb = 6 - (data->gun.time / 2);
 		else if (data->gun.time > 24 && data->gun.time < 36)
 			data->gun.gun_nb = (data->gun.time / 2) - 12;
-		else if (data->gun.time == 36)
+		if (data->gun.time == 20)
 			attack_gun(data);
 		else if (data->gun.time > 36)
 		{
