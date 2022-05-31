@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 15:17:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/23 17:37:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/31 13:02:44 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct s_table
 	t_philo			*philo;
 	pthread_t		*tid;
 	pthread_mutex_t	*fork;
-	pthread_mutex_t	prints;
+	pthread_mutex_t	*prints;
+	pthread_mutex_t	*death;
 	atomic_int		nb_philo;
 	atomic_int		total_meals;
 	int				time_to_die;
@@ -53,12 +54,15 @@ typedef struct s_table
 
 // utils
 
+int		print_error(char *str);
 int		ft_strlen(char *str);
 int		is_digit(char *str);
 int		ft_atoi_restrict(char *str);
-void	ft_printf_state(t_table *table);
 void	ft_sleep(t_table *table, int time);
 long	time_now(void);
+void	is_dead(t_table *table);
+void	are_their_belly_full(t_table *table);
+void	mutex_for_prints(t_philo *philo, pthread_mutex_t *mutex, char *str);
 
 // algo
 
@@ -66,12 +70,7 @@ int		parsing(int argc, char **argv);
 int		initialization(t_table *table, int argc, char **argv);
 int		ft_create_threads(t_table *table);
 int		ft_create_mutexes(t_table *table);
-void	ft_lock_mutex(t_table *table);
-void	ft_unlock_mutex(t_table *table);
 int		ft_destroy(t_table *table);
 int		thread(t_philo *philo);
-void	is_dead(t_table *table);
-void	are_their_belly_full(t_table *table);
-void	mutex_for_prints(t_philo *philo, pthread_mutex_t mutex, char *str);
 
 #endif

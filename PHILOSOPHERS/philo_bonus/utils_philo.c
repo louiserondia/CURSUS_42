@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:58:59 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/23 18:57:42 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/30 18:03:38 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,25 @@ long	time_now(void)
 
 void	is_dead(t_table *table)
 {
-	int		i;
-	long	now;
+	int	i;
 
-	while (table->someone_died == 0 && table->are_full == 0)
+	while (1)
 	{
 		usleep(1000);
 		i = 0;
 		while (i < table->nb_philo)
 		{
-			now = time_now();
+			if (table->total_meals != -1
+				&& table->nb_meals == table->total_meals)
+				exit (0);
 			sem_wait(table->sem_dead);
-			if (now >= table->last_meal + table->time_to_die)
+			if (time_now() >= table->last_meal + table->time_to_die)
 			{
-				sem_for_prints(table, "is dead\n");
-				table->someone_died = 1;
+				sem_wait(table->sem_print);
+				printf("%ld %d %s", time_now() - table->start_time,
+					table->id + 1, "died\n");
 				exit (1);
+				sem_post(table->sem_print);
 			}
 			sem_post(table->sem_dead);
 			i++;
@@ -47,28 +50,13 @@ void	is_dead(t_table *table)
 	}
 }
 
-void	are_their_belly_full(t_table *table)
-{
-	int	i;
-
-	i = 0;
-	while (i < table->nb_philo)
-	{
-		if (table->nb_meals != table->total_meals)
-			break ;
-		i++;
-	}
-	if (i == table->nb_philo)
-		table->are_full = true;
-}
-
-void	ft_sleep(t_table *table, int time)
+void	ft_sleep(int time)
 {
 	int	now;
 	int	start;
 
 	start = time_now();
-	while (table->someone_died == 0)
+	while (1)
 	{
 		now = time_now();
 		if (now - start >= time)
@@ -80,13 +68,11 @@ void	ft_sleep(t_table *table, int time)
 void	sem_for_prints(t_table *table, char *str)
 {
 	int		phi;
-	int		now;
+	long	now;
 
-	if (table->someone_died == 1)
-		return ;
 	phi = table->id + 1;
 	now = time_now() - table->start_time;
 	sem_wait(table->sem_print);
-	printf("%d %d %s", now, phi, str);
+	printf("%ld %d %s", now, phi, str);
 	sem_post(table->sem_print);
 }

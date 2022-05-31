@@ -6,11 +6,17 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 16:07:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/05/20 18:26:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/05/30 17:37:36 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+int	error_exit(char *str)
+{
+	printf("error : %s\n", str);
+	exit (EXIT_FAILURE);
+}
 
 int	ft_strlen(char *str)
 {
