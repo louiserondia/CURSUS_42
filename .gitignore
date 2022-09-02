@@ -2,8 +2,16 @@
 *.o
 *.a
 a.out
-main.c
 */.DS_Store
 *.txt
 */*.txt
 */.DS_Store
+PRINTF/autre/main.c
+PUSH_SWAP/push_swap
+PUSH_SWAP/autre
+PUSH_SWAP/autre/*
+PHILOSOPHERS/philo/philo
+*/*.excalidraw
+EXAM_RANK_3/1
+EXAM_RANK_3/3
+EXAM_RANK_3/42-exam-rank-03

@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/03 12:04:35 by lrondia           #+#    #+#              #
-#    Updated: 2022/01/26 19:57:10 by lrondia          ###   ########.fr        #
+#    Updated: 2022/03/17 11:48:57 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,10 +77,11 @@ CFLAGS = -Wall -Wextra -Werror
 
 $(NAME):	${OBJS}
 	ar rc ${NAME} ${OBJS}
+	
 all:	$(NAME)
-
+	
 bonus: ${BONUS_OBJS}
-	ar q ${BONUS_NAME}	${BONUS_OBJS}
+	ar rc ${BONUS_NAME}	${BONUS_OBJS}
 
 clean:
 		${RM} ${OBJS} ${BONUS_OBJS}
@@ -88,6 +89,6 @@ clean:
 fclean:	clean
 		${RM} ${NAME} ${BONUS_NAME}
 
-re: fclean all add
+re: fclean all
 
-.PHONY: all clean fclean re add bonus
+.PHONY: all clean fclean re bonus

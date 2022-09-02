@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 12:52:22 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/17 13:25:23 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/09/02 12:23:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t			i;
+	size_t	i;
 
 	i = 0;
 	while (s1[i] || s2[i])

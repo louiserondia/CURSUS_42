@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 15:59:29 by lrondia           #+#    #+#             */
-/*   Updated: 2022/01/10 16:20:16 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/03/14 16:21:26 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,12 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*ptr;
 
-	if (!lst || !del)
+	if (!lst)
 		return ;
 	while (*lst)
 	{
 		ptr = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
+		ft_lstdelone(*lst, del);
 		*lst = ptr;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lrondia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 16:22:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/02/14 19:40:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/04/12 16:16:13 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	ft_puthexa(int *count, unsigned long int i, char c)
 	char	*base;
 	char	*maj_base;
 
-	base = "0123456789abcdef";
-	maj_base = "0123456789ABCDEF";
+	    
 	if (c == 'p')
 	{
 		*count += 2;
@@ -87,7 +86,7 @@ void	check_conversion(int *count, char c, va_list arg)
 	else if (c == 'u')
 		ft_putnbr(count, va_arg(arg, unsigned int));
 	else if (c == 'x' || c == 'X' || c == 'p')
-		ft_puthexa(count, va_arg(arg, unsigned long int), c);
+		ft_puthexa(count, va_arg(arg, unsigned int), c);
 	else if (c == 's')
 		ft_putstr(count, va_arg(arg, char *));
 	else if (c == 'c')
