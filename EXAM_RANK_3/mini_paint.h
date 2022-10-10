@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 15:40:30 by lrondia           #+#    #+#             */
-/*   Updated: 2022/09/01 18:48:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:02:01 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 typedef struct t_tab {
 	int		size_x;
 	int		size_y;
-	int		x;
-	int		y;
+	float	x;
+	float	y;
 	char	type;
 	char	content;
 	float	radius;

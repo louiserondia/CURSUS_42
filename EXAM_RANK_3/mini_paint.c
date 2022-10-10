@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:30:39 by lrondia           #+#    #+#             */
-/*   Updated: 2022/09/07 17:47:17 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/10/10 15:01:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_arg(char **argv, t_tab *tab)
 		return (0);
 	if (!create_tab(tab))
 		return (0);
-	while (fscanf(file, "%c %d %d %f %c\n", &tab->content, &tab->x,
+	while (fscanf(file, "%c %f %f %f %c\n", &tab->content, &tab->x,
 		&tab->y, &tab->radius, &tab->type) == 5)
 	{
 		if (tab->content != 'c' && tab->content != 'C')

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:45:34 by lrondia           #+#    #+#             */
-/*   Updated: 2022/09/07 18:40:56 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/10/10 16:42:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	create_tab(t_tab *tab)
 void	create_rect(t_tab *tab)
 {
 	int	i;
-	float	cur_x;
-	float	cur_y;
+	int	cur_x;
+	int	cur_y;
 	float	small;
 	float	big;
 
@@ -44,23 +44,18 @@ void	create_rect(t_tab *tab)
 			cur_y = i / tab->size_x;
 			if (tab->content == 'r')
 			{
-				if (cur_x <= tab->x + tab->width && cur_x >= tab->x)
+				if (cur_x < tab->x + tab->width && cur_x >= tab->x)
 				{
 					small = cur_y - tab->y;
-					big = cur_y - (tab->y + tab->height);
-					if (small < 1.0 && small >= 0)
-						tab->tab[i] = tab->type;
-					else if (big < 1.0 && big >= 0)
+					big = (tab->y + tab->height) - cur_y;
+					if ((small < 1.0 && small >= 0) || (big < 1.0 && big >= 0))
 						tab->tab[i] = tab->type;
 				}
-
-				else if (cur_y >= tab->y && cur_y <= tab->y + tab->height)
+				if (cur_y >= tab->y && cur_y < tab->y + tab->height)
 				{
 					small = cur_x - tab->x;
-					big = cur_x - (tab->x + tab->width);
-					if (small < 1.0 && small >= 0)
-						tab->tab[i] = tab->type;
-					else if (big < 1.0 && big >= 0)	
+					big = (tab->x + tab->width) - cur_x;
+					if ((small < 1.0 && small >= 0) || (big < 1.0 && big >= 0))
 						tab->tab[i] = tab->type;
 				}
 			}
