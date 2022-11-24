@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 14:20:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/24 13:23:07 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/11/24 19:17:19 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	operations(std::string input, Phonebook *Phonebook)
 	}
 	else if (input == "SEARCH")
 		Phonebook->Search(Phonebook);
+	else if (input != "EXIT")
+		std::cout << "Wrong command. Please try again." << std::endl;
 }
 
 int	main(void)
