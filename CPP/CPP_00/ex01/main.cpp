@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 14:20:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/23 15:22:00 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/11/24 13:23:07 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 void	operations(std::string input, Phonebook *Phonebook)
 {
 	if (input == "ADD")
-		Phonebook->Add(Phonebook, &(Phonebook->Contact[Phonebook->index]));
+	{
+		Phonebook->Contact[Phonebook->index] = Phonebook->Add(Phonebook);
+		Phonebook->IncrementIndex(&Phonebook->index);
+	}
+	else if (input == "SEARCH")
+		Phonebook->Search(Phonebook);
 }
 
 int	main(void)

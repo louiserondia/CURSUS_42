@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 12:16:44 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/23 15:33:48 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/11/24 12:22:27 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ public:
 	int		index;
 	Contact	Contact[8];
 
-	void	Add(Phonebook *Phonebook, class Contact *Contact);
-	void	AddLoop(std::string str, std::string *Field);
-	void	DisplayContact(class Contact *Contact, int index);
+	class Contact	Add(Phonebook *Phonebook);
+	void			Search(Phonebook *Phonebook);
+	void			AddLoop(std::string str, std::string *Field);
+	void			DisplayContact(class Contact Contact, int index);
+	std::string		FormatContact(std::string source);
+	void			IncrementIndex(int *index);
 };
 
 
