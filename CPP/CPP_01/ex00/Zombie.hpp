@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 12:27:40 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/26 13:58:14 by lrondia          ###   ########.fr       */
+/*   Created: 2022/11/26 17:01:29 by lrondia           #+#    #+#             */
+/*   Updated: 2022/11/26 17:39:12 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-#ifndef CONTACT_HPP
-# define CONTACT_HPP
+#ifndef ZOMBIE_HPP
+# define ZOMBIE_HPP
 
 # include <iostream>
 
-class Contact	{
+class Zombie	{
+
+private:
+	std::string	_name;
 	
 public:
-	Contact(void);
-	~Contact(void);
+	Zombie(void);
+	Zombie(std::string name);
+	~Zombie(void);
 
-	std::string	FirstName;
-	std::string	LastName;
-	std::string	Nickname;
-	std::string	PhoneNumber;
-	std::string	DarkestSecret;
+	void	announce(void);
 };
+
+Zombie*	newZombie(std::string name);
+void	randomChump(std::string name);
 
 #endif

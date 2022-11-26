@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 12:27:40 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/26 13:58:14 by lrondia          ###   ########.fr       */
+/*   Created: 2022/11/26 17:33:04 by lrondia           #+#    #+#             */
+/*   Updated: 2022/11/26 17:47:10 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
-#ifndef CONTACT_HPP
-# define CONTACT_HPP
+#include "Zombie.hpp"
 
-# include <iostream>
+int	main(void)	{
+	Zombie	*Louise;
+	Zombie	*Greg = newZombie("Greg");
+	Zombie	Prout = Zombie("Prout");
 
-class Contact	{
-	
-public:
-	Contact(void);
-	~Contact(void);
-
-	std::string	FirstName;
-	std::string	LastName;
-	std::string	Nickname;
-	std::string	PhoneNumber;
-	std::string	DarkestSecret;
-};
-
-#endif
+	randomChump("Yacine");
+	randomChump("Johanna");
+	delete (Greg);
+	Louise = newZombie("Louise");
+	Louise->announce();
+	Prout.announce();
+	delete (Louise);
+	return (0);
+}
