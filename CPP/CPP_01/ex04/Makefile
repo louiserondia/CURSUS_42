@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2022/11/28 19:19:38 by lrondia          ###   ########.fr        #
+#    Updated: 2022/11/29 17:36:40 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +14,16 @@ SRCS = 	main.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
-CC = c++
+CXX = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = Sed_is_for_losers
 
 all : $(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:20:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/28 19:10:51 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:50:46 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ int	ReadReplace(std::string filename, std::string s1, std::string s2)	{
 	std::string		tmp;
 	std::string		NewFile;
 	std::ifstream	ifs(filename);
-	std::ofstream	ofs(filename + ".replace");
-
+	
 	if (!ifs.is_open())	{
 		std::cout << "File doesn't exit/is corrupted" << std::endl;
 		return (1);
 	}
+	
+	std::ofstream	ofs(filename + ".replace");
 	while (!ifs.eof())	
 	{
 		getline(ifs, tmp);

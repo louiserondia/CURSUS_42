@@ -6,13 +6,12 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2022/11/29 17:27:36 by lrondia          ###   ########.fr        #
+#    Updated: 2022/11/29 17:53:25 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	main.cpp\
-		Zombie.cpp\
-		ZombieHorde.cpp
+		Harl.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -20,7 +19,7 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = Moar_brainz
+NAME = Harl
 
 all : $(NAME)
 
