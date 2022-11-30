@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 23:03:20 by lrondia           #+#    #+#              #
-#    Updated: 2022/11/23 14:21:59 by lrondia          ###   ########.fr        #
+#    Updated: 2022/11/30 12:14:05 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,16 @@ SRCS = 	main.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
-CC = c++
+CXX = c++
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = Phonebook
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
 clean:
 	rm -f $(OBJS)
@@ -35,7 +35,4 @@ fclean: clean
 
 re: fclean all
 
-test: $(NAME)
-	./$(NAME)
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

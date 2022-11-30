@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 13:58:27 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/26 16:13:23 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/11/30 12:28:13 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	Account::displayAccountsInfos(void)	{
 	Account::_displayTimestamp();
 	std::cout << " accounts:" << Account::_nbAccounts;
 	std::cout << ";total:" << Account::_totalAmount;
-	std::cout << ";deposits;" << Account::_totalNbDeposits;
+	std::cout << ";deposits:" << Account::_totalNbDeposits;
 	std::cout << ";withdrawals:" << Account::_totalNbWithdrawals;
 	std::cout << std::endl;
 }

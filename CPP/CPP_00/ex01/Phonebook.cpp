@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 14:21:11 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/24 19:35:45 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/11/30 12:15:02 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	Phonebook::DisplayShortContact(class Contact Contact, int index)
 	std::cout << FormatContact(Contact.Nickname) << std::endl;
 }
 
-void	Phonebook::DisplayFullContact(class Contact Contact, int index)
+void	Phonebook::DisplayFullContact(class Contact Contact)
 {
 	std::cout << "First name :		" << Contact.FirstName << std::endl;
 	std::cout << "Last name :		" << Contact.LastName << std::endl;
@@ -93,7 +93,7 @@ void	Phonebook::Search(Phonebook *Phonebook)
 		else if (Phonebook->Contact[index].FirstName == "")
 			std::cout << "This contact doesn't exit. Please try again." << std::endl;
 		else
-			DisplayFullContact(Phonebook->Contact[index], index);
+			DisplayFullContact(Phonebook->Contact[index]);
 		std::cout << std::endl;
 	}
 }
