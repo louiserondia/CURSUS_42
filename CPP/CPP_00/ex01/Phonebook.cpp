@@ -6,14 +6,14 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 14:21:11 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/30 12:15:02 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/01 11:54:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Phonebook.hpp"
 
 Phonebook::Phonebook(void)	{
-	this->index = 0;
+	this->_index = 0;
 	return ;
 }
 
@@ -21,10 +21,10 @@ Phonebook::~Phonebook(void)	{
 	return ;
 }
 
-void	Phonebook::IncrementIndex(int *index)	{
-	(*index)++;
-	if (*index >= 8)
-		*index = 0;
+void	Phonebook::IncrementIndex(int *_index)	{
+	(*_index)++;
+	if (*_index >= 8)
+		*_index = 0;
 }
 
 std::string	Phonebook::FormatContact(std::string source)
@@ -47,27 +47,18 @@ std::string	Phonebook::FormatContact(std::string source)
 void	Phonebook::DisplayShortContact(class Contact Contact, int index)
 {
 	std::cout << FormatContact(std::to_string(index)) << " | ";
-	std::cout << FormatContact(Contact.FirstName) << " | ";
-	std::cout << FormatContact(Contact.LastName) << " | ";
-	std::cout << FormatContact(Contact.Nickname) << std::endl;
+	std::cout << FormatContact(Contact.getFirstName()) << " | ";
+	std::cout << FormatContact(Contact.getLastName()) << " | ";
+	std::cout << FormatContact(Contact.getNickname()) << std::endl;
 }
 
 void	Phonebook::DisplayFullContact(class Contact Contact)
 {
-	std::cout << "First name :		" << Contact.FirstName << std::endl;
-	std::cout << "Last name :		" << Contact.LastName << std::endl;
-	std::cout << "Nickname :		" << Contact.Nickname << std::endl;
-	std::cout << "Phone number :		" << Contact.PhoneNumber << std::endl;
-	std::cout << "Darkest secret :	" << Contact.DarkestSecret << std::endl;
-}
-
-void	Phonebook::AddLoop(std::string str, std::string *Field)
-{
-	std::string	input;
-
-	std::cout << str;
-	getline(std::cin, input);
-	*Field = input;
+	std::cout << "First name :		" << Contact.getFirstName() << std::endl;
+	std::cout << "Last name :		" << Contact.getLastName() << std::endl;
+	std::cout << "Nickname :		" << Contact.getNickname() << std::endl;
+	std::cout << "Phone number :		" << Contact.getPhoneNumber() << std::endl;
+	std::cout << "Darkest secret :	" << Contact.getDarkestSecret() << std::endl;
 }
 
 void	Phonebook::Search(Phonebook *Phonebook)
@@ -78,11 +69,11 @@ void	Phonebook::Search(Phonebook *Phonebook)
 	index = -1;
 	for (int i = 0; i < 8; i++)
 	{
-		if (Phonebook->Contact[i].FirstName != "")
-			DisplayShortContact(Phonebook->Contact[i], i);
+		if (Phonebook->_contact[i].getFirstName() != "")
+			DisplayShortContact(Phonebook->_contact[i], i);
 	}
 	std::cout << std::endl;
-	while (index < 0 || index >= 8 || Phonebook->Contact[index].FirstName == "")
+	while (index < 0 || index >= 8 || Phonebook->_contact[index].getFirstName() == "")
 	{
 		std::cout << "Insert the index of the contact you wish to see : ";
 		getline(std::cin, input);
@@ -90,34 +81,47 @@ void	Phonebook::Search(Phonebook *Phonebook)
 			index = stoi(input);
 		if (index < 0 || index >= 8)
 			std::cout << "Wrong input (index must be a number between 0 and 7). Please try again." << std::endl;
-		else if (Phonebook->Contact[index].FirstName == "")
+		else if (Phonebook->_contact[index].getFirstName() == "")
 			std::cout << "This contact doesn't exit. Please try again." << std::endl;
 		else
-			DisplayFullContact(Phonebook->Contact[index]);
+			DisplayFullContact(Phonebook->_contact[index]);
 		std::cout << std::endl;
 	}
 }
 
-Contact	Phonebook::Add(Phonebook *Phonebook)
+std::string	AddLoop(std::string str)
 {
-	class Contact Contact;
-	std::string	input[5];
+	std::string	input;
 
-	while (Contact.FirstName == ""){
-		Phonebook->AddLoop("Enter contact's first name : ", &Contact.FirstName);
+	std::cout << str;
+	getline(std::cin, input);
+	return (input);
+}
+
+Contact	Phonebook::FillContact(void)	{
+	std::string	input;
+	class Contact Contact;
+
+	while (Contact.getFirstName() == ""){
+		Contact.setFirstName(AddLoop("Enter contact's first name : "));
 	}
-	while (Contact.LastName == "")	{
-		Phonebook->AddLoop("Enter contact's last name : ", &Contact.LastName);
+	while (Contact.getLastName() == "")	{
+		Contact.setLastName(AddLoop("Enter contact's last name : "));
 	}	
-	while (Contact.Nickname == "")	{
-		Phonebook->AddLoop("Enter contact's nickname : ", &Contact.Nickname);
+	while (Contact.getNickname() == "")	{
+		Contact.setNickname(AddLoop("Enter contact's nickname : "));
 	}
-	while (Contact.PhoneNumber == "")	{
-		Phonebook->AddLoop("Enter contact's phone number : ", &Contact.PhoneNumber);
+	while (Contact.getPhoneNumber() == "")	{
+		Contact.setPhoneNumber(AddLoop("Enter contact's phone number : "));
 	}
-	while (Contact.DarkestSecret == "")	{
-		Phonebook->AddLoop("Enter contact's darkest secret : ", &Contact.DarkestSecret);
+	while (Contact.getDarkestSecret() == "")	{
+		Contact.setDarkestSecret(AddLoop("Enter contact's darkest secret : "));
 	}
 	std::cout << "Contact added correctly" << std::endl << std::endl;
 	return (Contact);
+}
+
+void	Phonebook::Add(Phonebook *Phonebook)	{
+	Phonebook->_contact[Phonebook->_index] = Phonebook->FillContact();
+	Phonebook->IncrementIndex(&Phonebook->_index);
 }
