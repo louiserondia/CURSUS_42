@@ -6,33 +6,33 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 15:40:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/02 20:03:54 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/02 18:06:20 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
 Fixed::Fixed(void) : _fixed(0)	{
-	std::cout << "Default constructor called" << std::endl;
+	// std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(Fixed const &src)	{
-	std::cout << "Copy constructor called" << std::endl;
+	// std::cout << "Copy constructor called" << std::endl;
 	*this = src;
 }
 
 Fixed::Fixed(int const src)	{
-	std::cout << "Int constructor called" << std::endl;
+	// std::cout << "Int constructor called" << std::endl;
 	_fixed = src << Fixed::_bits;
 }
 
 Fixed::Fixed(float const src)	{
-	std::cout << "Float constructor called" << std::endl;
+	// std::cout << "Float constructor called" << std::endl;
 	_fixed = roundf(src * ( 1 << Fixed::_bits));
 }
 
 Fixed::~Fixed(void)	{
-	std::cout << "Destructor called" << std::endl;
+	// std::cout << "Destructor called" << std::endl;
 }
 
 int		Fixed::getRawBits(void) const	{
@@ -76,7 +76,6 @@ Fixed	Fixed::min(const Fixed &a, const Fixed &b)	{
 
 //	opérateur d'assignation
 Fixed	&Fixed::operator=(Fixed const &rhs)	{
-	std::cout << "Copy assignment operator called" << std::endl;
 	this->_fixed = rhs.getRawBits();
 	return (*this);
 }
