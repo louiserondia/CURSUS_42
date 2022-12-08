@@ -6,12 +6,13 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2022/12/02 20:10:01 by lrondia          ###   ########.fr        #
+#    Updated: 2022/12/06 11:49:49 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	Fixed.cpp \
 		Point.cpp \
+		Bsp.cpp \
 		main.cpp
 
 OBJS = $(SRCS:.cpp=.o)

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 17:52:37 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/02 20:17:51 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/06 11:43:21 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,4 @@ const Fixed	Point::GetX(void) const	{
 
 const Fixed	Point::GetY(void) const	{
 	return _y;
-}
-
-bool	bsp(Point const a, Point const b, Point const c, Point const point) {
-	Fixed	FullArea;
-	Fixed	PAC;
-	Fixed	PAB;
-	Fixed	PBC;
-
-	FullArea = a.GetX() * (b.GetY() - c.GetY()) + b.GetX() * (c.GetY() - a.GetY()) + c.GetX() * (a.GetY() - b.GetY());
-	PAC = a.GetX() * (point.GetY() - c.GetY()) + point.GetX() * (c.GetY() - a.GetY()) + c.GetX() * (a.GetY() - point.GetY());
-	PAB = a.GetX() * (b.GetY() - point.GetY()) + b.GetX() * (point.GetY() - a.GetY()) + point.GetX() * (a.GetY() - b.GetY());
-	PBC = point.GetX() * (b.GetY() - c.GetY()) + b.GetX() * (c.GetY() - point.GetY()) + c.GetX() * (point.GetY() - b.GetY());
-
-	if (PAC + PAB + PBC == FullArea)
-		return true;
-	return false;
 }
