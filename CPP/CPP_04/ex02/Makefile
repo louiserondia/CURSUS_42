@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2022/12/09 16:39:07 by lrondia          ###   ########.fr        #
+#    Updated: 2022/12/09 18:29:56 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ SRCS = 	main.cpp \
 		Animal.cpp \
 		Dog.cpp \
 		Cat.cpp \
-		WrongCat.cpp \
-		WrongAnimal.cpp \
+		Brain.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -23,7 +22,7 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = Animal
+NAME = abstract
 
 all : $(NAME)
 

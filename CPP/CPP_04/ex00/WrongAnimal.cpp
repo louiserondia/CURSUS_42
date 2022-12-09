@@ -1,42 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   WrongAnimal.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 16:18:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/09 16:25:38 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "WrongAnimal.hpp"
 
 using namespace std;
 
-Dog::Dog(void)	{
-	type = "Dog";
-	cout << "Dog default constructor called" << endl;
+WrongAnimal::WrongAnimal(void)	{
+	type = "Random wrong animal";
+	cout << "WrongAnimal default constructor called" << endl;
 }
 
-Dog::~Dog()	{
-	cout << "Dog default destructor called" << endl;
+WrongAnimal::~WrongAnimal()	{
+	cout << "WrongAnimal default destructor called" << endl;
 }
 
-Dog::Dog(Dog const &copy)	{
+WrongAnimal::WrongAnimal(WrongAnimal const &copy)	{
 	*this = copy;
-	cout << "Dog copy constructor called" << endl;
+	cout << "WrongAnimal copy constructor called" << endl;
 }
 
-Dog	&Dog::operator=(Dog const &rhs)	{
+WrongAnimal	&WrongAnimal::operator=(WrongAnimal const &rhs)	{
 	type = rhs.type;
 	return *this;
 }
 
-void	Dog::makeSound(void) const	{
-	cout << "Waf waf wouf!!!!" << endl;
+void	WrongAnimal::makeSound(void) const	{
+	cout << "I am an animal hello" << endl;
+	return;
 }
 
-std::string	Dog::getType(void) const	{
+std::string	WrongAnimal::getType(void) const	{
 	return type;
 }

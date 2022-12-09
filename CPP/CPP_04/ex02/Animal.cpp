@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   AAnimal.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 16:18:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/09 18:22:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "Animal.hpp"
 
 using namespace std;
 
-Dog::Dog(void)	{
-	type = "Dog";
-	cout << "Dog default constructor called" << endl;
+Animal::Animal(void)	{
+	type = "Random animal";
+	cout << "Animal default constructor called" << endl;
 }
 
-Dog::~Dog()	{
-	cout << "Dog default destructor called" << endl;
+Animal::~Animal()	{
+	cout << "Animal default destructor called" << endl;
 }
 
-Dog::Dog(Dog const &copy)	{
+Animal::Animal(Animal const &copy)	{
 	*this = copy;
-	cout << "Dog copy constructor called" << endl;
+	cout << "Animal copy constructor called" << endl;
 }
 
-Dog	&Dog::operator=(Dog const &rhs)	{
+Animal	&Animal::operator=(Animal const &rhs)	{
 	type = rhs.type;
 	return *this;
 }
 
-void	Dog::makeSound(void) const	{
-	cout << "Waf waf wouf!!!!" << endl;
+void	Animal::makeSound(void) const	{
+	return;
 }
 
-std::string	Dog::getType(void) const	{
+std::string	Animal::getType(void) const	{
 	return type;
 }

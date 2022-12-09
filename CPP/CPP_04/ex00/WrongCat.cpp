@@ -1,42 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Dog.cpp                                            :+:      :+:    :+:   */
+/*   WrongCat.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 16:18:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/09 16:15:55 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
+#include "WrongCat.hpp"
 
 using namespace std;
 
-Dog::Dog(void)	{
-	type = "Dog";
-	cout << "Dog default constructor called" << endl;
+WrongCat::WrongCat(void) : WrongAnimal()	{
+	type = "WrongCat";
+	cout << "WrongCat default constructor called" << endl;
 }
 
-Dog::~Dog()	{
-	cout << "Dog default destructor called" << endl;
+WrongCat::~WrongCat()	{
+	cout << "WrongCat default destructor called" << endl;
 }
 
-Dog::Dog(Dog const &copy)	{
+WrongCat::WrongCat(WrongCat const &copy)	{
 	*this = copy;
-	cout << "Dog copy constructor called" << endl;
+	cout << "WrongCat copy constructor called" << endl;
 }
 
-Dog	&Dog::operator=(Dog const &rhs)	{
+WrongCat	&WrongCat::operator=(WrongCat const &rhs)	{
 	type = rhs.type;
 	return *this;
 }
 
-void	Dog::makeSound(void) const	{
-	cout << "Waf waf wouf!!!!" << endl;
+void	WrongCat::makeSound(void) const	{
+	cout << "Wrong noise mi mi mouuuu brbrbeee" << endl;
 }
 
-std::string	Dog::getType(void) const	{
+std::string	WrongCat::getType(void) const	{
 	return type;
 }
