@@ -15,7 +15,7 @@
 using namespace std;
 
 WrongCat::WrongCat(void) : WrongAnimal()	{
-	type = "WrongCat";
+	type = "Wrong cat";
 	cout << "WrongCat default constructor called" << endl;
 }
 

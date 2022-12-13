@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:01:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 16:45:04 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 15:25:12 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int main( void ) {
 	std::cout << animal->getType() << std::endl;
 	std::cout << wrongCat->getType() << std::endl;
 	std::cout << wrongAnimal->getType() << std::endl;
+	
 	std::cout << std::endl << "|  SOUNDS | " << std::endl;
 	cat->makeSound();
 	dog->makeSound();
