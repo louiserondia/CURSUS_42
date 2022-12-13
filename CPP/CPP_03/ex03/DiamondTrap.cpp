@@ -46,6 +46,7 @@ DiamondTrap::DiamondTrap(DiamondTrap const &copy)	{
 DiamondTrap	&DiamondTrap::operator=(DiamondTrap const &rhs)	{
 	_name = rhs._name;
 	ClapTrap::_name = _name + "_clap_name";
+	_max_hp = rhs._max_hp;
 	_hitPoints = rhs._hitPoints;
 	_energyPoints = rhs._energyPoints;
 	_attackDamage = rhs._attackDamage;

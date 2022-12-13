@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 13:02:08 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/08 19:19:05 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 14:42:00 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ FragTrap::FragTrap(FragTrap const &copy)	{
 
 FragTrap	&FragTrap::operator=(FragTrap const &rhs)	{
 	_name = rhs._name;
+	_max_hp = rhs._max_hp;
 	_hitPoints = rhs._hitPoints;
 	_energyPoints = rhs._energyPoints;
 	_attackDamage = rhs._attackDamage;
