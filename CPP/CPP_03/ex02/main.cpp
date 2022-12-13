@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:01:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/08 19:25:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 14:44:17 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main( void ) {
 	Margotelle.highFiveGuys();
 	
 	std::cout << std::endl << "|  ATTACK  |" << std::endl;
-	Margotelle.attack("Margotelle");
+	Margotelle.attack("Georgio");
 	Margotelle.attack("romvan-d");
 	
 	std::cout << std::endl << "|  TAKE DAMAGE  |" << std::endl;
