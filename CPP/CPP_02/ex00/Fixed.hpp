@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 15:40:32 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/30 16:16:47 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:16:21 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@
 
 class Fixed
 {
-private:
+	private:
+		int					_fixed;
+		static int const	_bits = 8;
 
-	int					_fixed;
-	static int const	_bits = 8;
+	public:
+		Fixed(void);
+		Fixed(Fixed const &src);
+		~Fixed(void);
 
-public:
-	Fixed(void);
-	Fixed(Fixed const &src);
-	~Fixed(void);
-
-	Fixed	&operator=(Fixed const &rhs);
-	
-	int		getRawBits(void) const;
-	void	setRawBits(int const raw);
+		Fixed	&operator=(Fixed const &rhs);
+		
+		int		getRawBits(void) const;
+		void	setRawBits(int const raw);
 };
 
 #endif
