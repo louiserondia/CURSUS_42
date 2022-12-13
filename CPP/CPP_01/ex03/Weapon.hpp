@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:15:04 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/28 13:57:14 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/12 15:49:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ private:
 	
 public:
 
-	Weapon(std::string Type);
+	Weapon(std::string type);
 	Weapon(void);
 	~Weapon(void);
 
 	std::string	getType(void);
-	void		setType(std::string	NewType);
+	void		setType(std::string	newtype);
 	
 };
 

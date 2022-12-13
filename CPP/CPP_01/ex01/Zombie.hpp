@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 17:01:29 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/26 17:52:01 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 12:20:17 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ public:
 	Zombie(std::string name);
 	~Zombie(void);
 
-	void	announce(void);
+	void		announce(void);
+	std::string	getName(void);
+	void		setName(std::string name);
 };
 
 Zombie	*zombieHorde(int N, std::string name);

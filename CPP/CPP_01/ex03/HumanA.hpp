@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:32:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/28 14:15:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 12:12:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ class HumanA
 {
 private:
 
-	Weapon		&_weapon;
 	std::string	_name;
+	Weapon		&_weapon;
 	
 public:
 

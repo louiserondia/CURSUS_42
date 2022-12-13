@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2022/11/29 17:36:40 by lrondia          ###   ########.fr        #
+#    Updated: 2022/12/13 12:28:49 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	rm *.replace
 
 re:	fclean all
 

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 14:20:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/29 13:50:46 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 12:35:22 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	ReadReplace(std::string filename, std::string s1, std::string s2)	{
 	while (!ifs.eof())	
 	{
 		getline(ifs, tmp);
-		while (1)
+		pos = tmp.find(s1);
+		while (pos != std::string::npos)
 		{
-			pos = tmp.find(s1, 0);
-			if (pos == std::string::npos)
-				break;
 			tmp.erase(pos, s1.length());
 			tmp.insert(pos, s2);
+			pos += s2.length();
+			pos = tmp.find(s1, pos);
 		}	
 		NewFile.append(tmp);
 		if (!ifs.eof())

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 12:32:16 by lrondia           #+#    #+#             */
-/*   Updated: 2022/11/28 14:30:29 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/13 12:12:41 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ private:
 
 public:
 
-	HumanB(std::string	N);
+	HumanB(std::string N);
 	~HumanB(void);
 
 void	attack(void);
