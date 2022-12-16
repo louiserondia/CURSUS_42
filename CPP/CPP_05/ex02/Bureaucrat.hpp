@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:47:38 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 12:33:32 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/16 17:45:44 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ class Bureaucrat
 		void		incrementGrade(void);
 		void		decrementGrade(void);
 		void		signForm(AForm &f);
+		void		executeForm(AForm const &f) const;
 
 		class GradeTooHighException	: public std::exception
 		{

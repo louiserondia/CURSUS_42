@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:49:00 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 12:58:46 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:23:52 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ Bureaucrat::Bureaucrat(Bureaucrat const &copy) : _name(copy._name)	{
 }
 
 Bureaucrat::~Bureaucrat(void)	{
-		std::cout << "Bureaucrat " << _name << " has been destroyed." << std::endl;
+	std::cout << "Bureaucrat " << _name << " has been destroyed." << std::endl;
 }
 
 
@@ -104,7 +104,17 @@ void	Bureaucrat::signForm(AForm &f)	{
 	std::cout << f.getName() << " was signed by " << _name << "." << std::endl;
 }
 
-
+void		Bureaucrat::executeForm(AForm const &f) const	{
+	try
+	{
+		f.execute(*this);
+	}
+	catch(const std::exception& low)
+	{
+		std::cout << low.what() << '\n';
+	}
+	std::cout << _name << " executed " << f.getName() << "." << std::endl;
+}
 
 //		EXCEPTIONS
 

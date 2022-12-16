@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 17:11:22 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 17:14:34 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:15:51 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ class RobotomyRequestForm : public AForm
 		RobotomyRequestForm	&operator=(RobotomyRequestForm const &rhs);
 		~RobotomyRequestForm(void);
 
-		bool	isGradeCorrect(int grade, std::string type) const;
-		void	execute(Bureaucrat const &executor) const;
+		bool	execute(Bureaucrat const &executor) const;
 
 	private:
 		std::string					_target;

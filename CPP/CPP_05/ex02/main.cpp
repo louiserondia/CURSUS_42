@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 18:12:48 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/16 17:54:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 int	main(void)	{
 	
-	std::cout << std::endl << " | CONSTRUCTORS | " << std::endl;
+	std::cout << std::endl << "	| CONSTRUCTORS |	" << std::endl;
 	Bureaucrat					Random;
 	Bureaucrat					Michel("Michel", 10);
 	Bureaucrat					Ginette("Ginette", 2);
@@ -26,16 +26,16 @@ int	main(void)	{
 	RobotomyRequestForm			C109_36("C109/36");
 	PresidentialPardonForm		Jesus("Jesus");
 	
-	F70bis.execute(Random);
+	std::cout << std::endl << "	| SIGNING AND EXECUTING |	" << std::endl;
 	F70bis.execute(Ginette);
 	Ginette.signForm(F70bis);
-	F70bis.execute(Ginette);
+	Random.executeForm(F70bis);
+	Ginette.executeForm(F70bis);
 	Ginette.signForm(C109_36);
-	C109_36.execute(Ginette);
-	C109_36.execute(Ginette);
-	C109_36.execute(Ginette);
+	Ginette.executeForm(C109_36);
 	Michel.signForm(Jesus);
-	Jesus.execute(Michel);
-	Jesus.execute(Ginette);
-	std::cout << std::endl << " | DESTRUCTORS | " << std::endl;
+	Michel.executeForm(Jesus);
+	Ginette.executeForm(Jesus);
+
+	std::cout << std::endl << "	| DESTRUCTORS |	" << std::endl;
 }

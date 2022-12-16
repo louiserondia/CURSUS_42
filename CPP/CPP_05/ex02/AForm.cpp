@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 17:49:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 16:21:06 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:24:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ AForm::AForm(AForm const &copy) : _name(copy._name)	{
 }
 
 AForm::~AForm(void)	{
+	std::cout << "Form " << _name << " has been destroyed." << std::endl;
 }
 
 
@@ -52,15 +53,35 @@ bool	AForm::isGradeCorrect(int grade, std::string type) const	{
 	}
 	catch (AForm::GradeTooHighException high)
 	{
-		std::cout << _name << type << high.what() << std::endl;
+		std::cout << getName() << type << high.what() << std::endl;
 	}
 	catch (AForm::GradeTooLowException low)
 	{
-		std::cout << _name << type << low.what() << std::endl;
+		std::cout << getName() << type << low.what() << std::endl;
 	}
 	return false;
 }
 
+bool	AForm::checkExecution(Bureaucrat const &executor) const	{
+	if (!isGradeCorrect(executor.getGrade(), "Executor's grade"))
+		return false;
+	try
+	{
+		if (!isSigned())
+			throw (AForm::NotSignedException());
+		if (executor.getGrade() > getGradeToExecute())
+			throw (AForm::GradeTooLowException());
+	}
+	catch (AForm::GradeTooLowException low)	{
+		std::cout << executor.getName() << low.what() << " to execute " << getName() << std::endl;
+		return false;
+	}
+	catch (AForm::NotSignedException not_signed)	{
+		std::cout << getName() << not_signed.what() << std::endl;
+		return false;
+	}
+	return true;
+}
 
 //		MEMBER FUNCTIONS
 

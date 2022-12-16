@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 12:38:48 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 16:13:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:15:53 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ class ShrubberyCreationForm : public AForm
 		ShrubberyCreationForm	&operator=(ShrubberyCreationForm const &rhs);
 		~ShrubberyCreationForm(void);
 
-		bool	isGradeCorrect(int grade, std::string type) const;
-		void	execute(Bureaucrat const &executor) const;
+		bool	execute(Bureaucrat const &executor) const;
 
 	private:
 		std::string					_target;

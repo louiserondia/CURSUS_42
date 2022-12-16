@@ -25,8 +25,7 @@ class PresidentialPardonForm : public AForm
 		PresidentialPardonForm	&operator=(PresidentialPardonForm const &rhs);
 		~PresidentialPardonForm(void);
 
-		bool	isGradeCorrect(int grade, std::string type) const;
-		void	execute(Bureaucrat const &executor) const;
+		bool	execute(Bureaucrat const &executor) const;
 
 	private:
 		std::string					_target;

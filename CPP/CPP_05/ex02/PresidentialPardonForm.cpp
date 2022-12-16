@@ -36,46 +36,10 @@ PresidentialPardonForm	&PresidentialPardonForm::operator=(PresidentialPardonForm
 
 //		MEMBER FUNCTIONS
 
-void	PresidentialPardonForm::execute(Bureaucrat const &executor) const
+bool	PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {
-	if (!isGradeCorrect(executor.getGrade(), "Executor's grade"))
-		return ;
-	try
-	{
-		if (!isSigned())
-			throw (AForm::NotSignedException());
-		if (executor.getGrade() > getGradeToExecute())
-			throw (AForm::GradeTooLowException());
-	}
-	catch (AForm::GradeTooLowException low)	{
-		std::cout << executor.getName() << low.what() << " to execute " << getName() << std::endl;
-		return;
-	}
-	catch (AForm::NotSignedException not_signed)	{
-		std::cout << getName() << not_signed.what() << std::endl;
-		return;
-	}
+	if (!checkExecution(executor))
+		return false;
 	std::cout << _target << " has been pardonned by its Majesty Zaphod Beeblebrox." << std::endl;
+	return true;
 }
-
-bool	PresidentialPardonForm::isGradeCorrect(int grade, std::string type) const
-{
-	try
-	{
-		if (grade < _gmax)
-			throw (AForm::GradeTooHighException());
-		else if (grade > _gmin)
-			throw (AForm::GradeTooLowException());
-		return true;
-	}
-	catch (AForm::GradeTooHighException high)
-	{
-		std::cout << getName() << type << high.what() << std::endl;
-	}
-	catch (AForm::GradeTooLowException low)
-	{
-		std::cout << getName() << type << low.what() << std::endl;
-	}
-	return false;
-}
-

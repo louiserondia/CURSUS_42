@@ -28,12 +28,14 @@ class AForm
 		AForm	&operator=(AForm const &rhs);
 		~AForm(void);
 
-		virtual bool		isGradeCorrect(int grade, std::string type) const ;
+		bool		isGradeCorrect(int grade, std::string type) const ;
+		bool		checkExecution(Bureaucrat const &executor) const;
+
 		void				beSigned(Bureaucrat &b);
 		std::string			getName(void) const;
 		int					getGradeToSign(void) const;
 		int					getGradeToExecute(void) const;
-		virtual void		execute(Bureaucrat const &executor) const = 0;
+		virtual bool		execute(Bureaucrat const &executor) const = 0;
 		bool				isSigned(void) const;
 
 		class GradeTooHighException	: public std::exception
