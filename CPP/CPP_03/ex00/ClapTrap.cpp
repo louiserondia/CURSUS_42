@@ -17,11 +17,11 @@ using namespace std;
 
 ///////////// CON/DESTRUCTION /////////////
 
-ClapTrap::ClapTrap(string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(10)	{
+ClapTrap::ClapTrap(string name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)	{
 	cout << _name << "'s constructor called" << endl;
 }
 
-ClapTrap::ClapTrap() : _hitPoints(10), _energyPoints(10), _attackDamage(10)	{
+ClapTrap::ClapTrap() : _hitPoints(10), _energyPoints(10), _attackDamage(0)	{
 	cout << "constructor called" << endl;
 }
 

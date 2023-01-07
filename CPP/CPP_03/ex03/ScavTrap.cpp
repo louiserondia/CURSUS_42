@@ -49,7 +49,7 @@ ScavTrap	&ScavTrap::operator=(ScavTrap const &rhs)	{
 
 void	ScavTrap::attack(const string &target)	{
 	if (_energyPoints == 0 || _hitPoints == 0)	{
-		cout << "ClapTrap " << _name
+		cout << "ScavTrap " << _name
 			 << " is too tired/dead. It's unable to attack right now." << endl;
 		return;
 	}
