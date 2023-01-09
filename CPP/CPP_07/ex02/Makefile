@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2023/01/03 17:07:44 by lrondia          ###   ########.fr        #
+#    Updated: 2023/01/09 11:00:01 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CXX = c++
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-NAME = Iter
+NAME = Array
 
 all : $(NAME)
 

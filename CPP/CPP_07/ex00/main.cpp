@@ -6,11 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/03 17:05:36 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/09 10:58:24 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "TemplateFunctions.tpp"
+#include "TemplateFunctions.hpp"
 
 /*
 ----> mon main <----
