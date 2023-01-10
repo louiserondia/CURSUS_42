@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 16:01:56 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/13 15:33:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:17:06 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ using namespace std;
 
 int main( void ) {
 
-	cout << endl;
+	cout << "\n	| FIRST SET OF TESTS |	\n\n";
 	const Animal	*cat = new Cat();
 	const Animal	*dog = new Dog();
 
@@ -26,7 +26,7 @@ int main( void ) {
 	delete cat;
 	delete dog;
 
-	cout << endl;
+	cout << "\n	| SECOND SET OF TESTS (array) |	\n\n";
 	const Animal	*animal[2];
 	animal[0] = new Cat();
 	animal[1] = new Dog();
@@ -35,14 +35,14 @@ int main( void ) {
 	delete animal[0];
 	delete animal[1];
 
-	cout << endl;
+	cout << "\n	| THIRD SET OF TESTS |	\n\n";
 	Cat	pimento;
 	Cat	copain;
 
-	cout << endl;
+	cout << "\n		| Animals' ideas |	\n\n";
 	pimento.getBrain().hasNewIdea("oh no im dead");
 	copain.getBrain().hasNewIdea("please dont die pimento my friend");
-	pimento.getBrain().hasNewIdea("it's too late copain, ill see you on the other side");
+	pimento.getBrain().hasNewIdea("it's too late copain, i'll see you on the other side");
 	copain.getBrain().hasNewIdea("i will always love you, fwiend");
 	pimento.getBrain().printIdeas();
 	copain.getBrain().printIdeas();

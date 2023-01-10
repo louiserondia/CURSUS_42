@@ -34,7 +34,7 @@ WrongAnimal	&WrongAnimal::operator=(WrongAnimal const &rhs)	{
 }
 
 void	WrongAnimal::makeSound(void) const	{
-	cout << "I am an animal hello" << endl;
+	cout << "I am a wrong animal hello" << endl;
 	return;
 }
 

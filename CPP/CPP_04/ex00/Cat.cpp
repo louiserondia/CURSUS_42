@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 16:15:55 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 11:16:09 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ Cat	&Cat::operator=(Cat const &rhs)	{
 }
 
 void	Cat::makeSound(void) const	{
-	cout << "Miiaaaaouuuuuuu mi mi mi i am a cutie" << endl;
+	cout << "Miiaaaaouuuuuuu mi mi mi i am cutie" << endl;
 }
 
 std::string	Cat::getType(void) const	{

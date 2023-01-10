@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 18:11:56 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:13:22 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 using namespace std;
 
-Cat::Cat(void) : Animal()	{
+Cat::Cat(void)	{
 	type = "Cat";
-	_brain = new Brain();
 	cout << "Cat default constructor called" << endl;
+	_brain = new Brain();
 }
 
 Cat::~Cat()	{

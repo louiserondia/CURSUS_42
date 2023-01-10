@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:02 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 18:12:00 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 13:13:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ using namespace std;
 
 Dog::Dog(void)	{
 	type = "Dog";
-	_brain = new Brain();
 	cout << "Dog default constructor called" << endl;
+	_brain = new Brain();
 }
 
 Dog::~Dog()	{

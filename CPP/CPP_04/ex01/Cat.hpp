@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 20:01:13 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/09 18:10:03 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 12:00:31 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ class Cat: public Animal
 		
 		void		makeSound(void) const;
 		std::string	getType(void) const;
-		Brain	&getBrain(void);
+		Brain		&getBrain(void);
 	private:
 		Brain	*_brain;
 };
