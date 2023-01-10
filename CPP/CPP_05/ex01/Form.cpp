@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 17:49:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 19:27:07 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:09:55 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,34 @@
 
 //		CON/DESTRUCTION
 
-Form::Form(void) : _name("Random doc"), _is_signed(false), _grade_to_sign(150), _grade_to_execute(150)	{
+Form::Form(void) : 
+_name("Random doc"),
+_is_signed(false),
+_grade_to_sign(150),
+_grade_to_execute(150)
+{
 	std::cout << "Random doc created at grade 150 to sign and execute." << std::endl;
 }
 
-Form::Form(std::string name, int grade_to_sign, int grade_to_execute) : _name(name), _is_signed(false)	{
-	_grade_to_sign = grade_to_sign;
+Form::Form(std::string name, int grade_to_sign, int grade_to_execute) : 
+_name(name),
+_is_signed(false),
+_grade_to_sign(grade_to_sign),
+_grade_to_execute(grade_to_execute)
+{
 	if (test(grade_to_sign, "grade to sign"))	{
 		std::cout << "Form " << _name << " was created at grade to sign " << _grade_to_sign << "." << std::endl;
 	}
-	_grade_to_execute = grade_to_execute;
 	if (test(grade_to_execute, "grade to execute"))	{
 		std::cout << "Form " << _name << " was created at grade to execute " << _grade_to_execute << "." << std::endl;
 	}
 }
 
-Form::Form(Form const &copy) : _name(copy._name)	{
+Form::Form(Form const &copy) :
+_name(copy._name),
+_grade_to_sign(copy._grade_to_sign),
+_grade_to_execute(copy._grade_to_execute)
+{
 	*this = copy;
 	std::cout << "Copy constructor called after " << copy._name << "." << std::endl;
 }
@@ -102,8 +114,6 @@ const char	*Form::GradeTooLowException::what() const throw()	{
 
 Form	&Form::operator=(Form const &rhs)	{
 	_is_signed = rhs._is_signed;
-	_grade_to_sign = rhs._grade_to_sign;
-	_grade_to_execute = rhs._grade_to_execute;
 	return *this;
 }
 

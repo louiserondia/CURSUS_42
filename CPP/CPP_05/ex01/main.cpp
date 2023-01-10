@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/15 19:27:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:53:33 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@ int	main(void)	{
 	Form		C109_36("C109/36", 2, 2);
 	Form		shir6p4("shir6p4", 2, 2);
 	
+	std::cout << std::endl << " | BE SIGNED AND SIGN FORM | " << std::endl;
 	try	{
+		std::cout << "C109_36 is being signed by Ginette... \n";
 		C109_36.beSigned(Ginette);
 	}
 	catch (const std::exception& e)	{
 		std::cout << Ginette.getName() << e.what() << " to sign " << C109_36.getName() << "." << std::endl;
 	}
 	try	{
+		std::cout << "F70bis is being signed by Michel... \n";
 		F70bis.beSigned(Michel);
 	}
 	catch (const std::exception& e)	{

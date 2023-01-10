@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 15:49:00 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/16 18:23:52 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:00:10 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	Bureaucrat::signForm(AForm &f)	{
 void		Bureaucrat::executeForm(AForm const &f) const	{
 	try
 	{
-		f.execute(*this);
+		if (!f.execute(*this))
+			return ;
 	}
 	catch(const std::exception& low)
 	{

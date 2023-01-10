@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 17:48:51 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/13 19:31:55 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:03:41 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ class Form
 	private:
 		const std::string	_name;
 		bool				_is_signed;
-		int					_grade_to_sign;
-		int					_grade_to_execute;
+		const int			_grade_to_sign;
+		const int			_grade_to_execute;
 		static const int	_gmax = 1;
 		static const int	_gmin = 150;
 

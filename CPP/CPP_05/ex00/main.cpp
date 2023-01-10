@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2022/12/13 17:47:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/10 16:00:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	main(void)	{
 
 	std::cout << std::endl << " | PRESENTATION | " << std::endl;
 	std::cout << "John is actually : " << John;
-	std::cout << "Ginette is now : " << Ginette;
+	std::cout << "Ginette is : " << Ginette;
 	std::cout << "Michel is : " << Michel;
 	std::cout << "Fail is just a " << Fail;
-	std::cout << "And the random dude is still : " << Random;
+	std::cout << "And the random dude is still a " << Random;
 	
 	std::cout << std::endl << " | DESTRUCTORS | " << std::endl;
 }
