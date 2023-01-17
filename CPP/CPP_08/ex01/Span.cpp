@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:52:38 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/17 15:45:46 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/17 16:29:24 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ unsigned int	Span::longestSpan(void) const	{
 	for (i = getTab().begin(); i < getTab().end() - 1; i++)	{
 		comp = *i - *(i + 1);
 		comp = abs(comp);
-		// std::cout << *i << " et " << *(i + 1) << " -> " << comp << std::endl;
 		if (comp > max)
 			max = comp;
 	}
