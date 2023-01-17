@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:51:52 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/12 18:18:02 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/17 14:55:39 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ class Span
 		Span			&operator=(Span const &src);
 
 		void				addNumber(int number);
+		void				addNumbers(std::vector<int>::iterator begin, std::vector<int>::iterator end);
 		std::vector<int>	getTab() const;
-		unsigned int		getAmountOfNb() const;
 		unsigned int		shortestSpan();
 		unsigned int		longestSpan();
 		
@@ -49,7 +49,6 @@ class Span
 		Span(void);
 
 		unsigned int	 	N;
-		unsigned int		_amount_of_nb;
 		std::vector<int>	_tab;
 };
 

@@ -6,12 +6,12 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/26 16:55:39 by lrondia           #+#    #+#              #
-#    Updated: 2023/01/12 17:08:11 by lrondia          ###   ########.fr        #
+#    Updated: 2023/01/17 12:45:51 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	main.cpp \
-		Span.cpp
+		Span.cpp \
 
 OBJS = $(SRCS:.cpp=.o)
 
