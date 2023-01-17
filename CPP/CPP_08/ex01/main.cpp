@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/12 18:29:47 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/17 15:50:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,32 @@ int	main(void) {
 
 	srand(time(NULL));
 	span.addNumber(0);
-	std::cout << span << std::endl;
+	std::cout << "Span : " << span;
 	try	{
-		std::cout << span.shortestSpan() << std::endl;
+		span.shortestSpan();
 	}
 	catch(const Span::SpanTooShortException &e)	{
 		std::cerr << e.what() << '\n';
 	}
 	
 	span.addNumber(10);
-	span.addNumber(1000);
 	span.addNumber(-1000);
 	span.addNumber(-1);
+	
+	std::cout << "\nSpan : " << span;
+	std::cout << "Shortest span : " << span.shortestSpan() << std::endl;
+	std::cout << "Longest span : " << span.longestSpan() << std::endl;
+	
+	std::cout << "\n | TEST ON BIG SPAN | \n";
+
+	std::vector<int>	v;
+	for (int i = 0; i < 10000; i++)	{
+		v.push_back(rand());
+	}
+	span.addNumbers(v.begin(), v.end());
+	// std::cout << span << std::endl;
 	std::cout << span.shortestSpan() << std::endl;
 	std::cout << span.longestSpan() << std::endl;
-	
-	std::cout << " | TEST ON BIG SPAN | \n";
-
-	Span big_span(10000);
-	for (int i = 0; i < 10000; i++)	{
-		big_span.addNumber(rand());
-	}
-	std::cout << big_span << std::endl;
-	std::cout << big_span.shortestSpan() << std::endl;
-	std::cout << big_span.longestSpan() << std::endl;
 	
 	return 0;
 }
