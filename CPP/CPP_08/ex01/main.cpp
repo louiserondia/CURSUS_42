@@ -6,13 +6,24 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/17 15:50:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/18 12:37:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 
 int	main(void) {
+	Span sp = Span(5);
+	sp.addNumber(6);
+	sp.addNumber(3);
+	sp.addNumber(17);
+	sp.addNumber(9);
+	sp.addNumber(11);
+	std::cout << sp.shortestSpan() << std::endl;
+	std::cout << sp.longestSpan() << std::endl;
+
+	std::cout << "\n	| MY TESTS |\n";
+	
 	Span span(6);
 
 	srand(time(NULL));

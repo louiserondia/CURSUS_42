@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:26:12 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/10 14:12:12 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/18 12:32:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <algorithm>
 # include <iterator>
 # include <list>
+# include <vector>
 # include <stdexcept>
 
 template <typename T>

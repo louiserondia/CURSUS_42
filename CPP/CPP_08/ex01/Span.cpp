@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:52:38 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/17 16:29:24 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/18 12:38:59 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	Span::addNumber(int number)	{
 		if (_tab.size() >= N)
 			throw std::out_of_range("Span is already full of numbers");
 		_tab.push_back(number);
-		std::sort(_tab.begin(), _tab.end());
 	}
 	catch (std::out_of_range &o) {
 		std::cout << o.what() << ": " << *this << std::endl;
@@ -46,7 +45,6 @@ void	Span::addNumbers(std::vector<int>::iterator begin, std::vector<int>::iterat
 		if (_tab.size() >= N)
 			throw std::out_of_range("Span is already full of numbers");
 		_tab.insert(_tab.begin(), begin, end);
-		std::sort(_tab.begin(), _tab.end());
 	}
 	catch (std::out_of_range &o) {
 		std::cout << o.what() << ": " << *this << std::endl;
