@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:45:34 by lrondia           #+#    #+#             */
-/*   Updated: 2022/10/10 16:42:57 by lrondia          ###   ########.fr       */
+/*   Updated: 2022/10/11 11:50:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	create_tab(t_tab *tab)
 		return (0);
 	while (i < tab->size_x * tab->size_y)
 	{
-	
 			tab->tab[i] = tab->type;
 		i++;
 	}
@@ -40,31 +39,31 @@ void	create_rect(t_tab *tab)
 	i = 0;
 	while (i < tab->size_x * tab->size_y)
 	{
-			cur_x = i % tab->size_x;
-			cur_y = i / tab->size_x;
-			if (tab->content == 'r')
+		cur_x = i % tab->size_x;
+		cur_y = i / tab->size_x;
+		if (tab->content == 'r')
+		{
+			if (cur_x < tab->x + tab->width && cur_x >= tab->x)
 			{
-				if (cur_x < tab->x + tab->width && cur_x >= tab->x)
-				{
-					small = cur_y - tab->y;
-					big = (tab->y + tab->height) - cur_y;
-					if ((small < 1.0 && small >= 0) || (big < 1.0 && big >= 0))
-						tab->tab[i] = tab->type;
-				}
-				if (cur_y >= tab->y && cur_y < tab->y + tab->height)
-				{
-					small = cur_x - tab->x;
-					big = (tab->x + tab->width) - cur_x;
-					if ((small < 1.0 && small >= 0) || (big < 1.0 && big >= 0))
-						tab->tab[i] = tab->type;
-				}
-			}
-			else
-			{
-				if (cur_y <= tab->y + tab->height && cur_y >= tab->y
-					&& cur_x <= tab->x + tab->width && cur_x >= tab->x)
+				small = cur_y - tab->y;
+				big = (tab->y + tab->height) - cur_y;
+				if ((small < 1.0 && small >= 0) || (big < 1.0 && big >= 0))
 					tab->tab[i] = tab->type;
 			}
+			if (cur_y >= tab->y && cur_y < tab->y + tab->height)
+			{
+				small = cur_x - tab->x;
+				big = (tab->x + tab->width) - cur_x;
+				if ((small < 1.0 && small >= 0) || (big < 1.0 && big >= 0))
+					tab->tab[i] = tab->type;
+			}
+		}
+		else
+		{
+			if (cur_y <= tab->y + tab->height && cur_y >= tab->y
+				&& cur_x <= tab->x + tab->width && cur_x >= tab->x)
+				tab->tab[i] = tab->type;
+		}
 		i++;
 	}
 }

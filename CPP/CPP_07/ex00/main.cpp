@@ -6,14 +6,14 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 16:00:35 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/09 10:58:24 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/25 17:36:27 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "TemplateFunctions.hpp"
 
 /*
-----> mon main <----
+ ----> mon main <----
 
 int	main(void)	{
 
@@ -50,17 +50,18 @@ int	main(void)	{
 */
 
 int	main(void) {
-	int a = 2;
-	int b = 3;
-	::swap( a, b );
-	std::cout << "a = " << a << ", b = " << b << std::endl;
-	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
-	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
-	std::string c = "chaine1";
-	std::string d = "chaine2";
-	::swap(c, d);
-	std::cout << "c = " << c << ", d = " << d << std::endl;
-	std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
-	std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+	int i = 2;
+	int j = 3;
+	::swap( i, j );
+	std::cout << "i = " << i << ", j = " << j << std::endl;
+	std::cout << "min( i, j ) = " << ::min( i, j ) << std::endl;
+	std::cout << "max( i, j ) = " << ::max( i, j ) << std::endl;
+
+	std::string k = "chaine1";
+	std::string l = "chaine2";
+	::swap(k, l);
+	std::cout << "k = " << k << ", l = " << l << std::endl;
+	std::cout << "min( k, l ) = " << ::min( k, l ) << std::endl;
+	std::cout << "max( k, l ) = " << ::max( k, l ) << std::endl;
 	return 0;
 }

@@ -1,22 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Iter.hpp                                           :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 17:07:55 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/12 13:17:05 by lrondia          ###   ########.fr       */
+/*   Created: 2023/01/24 17:06:46 by lrondia           #+#    #+#             */
+/*   Updated: 2023/01/24 17:06:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-
-template <typename T>
-
-void    iter(T *tab, int const size, void (* f)(T &))
-{
-	for (int i = 0; i < size; i++)	{
-		f(tab[i]);
-	}
-}
+#include 
