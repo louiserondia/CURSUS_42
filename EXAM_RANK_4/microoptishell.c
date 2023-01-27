@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:19:39 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/27 14:48:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/27 19:51:52 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef	struct s_data
 {
@@ -37,9 +38,27 @@ int	ft_strlen(char *str)
 	return i;
 }
 
-void	ft_exit(char *str)
+void	debug_cmd(char **cmd)	{
+	int i = 0;
+
+	if (!cmd)
+		return;
+	printf("-------------------\n");
+	while (cmd[i])
+	{
+		printf("cmd[%d] : %s\n", i, cmd[i]);
+		i++;
+	}
+	if (!cmd[0])
+	printf("---    empty    ---\n");
+	printf("-------------------\n");
+}
+
+void	ft_exit(char *str, char *arg)
 {
 	write(2, str, ft_strlen(str));
+	if (arg)
+		write(2, arg, ft_strlen(arg));
 	write(2, "\n", 1);
 	exit(EXIT_FAILURE);
 }
@@ -68,17 +87,45 @@ void	run_child(t_data *data, char **argv, char *envp[])
 	close(data->fd[0]);
 	close(data->fd[1]);
 	if (execve(argv[0], argv, envp) == -1)
-		ft_exit("Error");
+		ft_exit("error : cannot execute ", argv[0]);
+}
+
+void	handle_cd(char **argv)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = 1;
+	while (argv[i] && strcmp(argv[i], "|"))
+		i++;
+	if (i != 2)
+		write(2, "error: cd: bad arguments\n", 25);
+	res = chdir(argv[1]);
+	if (res == -1)	{
+		write(2, "error: cd: cannot change directory to ", 39);
+		write(2, argv[1], ft_strlen(argv[1]));
+		write(2, "\n", 1);
+	}
+	if (argv[i] && !strcmp(argv[i], "|"))
+		i++;
+	// return (argv + i);
 }
 
 void	ft_fork(t_data *data, char *argv[], char *envp[])
 {
 	int	fork_id;
 
+	if (!strcmp(argv[0], "cd"))	{
+		handle_cd(argv);
+		return;
+	}
+	if (!argv || !argv[0])
+		return;
 	pipe(data->fd);
 	fork_id = fork();
 	if (fork_id == -1)
-		ft_exit("Error");
+		ft_exit("error: fatal", NULL);
 	if (!fork_id)
 		run_child(data, argv, envp);
 	else
@@ -94,9 +141,11 @@ void	ft_fork(t_data *data, char *argv[], char *envp[])
 
 char	**one_phrase(t_data *data, char *argv[], char *envp[])
 {
-	int i;
+	int 	i;
+	bool	is_break;
 
 	i = 0;
+	is_break = false;
 	while (argv[i] && strcmp(argv[i], ";"))
 	{
 		if (!strcmp("|", argv[i]))	{
@@ -104,13 +153,18 @@ char	**one_phrase(t_data *data, char *argv[], char *envp[])
 			ft_fork(data, argv, envp);
 			data->pipe_place++;
 			argv += i + 1;
+			i = 0;
 			continue;
 		}
 		i++;
 	}
+	if (argv[i] && !strcmp(argv[i], ";"))
+		is_break = true;
 	if (argv[0])	{
 		argv[i] = NULL;
 		ft_fork(data, argv, envp);
+		if (is_break)
+			i++;
 		argv += i;
 	}
 	return (argv);
@@ -129,6 +183,5 @@ int	main(int argc, char *argv[], char *envp[])
 		how_many_pipes(&data, argv);
 		argv = one_phrase(&data, argv, envp);
 	}
-	// system("leaks a.out");
 	return (0);
 }
