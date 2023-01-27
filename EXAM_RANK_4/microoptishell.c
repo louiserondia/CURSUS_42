@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:19:39 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/25 19:03:02 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/27 14:48:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 typedef	struct s_data
 {
+	int		pipes;
 	int		pipe_place;
 	int		fd[2];
-	int		pipes;
+	int		fd_tmp;
 	char	**envp;
-	int		tmp;
 	
 }	t_data;
 
@@ -30,6 +30,8 @@ int	ft_strlen(char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (i);
 	while (str[i])
 		i++;
 	return i;
@@ -42,36 +44,34 @@ void	ft_exit(char *str)
 	exit(EXIT_FAILURE);
 }
 
-void	debug_cmd(char **cmd)	{
-	int i = 0;
+void	how_many_pipes(t_data *data, char **argv)
+{
+	int	i;
 
-	if (!cmd)
-		return;
-	printf("-------------------\n");
-	while (cmd[i])
+	i = 0;
+	data->pipes = 0;
+	while (argv[i] && strcmp(argv[i], ";"))
 	{
-		printf("cmd[%d] : %s\n", i, cmd[i]);
+		if (!strcmp(argv[i], "|"))
+			data->pipes++;
 		i++;
-	}
-	if (!cmd[0])
-	printf("---    empty    ---\n");
-	printf("-------------------\n");
+	}	
 }
 
-void	run_child(t_data *data, char **argv)
+void	run_child(t_data *data, char **argv, char *envp[])
 {
-	if (data->pipe_place) // pas au début
-		dup2(data->tmp, STDIN_FILENO);
-	if (data->pipe_place != data->pipes) // pas a la fin
+	if (data->pipe_place) // FIN & MILIEU
+		dup2(data->fd_tmp, STDIN_FILENO);
+	if (data->pipe_place != data->pipes) // DEBUT & MILIEU
 		dup2(data->fd[1], STDOUT_FILENO);
-	close(data->tmp);
+	close(data->fd_tmp);
 	close(data->fd[0]);
 	close(data->fd[1]);
-	if (execve(argv[0], argv, data->envp) == -1)
+	if (execve(argv[0], argv, envp) == -1)
 		ft_exit("Error");
 }
 
-void	ft_fork(t_data *data, char **argv)
+void	ft_fork(t_data *data, char *argv[], char *envp[])
 {
 	int	fork_id;
 
@@ -80,11 +80,11 @@ void	ft_fork(t_data *data, char **argv)
 	if (fork_id == -1)
 		ft_exit("Error");
 	if (!fork_id)
-		run_child(data, argv);
+		run_child(data, argv, envp);
 	else
 	{
-		close(data->tmp);
-		data->tmp = data->fd[0];
+		close(data->fd_tmp);
+		data->fd_tmp = data->fd[0];
 		if (data->pipe_place == data->pipes)
 			close(data->fd[0]);
 		close(data->fd[1]);
@@ -92,7 +92,7 @@ void	ft_fork(t_data *data, char **argv)
 	}
 }
 
-char	**one_phrase(t_data *data, char **argv)
+char	**one_phrase(t_data *data, char *argv[], char *envp[])
 {
 	int i;
 
@@ -100,48 +100,35 @@ char	**one_phrase(t_data *data, char **argv)
 	while (argv[i] && strcmp(argv[i], ";"))
 	{
 		if (!strcmp("|", argv[i]))	{
-			data->pipe_place++;
 			argv[i] = NULL;
-			ft_fork(data, argv);
+			ft_fork(data, argv, envp);
+			data->pipe_place++;
 			argv += i + 1;
 			continue;
 		}
 		i++;
 	}
-	if (i)
+	if (argv[0])	{
 		argv[i] = NULL;
-	if (argv[0])
-		ft_fork(data, argv);
-	if (argv[i])
-		argv += i + 1;
-	else
-		argv += 1;
+		ft_fork(data, argv, envp);
+		argv += i;
+	}
 	return (argv);
 }
 
-void	parsing(t_data *data, char **argv)
-{
-	argv++;
-	while (~0)
-	{
-		argv = one_phrase(data, argv);
-		if (!argv[0])
-			return;
-		data->pipes = 0;
-		data->pipe_place = 0;
-		data->tmp = -1;
-	}
-	
-}
-	
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_data	data;
 
 	(void) argc;
-	data.envp = envp;
-	data.tmp = -1;
-	parsing(&data, argv);
+	argv++;
+	while (argv[0])
+	{
+		data.fd_tmp = -1;
+		data.pipe_place = 0;
+		how_many_pipes(&data, argv);
+		argv = one_phrase(&data, argv, envp);
+	}
 	// system("leaks a.out");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:19:39 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/25 17:20:56 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/27 15:07:15 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ void	ft_exit(char **cmd, char *str)
 {
 	(void) cmd;
 	printf("%s\n", str);
-	// if (cmd)
-	// 	free_all(cmd);
-	// free(cmd);
 	exit(EXIT_FAILURE);
 }
 
@@ -117,7 +114,6 @@ void	ft_fork(t_data *data)
 	int	fork_id;
 
 	pipe(data->fd);
-	// printf("tmp : %d, fd[0] : %d et fd[1] : %d\n", data->tmp, data->fd[0], data->fd[1]);
 	fork_id = fork();
 	if (fork_id == -1)
 		ft_exit(data->cmd, "Error");
