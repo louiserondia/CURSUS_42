@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:19:39 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/27 19:51:52 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/01/30 19:19:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ typedef	struct s_data
 	int		pipe_place;
 	int		fd[2];
 	int		fd_tmp;
-	char	**envp;
 	
 }	t_data;
 
@@ -36,22 +35,6 @@ int	ft_strlen(char *str)
 	while (str[i])
 		i++;
 	return i;
-}
-
-void	debug_cmd(char **cmd)	{
-	int i = 0;
-
-	if (!cmd)
-		return;
-	printf("-------------------\n");
-	while (cmd[i])
-	{
-		printf("cmd[%d] : %s\n", i, cmd[i]);
-		i++;
-	}
-	if (!cmd[0])
-	printf("---    empty    ---\n");
-	printf("-------------------\n");
 }
 
 void	ft_exit(char *str, char *arg)
@@ -77,19 +60,6 @@ void	how_many_pipes(t_data *data, char **argv)
 	}	
 }
 
-void	run_child(t_data *data, char **argv, char *envp[])
-{
-	if (data->pipe_place) // FIN & MILIEU
-		dup2(data->fd_tmp, STDIN_FILENO);
-	if (data->pipe_place != data->pipes) // DEBUT & MILIEU
-		dup2(data->fd[1], STDOUT_FILENO);
-	close(data->fd_tmp);
-	close(data->fd[0]);
-	close(data->fd[1]);
-	if (execve(argv[0], argv, envp) == -1)
-		ft_exit("error : cannot execute ", argv[0]);
-}
-
 void	handle_cd(char **argv)
 {
 	int	i;
@@ -107,29 +77,34 @@ void	handle_cd(char **argv)
 		write(2, argv[1], ft_strlen(argv[1]));
 		write(2, "\n", 1);
 	}
-	if (argv[i] && !strcmp(argv[i], "|"))
-		i++;
-	// return (argv + i);
 }
 
 void	ft_fork(t_data *data, char *argv[], char *envp[])
 {
-	int	fork_id;
+	int	pid;
 
+	if (!argv || !argv[0])
+		return;
 	if (!strcmp(argv[0], "cd"))	{
 		handle_cd(argv);
 		return;
 	}
-	if (!argv || !argv[0])
-		return;
 	pipe(data->fd);
-	fork_id = fork();
-	if (fork_id == -1)
+	pid = fork();
+	if (pid == -1)
 		ft_exit("error: fatal", NULL);
-	if (!fork_id)
-		run_child(data, argv, envp);
-	else
-	{
+	if (!pid)	{
+		if (data->pipe_place)					 // FIN & MILIEU
+			dup2(data->fd_tmp, STDIN_FILENO);
+		if (data->pipe_place != data->pipes) 	// DEBUT & MILIEU
+			dup2(data->fd[1], STDOUT_FILENO);
+		close(data->fd_tmp);
+		close(data->fd[0]);
+		close(data->fd[1]);
+		if (execve(argv[0], argv, envp) == -1)
+			ft_exit("error: cannot execute ", argv[0]);
+	}
+	else	{
 		close(data->fd_tmp);
 		data->fd_tmp = data->fd[0];
 		if (data->pipe_place == data->pipes)
@@ -141,11 +116,9 @@ void	ft_fork(t_data *data, char *argv[], char *envp[])
 
 char	**one_phrase(t_data *data, char *argv[], char *envp[])
 {
-	int 	i;
-	bool	is_break;
+	int 	i = 0;
+	bool	is_break = false;
 
-	i = 0;
-	is_break = false;
 	while (argv[i] && strcmp(argv[i], ";"))
 	{
 		if (!strcmp("|", argv[i]))	{
