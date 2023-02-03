@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 13:19:39 by lrondia           #+#    #+#             */
-/*   Updated: 2023/01/30 19:19:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/03 11:33:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	handle_cd(char **argv)
 	res = 1;
 	while (argv[i] && strcmp(argv[i], "|"))
 		i++;
-	if (i != 2)
+	if (i != 2)	{
 		write(2, "error: cd: bad arguments\n", 25);
+		return;
+	}
 	res = chdir(argv[1]);
 	if (res == -1)	{
 		write(2, "error: cd: cannot change directory to ", 39);
@@ -106,10 +108,10 @@ void	ft_fork(t_data *data, char *argv[], char *envp[])
 	}
 	else	{
 		close(data->fd_tmp);
+		close(data->fd[1]);
 		data->fd_tmp = data->fd[0];
 		if (data->pipe_place == data->pipes)
 			close(data->fd[0]);
-		close(data->fd[1]);
 		waitpid(-1, NULL, 0);
 	}
 }
