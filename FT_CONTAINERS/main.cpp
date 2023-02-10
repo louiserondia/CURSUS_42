@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/09 18:51:31 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/10 17:25:21 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,61 @@ class A
 		~A() { std::cout << "Destructor\n"; }
 };
 
-struct V3	{
-	float x;
-	float y;
-	float z;
-
-	V3() : x(0), y(0), z(0) { std::cout << "Default constructor\n"; }
-	V3(float x, float y, float z) : x(x), y(y), z(z) { std::cout << "Constructor\n"; }
-	V3(const V3 &copy) : x(copy.x), y(copy.y), z(copy.z) { std::cout << "Copy constructor\n"; }
-	~V3() { std::cout << "Destroy\n"; }
-
-	void	printV3(){
-		std::cout << "x : " << x << ", y : " << y << ", z : " << z << "\n";
-	}
-};
+// template <class T, class Allocator>
+// void	debugVector(Vector<V3, Allouloucator<V3> > vector)
+// {
+// 	for (size_t i = 0; i < vector.size(); i++)
+// 		vector[i].printV3();
+// 	std::cout << "vector capacity : " << vector.capacity() << "\n";
+// 	std::cout << "vector size : " << vector.size() << "\n";
+// }
 
 int	main(void)
 {
 	Allouloucator<std::string>		allocator;
 	Vector<V3, Allouloucator<V3> >	vector;
-	// std::string						*str;
 
-	// str = allocator.allocate(1);
-	// std::cout << "_n_alloc :" << allocator.get_n_alloc() << "\n";
-	// allocator.construct(str, "hello");
-	// std::cout << *str << "\n";
+	std::cout << "\n	| PUSH_BACK 3 VECTORS |\n\n";
+	{
+		vector.push_back(V3(6.6f, 6.6f, 6.6f));
+		vector.push_back(V3());
+		vector.push_back(V3(3, 4, 5));
+		for (size_t i = 0; i < vector.size(); i++)
+			vector[i].printV3();
+		std::cout << "vector capacity : " << vector.capacity() << "\n";
+		std::cout << "vector size : " << vector.size() << "\n\n";
+	}
 
-	vector.push_back(V3());
-	vector.push_back(V3(0, 1, 2));
-	// vector.push_back(V3(3, 4, 5)); // --------> crash quand on essaie de changer la taille, utiliser le destructeur manuellement ?
-	// vector.push_back(V3(10, 11, 12));
-	// vector.push_back(V3(13, 14, 15));
+	std::cout << "	| POP_BACK, RESIZE (smaller) & RESERVE (6) |\n\n";
+	{
+		vector.pop_back();
+		vector.resize(2, V3(9, 9, 9));
+		vector.reserve(6);
+		for (size_t i = 0; i < vector.size(); i++)
+			vector[i].printV3();
+		std::cout << "vector capacity : " << vector.capacity() << "\n";
+		std::cout << "vector size : " << vector.size() << "\n\n";
+	}
 
-	std::cout << "vector capacity : " << vector.capacity() << "\n";
-	std::cout << "vector size : " << vector.size() << "\n";
+	std::cout << "	| CLEAR (size = 0), RESIZE (1) & PUSH_BACK |\n\n";
+	{
+		vector.clear();
+		vector.resize(1, V3(9, 9, 9));
+		vector.push_back(V3(3, 4, 5));
+		vector.push_back(V3(8.8f, 8.8f, 8.8f));
+		for (size_t i = 0; i < vector.size(); i++)
+			vector[i].printV3();
+		std::cout << "vector capacity : " << vector.capacity() << "\n";
+		std::cout << "vector size : " << vector.size() << "\n\n";
+	}
 
-	for (size_t i = 0; i < vector.size(); i++)
-		vector[i].printV3();
+	std::cout << "	| FRONT, AT & BACK |\n\n";
+	std::cout << "vector front : ";
+	vector.front().printV3();
+	std::cout << "vector at 1 : ";
+	vector.at(1).printV3();
+	std::cout << "vector back : ";
+	vector.back().printV3();
+
 	// std::cout << "vector[" << i << "] : " << vector[i] << "\n";
-		
-	
 }
