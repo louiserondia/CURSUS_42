@@ -6,13 +6,15 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:14:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/10 18:53:37 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/14 16:21:01 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
+#include "Vector.hpp"
+#include "Allouloucator.hpp"
 
 // template <
 // 	class Category,
@@ -51,9 +53,44 @@ class Iterator
 			return *this;
 		}
 
-		Iterator	begin()	{ return Iterator(_p); }
-		Iterator	end()	{ return Iterator(_p); } //? comment ajouter _size ?
+		Iterator	operator++(int) {
+			Iterator	tmp(*this);
+			_p++;
+			return tmp;
+		}
+		
+		Iterator	&operator++() {
+			_p++;
+			return *this;
+		}
 
+		Iterator	operator--(int) {
+			Iterator	tmp(*this);
+			_p--;
+			return tmp;
+		}
+		
+		Iterator	&operator--() {
+			_p--;
+			return *this;
+		}
+		
+		Iterator	&operator+=(const Iterator &rhs) { 
+			_p += rhs._p;
+			return *this;
+		}
+		
+		Iterator	&operator-=(const Iterator &rhs) { 
+			_p -= rhs._p;
+			return *this;
+		}
+		
+		Iterator			operator+(difference_type n) { return _p + n; }
+		friend Iterator		operator+(difference_type &lhs, const Iterator &rhs) { return rhs + lhs; } //? pk absolument mettre friend ?
+		Iterator			operator-(difference_type &n) { return _p - n; }
+		Iterator			operator-(const Iterator &rhs) { return _p - rhs._p; }
+		friend Iterator		operator-(difference_type &lhs, const Iterator &rhs) { return rhs - lhs; }
+		
 		template <class U>
 		bool	operator==(const Iterator<U> &other) const { return _p == other._p; }
 		
@@ -81,9 +118,10 @@ class Iterator
 		reference	operator[](difference_type i) { return _p[i]; }
 		typename Iterator<const T>::reference	operator[](difference_type i) const { return _p[i]; }
 		
-		//??? operator Iterator< const U >() const {
-		//? 	return ( Iterator< const U >( _p ) );
-		//? }
+		//^ operateur de conversion ^
+		operator Iterator< const T >() const {
+			return ( Iterator< const T >(_p) );
+		}
 
 	private:
 		pointer _p;
