@@ -65,7 +65,7 @@ class Allouloucator
 		void			destroy(pointer p)	{
 			if (_n_construct)
 				_n_construct--;
-			(value_type *)p->~value_type();
+			p->~value_type();
 		}
 
 		size_type		get_n_alloc()	{ return _n_alloc; }

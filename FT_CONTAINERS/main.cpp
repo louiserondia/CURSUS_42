@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/14 18:12:32 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/15 17:17:12 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ class A
 int	main(void)
 {
 	Allouloucator<std::string>		allocator;
+	
 	Vector<V3, Allouloucator<V3> >	vector;
 
 	std::cout << "\n	| PUSH_BACK 3 VECTORS |\n\n";
@@ -45,7 +46,7 @@ int	main(void)
 		vector.push_back(V3());
 		vector.push_back(V3(3, 4, 5));
 		for (size_t i = 0; i < vector.size(); i++)
-			vector[i].printV3();
+			vector.at(i).printV3();
 		std::cout << "vector capacity : " << vector.capacity() << "\n";
 		std::cout << "vector size : " << vector.size() << "\n\n";
 	}
@@ -53,50 +54,55 @@ int	main(void)
 	std::cout << "	| POP_BACK, RESIZE (smaller) & RESERVE (6) |\n\n";
 	{
 		vector.pop_back();
-		vector.resize(2, V3(9, 9, 9));
+		vector.resize(5, V3(9, 9, 9));
 		vector.reserve(6);
-		// for (size_t i = 0; i < vector.size(); i++)
-		// 	vector[i].printV3();
-		// std::cout << "vector capacity : " << vector.capacity() << "\n";
-		// std::cout << "vector size : " << vector.size() << "\n\n";
+		for (size_t i = 0; i < vector.size(); i++)
+			vector[i].printV3();
+		std::cout << "vector capacity : " << vector.capacity() << "\n";
+		std::cout << "vector size : " << vector.size() << "\n\n";
 	}
 
-	// std::cout << "	| CLEAR (size = 0), RESIZE (1) & PUSH_BACK |\n\n";
-	// {
-	// 	vector.clear();
-	// 	vector.resize(1, V3(9, 9, 9));
-	// 	vector.push_back(V3(3, 4, 5));
-	// 	vector.push_back(V3(8.8f, 8.8f, 8.8f));
-	// 	for (size_t i = 0; i < vector.size(); i++)
-	// 		vector[i].printV3();
-	// 	std::cout << "vector capacity : " << vector.capacity() << "\n";
-	// 	std::cout << "vector size : " << vector.size() << "\n\n";
-	// }
+	std::cout << "	| CLEAR (size = 0), RESIZE (1) & PUSH_BACK |\n\n";
+	{
+		vector.clear();
+		vector.resize(1, V3(9, 9, 9));
+		vector.push_back(V3(3, 4, 5));
+		vector.push_back(V3(8.8f, 8.8f, 8.8f));
+		for (size_t i = 0; i < vector.size(); i++)
+			vector[i].printV3();
+		std::cout << "vector capacity : " << vector.capacity() << "\n";
+		std::cout << "vector size : " << vector.size() << "\n\n";
+	}
 
-	// std::cout << "	| FRONT, AT & BACK |\n\n";
-	// std::cout << "vector front : ";
-	// vector.front().printV3();
-	// std::cout << "vector at 1 : ";
-	// vector.at(1).printV3();
-	// std::cout << "vector back : ";
-	// vector.back().printV3();
+	std::cout << "	| FRONT, AT & BACK |\n\n";
+	std::cout << "vector front : ";
+	vector.front().printV3();
+	std::cout << "vector at 1 : ";
+	vector.at(1).printV3();
+	std::cout << "vector back : ";
+	vector.back().printV3();
 
 
 	std::cout << "\n	| CONSTRUCTOR W/ SIZE & VALUE |\n\n";
-	Vector<std::string, Allouloucator<std::string> >	char_tab(4, "lol", allocator);
-	for (Iterator<std::string> it = char_tab.begin(); it != char_tab.end(); it++)
-		std::cout << "char_tab : " << *it << std::endl;
+	Vector<std::string, Allouloucator<std::string> >	str_tab(4, "lol");
+	for (Iterator<std::string> it = str_tab.begin(); it != str_tab.end(); it++)
+		std::cout << "str_tab : " << *it << std::endl;
 
+	std::cout << "\n	| CONSTRUCTOR W/ ITERATORS |\n\n";
+	int tab[4] = {0, 1, 2, 3 };
+	Vector<int, Allouloucator<int> >	it_tab(tab, tab + 4);
+
+	for (Iterator<int> it = it_tab.begin(); it != it_tab.end(); it++)
+		std::cout << "it_tab : "<< *it << std::endl;
 
 	Vector<int, Allouloucator<int> >	int_tab;
 
 	int_tab.push_back(2);
 	int_tab.push_back(4);
 	int_tab.push_back(6);
-	std::cout << "	| ITERATORS |\n\n";
-	for (Iterator<int> it = int_tab.begin(); it != int_tab.end(); it++)	{
+	std::cout << "\n	| ITERATORS |\n\n";
+	for (Iterator<int> it = int_tab.begin(); it != int_tab.end(); it++)
 		std::cout << "iterator : "<< *it << std::endl;
-	}
 
 	// std::cout << "vector[" << i << "] : " << vector[i] << "\n";
 }

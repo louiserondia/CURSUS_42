@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/14 18:13:01 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/15 17:39:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,26 @@ class Vector
 	// ^													^
 	// ^----------------------------------------------------^
 	
-		explicit Vector(const Allocator &alloc = Allocator()) : _data(nullptr), _size(0), _capacity(0) {
-			_allocator = alloc;
+		explicit Vector(const Allocator &alloc = Allocator()) : _data(0), _size(0), _capacity(0), _allocator(alloc) {
 			ReAlloc(2);
 		}
 		
-		explicit Vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator()) : _data(nullptr), _size(0), _capacity(0) {
-			_allocator = alloc;
+		explicit Vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator()) : _data(0), _size(0), _capacity(0), _allocator(alloc) {
 			ReAlloc(2);
 			assign(n, value);
 		}
 		
 		template <class InputIterator>
-		Vector(InputIterator first, InputIterator last, const Allocator & = Allocator());
+		Vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator()) : _data(0), _size(0), _capacity(0), _allocator(alloc) {
+			ReAlloc(2);
+			for (InputIterator it = first; it != last; it++)
+				push_back(*it);
+		}
+		
 		Vector(const Vector<T, Allocator> &x);
 		~Vector(void) {
 			clear();
-			delete _data;
+			_allocator.deallocate(_data, _capacity);
 		}
 
 		Vector<T, Allocator>	&operator=(const Vector<T, Allocator> &x);
@@ -150,8 +153,10 @@ class Vector
 			if (newCapacity < _size)
 				_size = newCapacity;
 			for (size_type i = 0; i < _size; i++)
-				ptr[i] = _data[i];
-			delete _data;
+				_allocator.construct(ptr + i, _data[i]);
+			for(size_type i = 0; i < _size; i++)
+				_allocator.destroy(_data + i);
+			_allocator.deallocate(_data, _capacity);
 			_data = ptr;
 			_capacity = newCapacity;
 		}
@@ -231,13 +236,13 @@ class Vector
 		void			push_back(const T &x)	{
 			if (_size >= _capacity)
 				ReAlloc(_capacity * 2);
-			_data[_size] = x; //! segfault ici
+			_allocator.construct(_data + _size, x);
 			_size++;
 		}
 
 		void			pop_back()	{
 			if (_size)	{
-				_data[_size].~T();
+				_allocator.destroy(_data + _size - 1);
 				_size--;
 			}
 		}
@@ -252,7 +257,7 @@ class Vector
 		
 		void			clear()	{
 			while(_size)	{
-				_data[_size].~T();
+				_data[_size - 1].~T();
 				_size--;
 			}
 		}
