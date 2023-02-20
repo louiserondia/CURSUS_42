@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/15 17:39:34 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/20 18:18:13 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ struct V3	{
 // ^--------------------------------------------------------^
 	
 
-// template < class T, class Allocator = Allouloucator<T> >
-template < class T, class Allocator = std::allocator<T> >
+template < class T, class Allocator = Allouloucator<T> >
+// template < class T, class Allocator = std::allocator<T> >
 
 class Vector
 {
@@ -77,29 +77,52 @@ class Vector
 	// ^													^
 	// ^----------------------------------------------------^
 	
-		explicit Vector(const Allocator &alloc = Allocator()) : _data(0), _size(0), _capacity(0), _allocator(alloc) {
+		explicit Vector(const Allocator &alloc = Allocator()):
+		_data(0),
+		_size(0),
+		_capacity(0),
+		_allocator(alloc) {
 			ReAlloc(2);
 		}
 		
-		explicit Vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator()) : _data(0), _size(0), _capacity(0), _allocator(alloc) {
+		explicit Vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator()) :
+		_data(0),
+		_size(0),
+		_capacity(0),
+		_allocator(alloc) {
 			ReAlloc(2);
 			assign(n, value);
 		}
 		
 		template <class InputIterator>
-		Vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator()) : _data(0), _size(0), _capacity(0), _allocator(alloc) {
+		Vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator()) : 
+		_data(0),
+		_size(0),
+		_capacity(0),
+		_allocator(alloc) {
 			ReAlloc(2);
 			for (InputIterator it = first; it != last; it++)
 				push_back(*it);
 		}
 		
-		Vector(const Vector<T, Allocator> &x);
+		Vector(const Vector<T, Allocator> &x) :
+		_data(x._data),
+		_size(x._size),
+		_capacity(x._capacity),
+		_allocator(x._allocator) {}
+
 		~Vector(void) {
 			clear();
 			_allocator.deallocate(_data, _capacity);
 		}
 
-		Vector<T, Allocator>	&operator=(const Vector<T, Allocator> &x);
+		Vector<T, Allocator>	&operator=(const Vector<T, Allocator> &x)	{
+			_data = x._data;
+			_size = x._size;
+			_capacity = x._capacity;
+			_allocator = x._allocator;
+			return *this;
+		}
 		allocator_type			get_allocator() const { return _allocator; }
 		
 		template <class InputIterator>
@@ -125,7 +148,7 @@ class Vector
 
 		iterator				begin() { return iterator(_data); }
 		const_iterator			begin() const { return const_iterator(_data); }
-		iterator				end() { return iterator(_data + _size); }
+		iterator				end() { return iterator(_data + _size); } //? est-ce qu'il envoie pas un trop tôt ?
 		const_iterator			end() const { return const_iterator(_data + _size); }
 		reverse_iterator		rbegin() { return reverse_iterator(_data + _size - 1); }
 		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_data + _size - 1); }
@@ -212,18 +235,15 @@ class Vector
 		}
 		
 		reference		front() { return _data[0]; }
+	
 		const_reference	front() const { return _data[0]; }
 		
 		reference	back() {
-			if (_size > 0)
-				return _data[size() - 1];
-			return _data[0];
+			return _data[size() - 1];
 		}
 		
 		const_reference	back() const { // ? refaire avec un iterator non ? c-a-d renvoyer begin() ou end() directement
-			if (_size > 0)
-				return _data[size() - 1];
-			return _data[0];
+			return _data[size() - 1];
 		}
 
 
@@ -247,17 +267,65 @@ class Vector
 			}
 		}
 		
-		iterator		insert(iterator position, const T &x);
-		iterator		insert(iterator position, size_type n, const T &x);
+		iterator		insert(iterator position, const T &x)	{
+			T	tmp = back();
+
+			std::copy_backward(position, end() - 2, end() - 1);
+			*position = x;
+			if (_size)
+				push_back(tmp);
+			return position;
+		}
+
+		iterator		insert(iterator position, size_type n, const T &x) {
+			
+		}
+		
 		template <class InputIterator>
 		void			insert(iterator position, InputIterator first, InputIterator last);
-		iterator		erase(iterator position);
-		iterator		erase(iterator first, iterator last);
-		void			swap(Vector<T, Allocator> &);
+		
+		iterator		erase(iterator position) {
+			bool	is_end = false;
+			bool	is_last = false;
+
+			if (position == end() - 1) { is_last = true; }
+			if (position == end()) { is_end = true; }
+	
+			if (is_end)
+				return end();
+			_allocator.destroy(position.operator->());
+			if (_size)
+				_size--;
+			if (!is_last)
+				std::copy(position + 1, end() + 1, position);
+			return position + 1;
+		}
+		
+		iterator		erase(iterator first, iterator last) {
+			bool		is_end = false;
+			bool		is_last = false;
+			
+			if (last == end() - 1) { is_last = true; }
+			if (last == end()) { is_end = true; }
+	
+			for (iterator it = first; it != last; it++) {
+				_allocator.destroy(it.operator->());
+				if (_size)
+					_size--;
+			}
+			if (!is_end) {
+				std::copy(last, end() + 1, first);
+				return first;
+			}
+			return end(); //? le mien ne segfault pas quand je return end alors que si j'essaie de print le vrai dans le main ca segfault
+		}
+		
+		void			swap(Vector<T, Allocator> &vector) {
+		}
 		
 		void			clear()	{
 			while(_size)	{
-				_data[_size - 1].~T();
+				_data[_size - 1].~T(); //? est-ce que je devrais plutot utiliser destroy et puis deallocate ?
 				_size--;
 			}
 		}

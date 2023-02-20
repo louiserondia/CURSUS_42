@@ -6,7 +6,7 @@
 #    By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/08 13:44:42 by lrondia           #+#    #+#              #
-#    Updated: 2023/02/15 16:44:35 by lrondia          ###   ########.fr        #
+#    Updated: 2023/02/20 15:12:00 by lrondia          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS = $(SRCS:.cpp=.o)
 
 CXX = clang++
 
-CXXFLAGS = -Wall -Wextra -Werror -Wno-unused-parameter -std=c++98 #-fsanitize=address
+CXXFLAGS = -Wall -Wextra -Werror -Wno-unused-parameter -std=c++98 -fsanitize=address -g
 
 NAME = ft_containers
 

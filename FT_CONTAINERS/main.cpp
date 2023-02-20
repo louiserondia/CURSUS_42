@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/15 17:17:12 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/20 15:44:10 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,23 +86,51 @@ int	main(void)
 	std::cout << "\n	| CONSTRUCTOR W/ SIZE & VALUE |\n\n";
 	Vector<std::string, Allouloucator<std::string> >	str_tab(4, "lol");
 	for (Iterator<std::string> it = str_tab.begin(); it != str_tab.end(); it++)
-		std::cout << "str_tab : " << *it << std::endl;
+		std::cout << "str_tab : " << *it << std::endl;	
+	std::cout << "str_tab size : " << str_tab.size() << std::endl;
 
 	std::cout << "\n	| CONSTRUCTOR W/ ITERATORS |\n\n";
 	int tab[4] = {0, 1, 2, 3 };
 	Vector<int, Allouloucator<int> >	it_tab(tab, tab + 4);
 
 	for (Iterator<int> it = it_tab.begin(); it != it_tab.end(); it++)
-		std::cout << "it_tab : "<< *it << std::endl;
+		std::cout << "tab : "<< *it << std::endl;
 
 	Vector<int, Allouloucator<int> >	int_tab;
 
-	int_tab.push_back(2);
-	int_tab.push_back(4);
+	int_tab.push_back(10);
+	int_tab.push_back(40);
 	int_tab.push_back(6);
+	int_tab.push_back(8);
+	int_tab.push_back(1000000);
 	std::cout << "\n	| ITERATORS |\n\n";
+	for (Iterator<int> it = int_tab.begin(); it != int_tab.end(); it++)
+		std::cout << "int_tab : "<< *it << std::endl;
+
+	std::cout << "int_tab[" << 1 << "] : " << int_tab[1] << "\n";
+
+	std::cout << "\n	| ERASE 1st THEN 3rd ELEM |\n\n";
+	std::cout << "return :" << *(int_tab.erase(int_tab.begin(), int_tab.begin() + 1)) << std::endl;
+	int_tab.erase(int_tab.end() - 1);
 	for (Iterator<int> it = int_tab.begin(); it != int_tab.end(); it++)
 		std::cout << "iterator : "<< *it << std::endl;
 
-	// std::cout << "vector[" << i << "] : " << vector[i] << "\n";
+	std::vector<int>	lol;
+	lol.push_back(10);
+	lol.push_back(40);
+	lol.push_back(6);
+	lol.push_back(8);
+	lol.push_back(1000000);
+	std::cout << "actual return :" << *(lol.erase(lol.begin(), lol.begin() + 1)) << std::endl;
+	lol.erase(lol.end() - 1);
+	for (std::vector<int>::iterator it = lol.begin(); it != lol.end(); it++)
+		std::cout << "actual vector : "<< *it << std::endl;
+
+	// std::cout << "\n	| INSERT INSIDE VECTOR |\n\n";
+	// int i = 1;
+	// int_tab.insert(&i, 1);
+	// int_tab.insert(int_tab.begin(), 1);
+
+	Iterator<int> it = int_tab.begin();
+	it - 1;
 }
