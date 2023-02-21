@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/20 18:18:13 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/21 21:14:25 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,8 @@
 #include "Allouloucator.hpp"
 #include "Iterator.hpp"
 #include <stdexcept>
-
-
-struct V3	{
-	float x;
-	float y;
-	float z;
-
-	V3() : x(0), y(0), z(0) { /*std::cout << "Default constructor\n";*/ }
-	V3(float x, float y, float z) : x(x), y(y), z(z) { /*std::cout << "Constructor\n";*/ }
-	V3(const V3 &copy) : x(copy.x), y(copy.y), z(copy.z) { /*std::cout << "Copy constructor\n";*/ }
-	~V3() { /*std::cout << "Destroy\n";*/ }
-
-	void	printV3(){
-		std::cout << "x " << x << "	y " << y << "	z " << z << "\n";
-	}
-};
+#include <string>
+#include <algorithm>
 
 // ^--------------------------------------------------------^
 // ^	 __   __   ___     ___    _____    ___     ___   	^	
@@ -43,7 +29,6 @@ struct V3	{
 	
 
 template < class T, class Allocator = Allouloucator<T> >
-// template < class T, class Allocator = std::allocator<T> >
 
 class Vector
 {
@@ -67,7 +52,7 @@ class Vector
 		typedef	Iterator<const value_type>				const_iterator;
 		typedef	std::reverse_iterator<iterator>			reverse_iterator;
 		typedef	std::reverse_iterator<const_iterator>	const_reverse_iterator;
-		typedef	std::size_t								size_type; // ? difference si j'ecris juste size_t ?
+		typedef	std::size_t								size_type;
 		typedef	std::ptrdiff_t							difference_type;
 
 
@@ -100,7 +85,7 @@ class Vector
 		_size(0),
 		_capacity(0),
 		_allocator(alloc) {
-			ReAlloc(2);
+			ReAlloc(last - first); //? test d'alloc direct la bonne taille, a verifier
 			for (InputIterator it = first; it != last; it++)
 				push_back(*it);
 		}
@@ -242,7 +227,7 @@ class Vector
 			return _data[size() - 1];
 		}
 		
-		const_reference	back() const { // ? refaire avec un iterator non ? c-a-d renvoyer begin() ou end() directement
+		const_reference	back() const {
 			return _data[size() - 1];
 		}
 
@@ -278,11 +263,73 @@ class Vector
 		}
 
 		iterator		insert(iterator position, size_type n, const T &x) {
+			difference_type	move_old_NIM = std::min(n, (size_type)(end() - position)); //size - pos
+			difference_type	move_new_NIM = std::max((difference_type)0, (difference_type)(n - (end() - position)));
+
+			size_type		i;
+			size_type		j;
 			
+			//^		0    allouer la taille nécessaire
+			if (_capacity < _size + n)
+				reserve(std::max(_size + n, _size * 2));
+
+// ca marche pas ici et au copy backward
+
+			std::cout << "position - begin() : " << position - begin() << "\n";
+			//^		1	ajouter les elements de l'ancien vecteur dans la mémoire non-initialisée (NIM)
+			for (i = 0; i < (size_type)move_old_NIM; i++)
+				_allocator.construct(_data + (position - begin() + i), *(end() - n + i));
+			_size += i;
+
+			//^		2	ajouter les elements du nouveau vecteur dans la NIM
+			for (j = 0; j < (size_type)move_new_NIM; j++)
+				_allocator.construct(_data + _size + i, x); 
+			
+			//^		3	copier les élements restants de l'ancien vecteur dans la mémoire déjà initialisée
+			std::copy_backward(position, position + n, end());
+
+			//^		4	copier les éléments restants du nouveau vecteur dans la mémoire déjà initialisée
+			iterator	max = std::min(end(), position + n);
+			for (iterator it = position; it != max; it++)
+				_data[it - begin()] = x;
+
+			return position;
 		}
+
+ 
+
+		// iterator		insert(iterator position, size_type n, const T &x) {
+		// 	size_type	i = 0;
+		// 	iterator	uninit_mem = end();
+		// 	iterator	init_mem;
+
+		// 	while (_capacity < _size + n)
+		// 		ReAlloc(_capacity * 2);
+		// 	while (i < n && uninit_mem > position) {
+		// 		uninit_mem--;
+		// 		i++;
+		// 	}
+		// 	init_mem = uninit_mem;
+		// 	for (size_type k = 0; uninit_mem < end() - 1 && k < n; k++) {
+		// 		_allocator.construct(_data + (uninit_mem - begin()) + n, *uninit_mem);
+		// 		_size++;
+		// 		uninit_mem++;
+		// 	}
+		// 	if (position != init_mem)
+		// 		std::copy_backward(position, init_mem, uninit_mem);
+		// 	for(size_type j = 0; j < n;  j++) {
+		// 		if (position + j >= end()) {
+		// 			_allocator.construct(_data + (position - begin()) + j, x);
+		// 			_size++;
+		// 		}
+		// 		else
+		// 			_data[(position - begin()) + j] = x;
+		// 	}
+		// 	return position;
+		// }
 		
-		template <class InputIterator>
-		void			insert(iterator position, InputIterator first, InputIterator last);
+		// template <class InputIterator>
+		// void			insert(iterator position, InputIterator first, InputIterator last);
 		
 		iterator		erase(iterator position) {
 			bool	is_end = false;
@@ -320,12 +367,25 @@ class Vector
 			return end(); //? le mien ne segfault pas quand je return end alors que si j'essaie de print le vrai dans le main ca segfault
 		}
 		
-		void			swap(Vector<T, Allocator> &vector) {
+		void			swap(Vector<T, Allocator> &other) { //! utiliser insert pour _data
+			T			*copy_data = _data;
+			size_t		copy_size = _size;
+			size_t		copy_capacity = _capacity;
+			Allocator	copy_allocator = _allocator;
+			
+			_data = other._data;
+			_size = other._size;
+			_capacity = other._capacity;
+			_allocator = other._allocator;
+			other._data = copy_data;
+			other._size = copy_size;
+			other._capacity = copy_capacity;
+			other._allocator = copy_allocator;
 		}
 		
 		void			clear()	{
 			while(_size)	{
-				_data[_size - 1].~T(); //? est-ce que je devrais plutot utiliser destroy et puis deallocate ?
+				_data[_size - 1].~T(); //? ou destroy et puis deallocate ?
 				_size--;
 			}
 		}

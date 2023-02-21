@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:14:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/16 18:39:33 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/21 14:37:19 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ class Iterator
 		~Iterator(void) {}
 
 		Iterator	&operator=(const Iterator &other) {
-			_p(other._p);
+			_p = other._p;
 			return *this;
 		}
 

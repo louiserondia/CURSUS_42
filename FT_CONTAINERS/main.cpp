@@ -6,12 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/20 15:44:10 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/21 20:56:02 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Allouloucator.hpp"
 #include "Vector.hpp"
+#include "V3.hpp"
 #include "Iterator.hpp"
 #include <memory>
 #include <vector>
@@ -25,14 +26,10 @@ class A
 		~A() { std::cout << "Destructor\n"; }
 };
 
-// template <class T, class Allocator>
-// void	debugVector(Vector<V3, Allouloucator<V3> > vector)
-// {
-// 	for (size_t i = 0; i < vector.size(); i++)
-// 		vector[i].printV3();
-// 	std::cout << "vector capacity : " << vector.capacity() << "\n";
-// 	std::cout << "vector size : " << vector.size() << "\n";
-// }
+void	print_int_vector(Vector<int> vector, std::string name) {
+	for (Iterator<int> it = vector.begin(); it != vector.end(); it++)
+		std::cout << name << " : "<< *it << std::endl;
+}
 
 int	main(void)
 {
@@ -115,22 +112,34 @@ int	main(void)
 	for (Iterator<int> it = int_tab.begin(); it != int_tab.end(); it++)
 		std::cout << "iterator : "<< *it << std::endl;
 
-	std::vector<int>	lol;
-	lol.push_back(10);
-	lol.push_back(40);
-	lol.push_back(6);
-	lol.push_back(8);
-	lol.push_back(1000000);
-	std::cout << "actual return :" << *(lol.erase(lol.begin(), lol.begin() + 1)) << std::endl;
-	lol.erase(lol.end() - 1);
-	for (std::vector<int>::iterator it = lol.begin(); it != lol.end(); it++)
-		std::cout << "actual vector : "<< *it << std::endl;
+	// std::cout << "\n	| SWAP INT_TAB AND LOL |\n\n";
+	// Vector<int>	lol;
+	// lol.push_back(66666);
+	// lol.push_back(77777);
+	// lol.push_back(88888);
+	// lol.push_back(99999);
+	// lol.swap(int_tab);
+	// print_int_vector(lol, "lol");
+	// print_int_vector(int_tab, "int_tab");
+	// for (Iterator<int> it = lol.begin(); it != lol.end(); it++)
+	// 	std::cout << "lol : "<< *it << std::endl;
+	// for (Iterator<int> it = int_tab.begin(); it != int_tab.end(); it++)
+	// 	std::cout << "iterator : "<< *it << std::endl;
 
-	// std::cout << "\n	| INSERT INSIDE VECTOR |\n\n";
-	// int i = 1;
-	// int_tab.insert(&i, 1);
-	// int_tab.insert(int_tab.begin(), 1);
+	std::cout << "\n	| INSERT n TIMES A VALUE INSIDE VECTOR |\n\n";
+	Vector<int> new_tab;
+	for (int i = 0; i < 9; i++)
+		new_tab.push_back(i);
+	std::cout << "new_tab before insert :	";
+	for (Iterator<int> it = new_tab.begin(); it != new_tab.end(); it++)
+		std::cout << *it << " | ";
+	std::cout << std::endl /*<< "begin + 2 : " << *(new_tab.begin() + 2) */<< std::endl;
 
-	Iterator<int> it = int_tab.begin();
-	it - 1;
+	new_tab.insert(new_tab.begin(), 4, 9);
+	std::cout << "new_tab after insert :	";
+	for (Iterator<int> it = new_tab.begin(); it != new_tab.end(); it++)
+		std::cout << *it << " | ";
+	std::cout << std::endl << std::endl;
+		// std::cout << "new_tab : "<< *it << std::endl;
+	
 }
