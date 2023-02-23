@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/21 20:56:02 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/23 12:07:55 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	main(void)
 
 	std::cout << "\n	| INSERT n TIMES A VALUE INSIDE VECTOR |\n\n";
 	Vector<int> new_tab;
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 3; i++)
 		new_tab.push_back(i);
 	std::cout << "new_tab before insert :	";
 	for (Iterator<int> it = new_tab.begin(); it != new_tab.end(); it++)

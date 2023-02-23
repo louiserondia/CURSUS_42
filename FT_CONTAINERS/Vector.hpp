@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/21 21:14:25 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/23 12:37:37 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,33 +265,40 @@ class Vector
 		iterator		insert(iterator position, size_type n, const T &x) {
 			difference_type	move_old_NIM = std::min(n, (size_type)(end() - position)); //size - pos
 			difference_type	move_new_NIM = std::max((difference_type)0, (difference_type)(n - (end() - position)));
-
-			size_type		i;
-			size_type		j;
+			difference_type rest_old = std::max((difference_type)0, move_old_NIM - (difference_type)n);
+			difference_type diff_begin_pos = position - begin();
 			
-			//^		0    allouer la taille nécessaire
+			size_type		i = 0;
+			size_type		j = 0;
+
+			//^		0    allouer la taille nécessaire & récupérer la bonne valeur de position
 			if (_capacity < _size + n)
 				reserve(std::max(_size + n, _size * 2));
+			position = begin() + diff_begin_pos;
 
-// ca marche pas ici et au copy backward
-
-			std::cout << "position - begin() : " << position - begin() << "\n";
+				std::cout << "position - begin " << position - begin() << "\n";
 			//^		1	ajouter les elements de l'ancien vecteur dans la mémoire non-initialisée (NIM)
+			difference_type first_elem = std::max((difference_type)0, (difference_type)(_size - n));
 			for (i = 0; i < (size_type)move_old_NIM; i++)
-				_allocator.construct(_data + (position - begin() + i), *(end() - n + i));
-			_size += i;
+				_allocator.construct(_data + _size + move_new_NIM + i, _data[first_elem + i]);
 
 			//^		2	ajouter les elements du nouveau vecteur dans la NIM
 			for (j = 0; j < (size_type)move_new_NIM; j++)
-				_allocator.construct(_data + _size + i, x); 
-			
+				_allocator.construct(_data + _size + j, x);
+			_size += i;
+			_size += j;
+
 			//^		3	copier les élements restants de l'ancien vecteur dans la mémoire déjà initialisée
-			std::copy_backward(position, position + n, end());
+			if (rest_old > 0)
+				std::copy_backward(position, end() - n, end() - n);
 
 			//^		4	copier les éléments restants du nouveau vecteur dans la mémoire déjà initialisée
 			iterator	max = std::min(end(), position + n);
-			for (iterator it = position; it != max; it++)
+			for (iterator it = position; it != max; it++) {
+				// std::cout << "position - begin " << it - begin() << "\n";
+				// std::cout << "position " << *position << "\n";
 				_data[it - begin()] = x;
+			}
 
 			return position;
 		}
