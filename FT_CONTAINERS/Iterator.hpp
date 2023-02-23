@@ -24,6 +24,8 @@
 // 	class Reference = T&
 // 	>
 
+namespace ft {
+
 template <class T>
 
 class Iterator
@@ -126,3 +128,5 @@ class Iterator
 	private:
 		pointer _p;
 };
+
+}
