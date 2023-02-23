@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/23 14:40:45 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/23 19:35:00 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "Allouloucator.hpp"
 #include "Iterator.hpp"
+#include "type_traits.hpp"
+#include "utils.hpp"
 #include <stdexcept>
 #include <string>
 #include <algorithm>
@@ -67,7 +69,7 @@ class Vector
 		_size(0),
 		_capacity(0),
 		_allocator(alloc) {
-			ReAlloc(2);
+			reserve(2);
 		}
 		
 		explicit Vector(size_type n, const T &value = T(), const Allocator &alloc = Allocator()) :
@@ -75,26 +77,31 @@ class Vector
 		_size(0),
 		_capacity(0),
 		_allocator(alloc) {
-			ReAlloc(2);
+			reserve(2);
 			assign(n, value);
 		}
 		
 		template <class InputIterator>
-		Vector(InputIterator first, InputIterator last, const Allocator &alloc = Allocator()) : 
+		Vector(InputIterator first, 
+				InputIterator last, 
+				const Allocator &alloc = Allocator(),
+				typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type * = 0) : 
 		_data(0),
 		_size(0),
 		_capacity(0),
 		_allocator(alloc) {
-			ReAlloc(last - first); //? test d'alloc direct la bonne taille, a verifier
+			reserve(std::distance(first, last));
 			for (InputIterator it = first; it != last; it++)
 				push_back(*it);
 		}
 		
 		Vector(const Vector<T, Allocator> &x) :
-		_data(x._data),
-		_size(x._size),
-		_capacity(x._capacity),
-		_allocator(x._allocator) {}
+		_data(0),
+		_size(0),
+		_capacity(0),
+		_allocator(x._allocator) {
+			assign(x.begin(), x.end());
+		}
 
 		~Vector(void) {
 			clear();
@@ -102,26 +109,26 @@ class Vector
 		}
 
 		Vector<T, Allocator>	&operator=(const Vector<T, Allocator> &x)	{
-			_data = x._data;
+			assign(x.begin(), x.end());
 			_size = x._size;
 			_capacity = x._capacity;
 			_allocator = x._allocator;
 			return *this;
 		}
-		allocator_type			get_allocator() const { return _allocator; }
+		
+		allocator_type	get_allocator() const { return _allocator; }
 		
 		template <class InputIterator>
-		void					assign(InputIterator first, InputIterator last) {  // ? verifier et utiliser insert
+		void	assign(InputIterator first,
+						InputIterator last, 
+						typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type * = 0) {
 			clear();
-			for (InputIterator it = first; it != last; it++)	{
-				push_back(*it);
-			}
+			insert(begin(), first, last);
 		}
 		
-		void					assign(size_type n, const T &u)	{
+		void	assign(size_type n, const T &u)	{
 			clear();
-			while (_size < n)
-				push_back(u);
+			insert(begin(), n, u);
 		}
 
 	// ^----------------------------------------------------^
@@ -168,14 +175,14 @@ class Vector
 			_data = ptr;
 			_capacity = newCapacity;
 		}
-		
-		void			resize(size_type sz, T c = T())	{ // ? peut-etre a refaire avec insert ??
+
+		void			resize(size_type sz, T c = T())	{
 			if (sz > max_size())
 				throw(std::length_error(""));
-			while (_size > sz)
-				pop_back();
-			while (_size < sz)
-				push_back(c);
+			if (_size > sz)
+				erase(begin() + sz, end());
+			if (_size < sz)
+				insert(end(), sz - _size, c);
 		}
 		
 		void			 reserve(size_type n) {
@@ -262,45 +269,64 @@ class Vector
 			return position;
 		}
 
-		iterator		insert(iterator position, size_type n, const T &x) {
-			difference_type	move_old_NIM = std::min(n, (size_type)(end() - position)); //size - pos
-			difference_type	move_new_NIM = std::max((difference_type)0, (difference_type)(n - (end() - position)));
-			difference_type diff_begin_pos = position - begin();
-			difference_type rest_old = std::max((difference_type)0, (difference_type)_size - (difference_type)n - diff_begin_pos);
-			
+	/*	0.	allouer la taille nécessaire & récupérer la bonne valeur de position
+		1.	ajouter les elements de l'ancien vecteur dans la mémoire non-initialisée (NIM)
+		2.	ajouter les elements du nouveau vecteur dans la NIM
+		3.	copier les élements restants de l'ancien vecteur dans la mémoire déjà initialisée
+		4.	copier les éléments restants du nouveau vecteur dans la mémoire déjà initialisée	*/
+
+		iterator	insert(iterator position, size_type n, const T &x) {
 			size_type		i = 0;
 			size_type		j = 0;
+			difference_type	old_uninit = std::min(n, (size_type)(end() - position));
+			difference_type	new_uninit = std::max((difference_type)0, (difference_type)(n - (end() - position)));
+			difference_type index_pos = position - begin();
+			difference_type old_rest = std::max((difference_type)0, (difference_type)_size - (difference_type)n - index_pos);
+			difference_type	max = std::min((difference_type)_size, index_pos + (difference_type)n);
 
-			//^		0    allouer la taille nécessaire & récupérer la bonne valeur de position
 			if (_capacity < _size + n)
 				reserve(std::max(_size + n, _size * 2));
-			position = begin() + diff_begin_pos;
-
-			//^		1	ajouter les elements de l'ancien vecteur dans la mémoire non-initialisée (NIM)
-			difference_type first_elem = diff_begin_pos + rest_old;
-			for (i = 0; i < (size_type)move_old_NIM; i++)
-				_allocator.construct(_data + _size + move_new_NIM + i, _data[first_elem + i]);
-
-			//^		2	ajouter les elements du nouveau vecteur dans la NIM
-			for (j = 0; j < (size_type)move_new_NIM; j++)
+			position = begin() + index_pos;
+			for (i = 0; i < (size_type)old_uninit; i++)
+				_allocator.construct(_data + _size + new_uninit + i, _data[index_pos + old_rest + i]);
+			for (j = 0; j < (size_type)new_uninit; j++)
 				_allocator.construct(_data + _size + j, x);
-
-			//^		3	copier les élements restants de l'ancien vecteur dans la mémoire déjà initialisée
-			if (rest_old)
+			if (old_rest)
 				std::copy_backward(position, end() - n, end());
-
-			//^		4	copier les éléments restants du nouveau vecteur dans la mémoire déjà initialisée
-			iterator	max = std::min(end(), position + n);
-			// std::cout << "it - begin()" << it - begin() << "\n";
-			for (iterator it = position; it != max; it++)
-				_data[it - begin()] = x;
-
+			for (difference_type i = index_pos; i != max; i++)
+				_data[i] = x;
 			_size += i + j;
 			return position;
 		}
 
-		// template <class InputIterator>
-		// void			insert(iterator position, InputIterator first, InputIterator last);
+		template <class InputIterator>
+		void	insert(iterator position, 
+						InputIterator first, 
+						InputIterator last, 
+						typename enable_if< !is_integral< InputIterator >::value, InputIterator >::type * = 0) {
+			size_type		i = 0;
+			size_type		j = 0;
+			difference_type	n = std::distance(first, last);
+			difference_type	old_uninit = std::min(n, end() - position);
+			difference_type	new_uninit = std::max((difference_type)0, (difference_type)(n - (end() - position)));
+			difference_type index_pos = position - begin();
+			difference_type old_rest = std::max((difference_type)0, (difference_type)_size - (difference_type)n - index_pos);
+			difference_type	max = std::min((difference_type)_size, index_pos + (difference_type)n);
+			difference_type	new_rest = n - new_uninit;
+
+			if (_capacity < _size + n)
+				reserve(std::max(_size + n, _size * 2));
+			position = begin() + index_pos;
+			for (i = 0; i < (size_type)old_uninit; i++)
+				_allocator.construct(_data + _size + new_uninit + i, _data[index_pos + old_rest + i]);
+			for (j = 0; j < (size_type)new_uninit; j++)
+				_allocator.construct(_data + _size + j, *(last - new_uninit + j));
+			if (old_rest)
+				std::copy_backward(position, end() - n, end());
+			for (difference_type k = index_pos; k != max; k++)
+				_data[k] = *(first + k - index_pos);
+			_size += i + j;
+		}
 		
 		iterator		erase(iterator position) {
 			bool	is_end = false;
@@ -338,20 +364,11 @@ class Vector
 			return end(); //? le mien ne segfault pas quand je return end alors que si j'essaie de print le vrai dans le main ca segfault
 		}
 		
-		void			swap(Vector<T, Allocator> &other) { //! utiliser insert pour _data
-			T			*copy_data = _data;
-			size_t		copy_size = _size;
-			size_t		copy_capacity = _capacity;
-			Allocator	copy_allocator = _allocator;
-			
-			_data = other._data;
-			_size = other._size;
-			_capacity = other._capacity;
-			_allocator = other._allocator;
-			other._data = copy_data;
-			other._size = copy_size;
-			other._capacity = copy_capacity;
-			other._allocator = copy_allocator;
+		void	swap(Vector<T, Allocator> &other) {
+			ft::swap(_data, other._data);
+			ft::swap(_size, other._size);
+			ft::swap(_capacity, other._capacity);
+			ft::swap(_allocator, other._allocator);
 		}
 		
 		void			clear()	{
