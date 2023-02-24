@@ -6,23 +6,11 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:14:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/21 14:37:19 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/24 14:10:23 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
-
-#include <iostream>
-#include "Vector.hpp"
-#include "Allouloucator.hpp"
-
-// template <
-// 	class Category,
-// 	class T,
-// 	class Distance = ptrdiff_t,
-// 	class Pointer = T*,
-// 	class Reference = T&
-// 	>
 
 namespace ft {
 
@@ -37,13 +25,6 @@ class Iterator
 		typedef	value_type &					reference;
 		typedef	std::ptrdiff_t					difference_type;
 		typedef	std::random_access_iterator_tag	iterator_category;
-
-		// typedef T			value_type;
-		// typedef	Distance	difference_type;
-		// typedef	Pointer		pointer;
-		// typedef	Reference	reference;
-		// typedef	Category	iterator_category;
-
 
 		Iterator(void) : _p(0) {}
 		Iterator(pointer p) : _p(p) {}

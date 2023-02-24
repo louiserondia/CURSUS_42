@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
+/*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/23 19:35:00 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/24 14:53:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 #include "Allouloucator.hpp"
 #include "Iterator.hpp"
+#include "reverse_iterator.hpp"
+#include "iterator_traits.hpp"
 #include "type_traits.hpp"
 #include "utils.hpp"
 #include <stdexcept>
@@ -30,7 +32,6 @@
 // ^--------------------------------------------------------^
 	
 namespace ft {
-
 
 template < class T, class Allocator = Allouloucator<T> >
 
@@ -54,8 +55,8 @@ class vector
 		typedef	typename Allocator::const_pointer		const_pointer;
 		typedef	Iterator<value_type>					iterator;
 		typedef	Iterator<const value_type>				const_iterator;
-		typedef	std::reverse_iterator<iterator>			reverse_iterator;
-		typedef	std::reverse_iterator<const_iterator>	const_reverse_iterator;
+		typedef ft::reverse_iterator<iterator>			reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 		typedef	std::size_t								size_type;
 		typedef	std::ptrdiff_t							difference_type;
 
@@ -117,7 +118,7 @@ class vector
 			_allocator = x._allocator;
 			return *this;
 		}
-		
+
 		allocator_type	get_allocator() const { return _allocator; }
 		
 		template <class InputIterator>
@@ -127,7 +128,7 @@ class vector
 			clear();
 			insert(begin(), first, last);
 		}
-		
+
 		void	assign(size_type n, const T &u)	{
 			clear();
 			insert(begin(), n, u);
@@ -144,10 +145,10 @@ class vector
 		const_iterator			begin() const { return const_iterator(_data); }
 		iterator				end() { return iterator(_data + _size); } //? est-ce qu'il envoie pas un trop tôt ?
 		const_iterator			end() const { return const_iterator(_data + _size); }
-		reverse_iterator		rbegin() { return reverse_iterator(_data + _size - 1); }
-		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_data + _size - 1); }
-		reverse_iterator		rend() { return iterator(_data - 1); }
-		const_reverse_iterator	rend() const { return const_iterator(_data - 1); }
+		reverse_iterator		rbegin() { return reverse_iterator(_data + _size); }
+		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_data + _size); }
+		reverse_iterator		rend() { return reverse_iterator(_data); }
+		const_reverse_iterator	rend() const { return const_reverse_iterator(_data); }
 
 	// ^----------------------------------------------------^
 	// ^													^
@@ -160,23 +161,6 @@ class vector
 		size_type		max_size() const { return std::numeric_limits<size_type>::max() / sizeof(size_type); }
 		size_type		capacity() const { return _capacity; }
 		bool			empty() const { return (!_size); }
-		
-		void			ReAlloc(size_type newCapacity)	{
-			T	*ptr;
-			
-			if (newCapacity > max_size())
-				throw(std::length_error(""));
-			ptr = _allocator.allocate(newCapacity);
-			if (newCapacity < _size)
-				_size = newCapacity;
-			for (size_type i = 0; i < _size; i++)
-				_allocator.construct(ptr + i, _data[i]);
-			for(size_type i = 0; i < _size; i++)
-				_allocator.destroy(_data + i);
-			_allocator.deallocate(_data, _capacity);
-			_data = ptr;
-			_capacity = newCapacity;
-		}
 
 		void			resize(size_type sz, T c = T())	{
 			if (sz > max_size())
@@ -188,10 +172,17 @@ class vector
 		}
 		
 		void			 reserve(size_type n) {
+			T	*ptr;
 			if (n > max_size())
 				throw (std::length_error(""));
 			if (_capacity < n)	{
-				ReAlloc(n);
+				ptr = _allocator.allocate(n);
+				for (size_type i = 0; i < _size; i++)
+					_allocator.construct(ptr + i, _data[i]);
+				for(size_type i = 0; i < _size; i++)
+					_allocator.destroy(_data + i);
+				_allocator.deallocate(_data, _capacity);
+				_data = ptr;
 				_capacity = n;
 			}
 		}
@@ -249,7 +240,7 @@ class vector
 
 		void			push_back(const T &x)	{
 			if (_size >= _capacity)
-				ReAlloc(_capacity * 2);
+				reserve(_capacity * 2);
 			_allocator.construct(_data + _size, x);
 			_size++;
 		}
@@ -262,13 +253,10 @@ class vector
 		}
 		
 		iterator		insert(iterator position, const T &x)	{
-			T	tmp = back();
-
-			std::copy_backward(position, end() - 2, end() - 1);
-			*position = x;
-			if (_size)
-				push_back(tmp);
-			return position;
+			difference_type	index_pos = std::distance(begin(), position);
+			
+			insert(position, 1, x);
+			return begin() + index_pos;
 		}
 
 	/*	0.	allouer la taille nécessaire & récupérer la bonne valeur de position
@@ -277,57 +265,53 @@ class vector
 		3.	copier les élements restants de l'ancien vecteur dans la mémoire déjà initialisée
 		4.	copier les éléments restants du nouveau vecteur dans la mémoire déjà initialisée	*/
 
-		iterator	insert(iterator position, size_type n, const T &x) {
-			size_type		i = 0;
-			size_type		j = 0;
-			difference_type	old_uninit = std::min(n, (size_type)(end() - position));
-			difference_type	new_uninit = std::max((difference_type)0, (difference_type)(n - (end() - position)));
-			difference_type index_pos = position - begin();
-			difference_type old_rest = std::max((difference_type)0, (difference_type)_size - (difference_type)n - index_pos);
-			difference_type	max = std::min((difference_type)_size, index_pos + (difference_type)n);
+		void	insert(iterator position, size_type n, const T &x) {
+			typedef difference_type diff_t;
+
+			diff_t	old_uninit = std::min(n, (size_type)(end() - position));
+			diff_t	new_uninit = std::max((diff_t)0, (diff_t)(n - (end() - position)));
+			diff_t	index_pos = std::distance(begin(), position);
+			diff_t	old_rest = std::max((diff_t)0, (diff_t)_size - (diff_t)n - index_pos);
+			diff_t	max = std::min((diff_t)_size, index_pos + (diff_t)n);
 
 			if (_capacity < _size + n)
 				reserve(std::max(_size + n, _size * 2));
 			position = begin() + index_pos;
-			for (i = 0; i < (size_type)old_uninit; i++)
+			for (diff_t i = 0; i < old_uninit; i++)
 				_allocator.construct(_data + _size + new_uninit + i, _data[index_pos + old_rest + i]);
-			for (j = 0; j < (size_type)new_uninit; j++)
+			for (diff_t j = 0; j < new_uninit; j++)
 				_allocator.construct(_data + _size + j, x);
 			if (old_rest)
 				std::copy_backward(position, end() - n, end());
-			for (difference_type i = index_pos; i != max; i++)
+			for (diff_t i = index_pos; i != max; i++)
 				_data[i] = x;
-			_size += i + j;
-			return position;
+			_size += n;
 		}
 
 		template <class InputIterator>
-		void	insert(iterator position, 
-						InputIterator first, 
-						InputIterator last, 
+		void	insert(iterator position, InputIterator first, InputIterator last, 
 						typename enable_if< !is_integral< InputIterator >::value, InputIterator >::type * = 0) {
-			size_type		i = 0;
-			size_type		j = 0;
-			difference_type	n = std::distance(first, last);
-			difference_type	old_uninit = std::min(n, end() - position);
-			difference_type	new_uninit = std::max((difference_type)0, (difference_type)(n - (end() - position)));
-			difference_type index_pos = position - begin();
-			difference_type old_rest = std::max((difference_type)0, (difference_type)_size - (difference_type)n - index_pos);
-			difference_type	max = std::min((difference_type)_size, index_pos + (difference_type)n);
-			difference_type	new_rest = n - new_uninit;
+			typedef difference_type diff_t;
+
+			diff_t	n = std::distance(first, last);
+			diff_t	old_uninit = std::min(n, end() - position);
+			diff_t	new_uninit = std::max((diff_t)0, n - (end() - position));
+			diff_t	index_pos = position - begin();
+			diff_t	old_rest = (diff_t)_size - n - index_pos;
+			diff_t	max = std::min((diff_t)_size, index_pos + n);
 
 			if (_capacity < _size + n)
 				reserve(std::max(_size + n, _size * 2));
 			position = begin() + index_pos;
-			for (i = 0; i < (size_type)old_uninit; i++)
+			for (diff_t i = 0; i < old_uninit; i++)
 				_allocator.construct(_data + _size + new_uninit + i, _data[index_pos + old_rest + i]);
-			for (j = 0; j < (size_type)new_uninit; j++)
+			for (diff_t j = 0; j < new_uninit; j++)
 				_allocator.construct(_data + _size + j, *(last - new_uninit + j));
-			if (old_rest)
+			if (old_rest > 0)
 				std::copy_backward(position, end() - n, end());
-			for (difference_type k = index_pos; k != max; k++)
+			for (diff_t k = index_pos; k != max; k++)
 				_data[k] = *(first + k - index_pos);
-			_size += i + j;
+			_size += n;
 		}
 		
 		iterator		erase(iterator position) {
@@ -363,7 +347,9 @@ class vector
 				std::copy(last, end() + 1, first);
 				return first;
 			}
-			return end(); //? le mien ne segfault pas quand je return end alors que si j'essaie de print le vrai dans le main ca segfault
+			return end(); 
+			//^return le dernier et si last est + loin que end, alors return end
+			//? le mien ne segfault pas quand je return end alors que si j'essaie de print le vrai dans le main ca segfault
 		}
 		
 		void	swap(vector<T, Allocator> &other) {
@@ -375,7 +361,7 @@ class vector
 		
 		void			clear()	{
 			while(_size)	{
-				_data[_size - 1].~T(); //? ou destroy et puis deallocate ?
+				_data[_size - 1].~T();
 				_size--;
 			}
 		}
