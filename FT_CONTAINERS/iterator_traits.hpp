@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 13:58:23 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/24 14:09:37 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/27 12:53:35 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ template <class T>
 struct iterator_traits<T *> {
 	typedef ptrdiff_t						difference_type;
 	typedef T								value_type;
-	typedef T								*pointer;
-	typedef T								&reference;
+	typedef T *								pointer;
+	typedef T &								reference;
 	typedef std::random_access_iterator_tag	iterator_category;
 };
 

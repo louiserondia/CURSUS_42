@@ -6,12 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/24 14:10:44 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/27 15:26:40 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "V3.hpp"
+#include <list>
 
 using namespace ft;
 
@@ -27,7 +28,7 @@ class A
 template < typename T>
 void	print_vector(vector<T> vector, std::string name) {
 	std::cout << name << " : | ";
-	for (Iterator<T> it = vector.begin(); it != vector.end(); it++)
+	for (Iterator<T> it = vector.begin(); it != vector.end(); it ++)
 		std::cout << *it << " | ";
 	std::cout << std::endl << std::endl;
 }
@@ -152,7 +153,27 @@ int	main(void)
 
 	std::cout << "\n	| INSERT WITH ITERATORS |\n\n";
 
-		new_tab.insert(new_tab.end() - 6, oui.begin(), oui.end());
+		new_tab.insert(new_tab.end(), oui.begin(), oui.end());
 		print_vector(new_tab, "new_tab after insert w/ iterators");
 
+	std::cout << "\n	| INSERT WITH ITERATORS |\n\n";
+	
+		// std::list<int> lst;
+		// std::list<int>::iterator lst_it;
+	
+		// lst_it = lst.begin();
+		// for (int i = 1; lst_it != lst.end(); ++i)
+		// 	*lst_it++ = i * 5;
+		// vct.assign(lst.begin(), lst.end());
+		//? pas d'operateur + avec la liste, doit etre géré ?
+		
+
+		vector<std::string> vct(10);
+
+		for (unsigned long int i = 0; i < vct.size(); i++)
+			vct[i] = std::string((vct.size() - i), i + 65);
+		print_vector(vct, "vct");
+		std::cout << "begin : " << *vct.begin() << std::endl;
+		std::cout << "begin + 2 : " << *(vct.begin() + 2) << std::endl;
+		std::cout << "begin + 3 : " << *(vct.begin() + 3) << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:14:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/24 14:10:23 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/27 15:16:26 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ class Iterator
 			return *this;
 		}
 		
-		Iterator	&operator+=(const Iterator &rhs) { 
-			_p += rhs._p;
+		Iterator	&operator+=(difference_type n) { 
+			_p += n;
 			return *this;
 		}
 		
-		Iterator	&operator-=(const Iterator &rhs) { 
-			_p -= rhs._p;
+		Iterator	&operator-=(difference_type n) { 
+			_p -= n;
 			return *this;
 		}
 		
@@ -75,22 +75,22 @@ class Iterator
 		friend Iterator		operator-(difference_type lhs, const Iterator &rhs) { return rhs - lhs; }
 	
 		template <class U>
-		bool	operator==(const Iterator<U> &other) const { return _p == other._p; }
+		bool	operator==(const Iterator<U> &other) const { return _p == other.operator->(); }
 		
 		template <class U>
-		bool	operator!=(const Iterator<U> &other) const { return _p != other._p; }
+		bool	operator!=(const Iterator<U> &other) const { return _p != other.operator->(); }
 		
 		template <class U>
-		bool	operator<=(const Iterator<U> &other) const { return _p <= other._p; }
+		bool	operator<=(const Iterator<U> &other) const { return _p <= other.operator->(); }
 		
 		template <class U>
-		bool	operator>=(const Iterator<U> &other) const { return _p >= other._p; }
+		bool	operator>=(const Iterator<U> &other) const { return _p >= other.operator->(); }
 		
 		template <class U>
-		bool	operator<(const Iterator<U> &other) const { return _p < other._p; }
+		bool	operator<(const Iterator<U> &other) const { return _p < other.operator->(); }
 		
 		template <class U>
-		bool	operator>(const Iterator<U> &other) const { return _p > other._p; }
+		bool	operator>(const Iterator<U> &other) const { return _p > other.operator->(); }
 		
 		reference	operator*() { return *_p; }		
 		typename Iterator<const T>::reference	operator*() const { return *_p; }

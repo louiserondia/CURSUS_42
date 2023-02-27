@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 23:00:48 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/24 14:10:01 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/27 19:57:51 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft {
 			reverse_iterator() {}
 			explicit reverse_iterator(Iterator x) : current(x) {}
 			template <class U>
-			reverse_iterator(const reverse_iterator<U> &u) : current(u.current) {}
+			reverse_iterator(const reverse_iterator<U> &u) : current(u.base()) {}
 			
 			template <class U>
 			reverse_iterator &operator=(const reverse_iterator<U> &other) {
@@ -62,7 +62,7 @@ namespace ft {
 				return *this;
 			}
 
-			reverse_iterator	operator++(int n) {
+			reverse_iterator	operator++(int) {
 				reverse_iterator tmp = *this;
 				--current;
 				return tmp;
@@ -73,7 +73,7 @@ namespace ft {
 				return *this;
 			}
 			
-			reverse_iterator	operator--(int n) {
+			reverse_iterator	operator--(int) {
 				reverse_iterator tmp = *this;
 				++current;
 				return tmp;
@@ -93,7 +93,8 @@ namespace ft {
 				return *this;
 			}
 			
-			reference			operator[](difference_type n) const { return current[ - n - 1 ]; }
+			reference			operator[](difference_type n) const { return *operator+(n); }
+			// reference			operator[](difference_type n) const { return current[ - n - 1 ]; }
 
 	};
 
@@ -135,8 +136,8 @@ namespace ft {
 	}
 
 	template <class Iterator>
-	bool	operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> &x) {
-		return reverse_iterator<Iterator>(x.current - n);
+	reverse_iterator<Iterator>	operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator> &x) {
+		return reverse_iterator<Iterator>(x.base() - n);
 	}
 
 }
