@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:14:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/27 15:16:26 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/28 13:21:04 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ class Iterator
 		Iterator			operator+(difference_type n) const{ return _p + n; }
 		friend Iterator		operator+(difference_type lhs, const Iterator &rhs) { return rhs + lhs; }
 		Iterator			operator-(difference_type n) const { return _p - n; }
-		difference_type		operator-(const Iterator &rhs) const { return _p - rhs._p; }
+		template <class U>
+		difference_type		operator-(const Iterator<U> &rhs) const { return _p - rhs.operator->(); }
 		friend Iterator		operator-(difference_type lhs, const Iterator &rhs) { return rhs - lhs; }
 	
 		template <class U>
@@ -92,14 +93,11 @@ class Iterator
 		template <class U>
 		bool	operator>(const Iterator<U> &other) const { return _p > other.operator->(); }
 		
-		reference	operator*() { return *_p; }		
-		typename Iterator<const T>::reference	operator*() const { return *_p; }
+		reference	operator*() const { return *_p; }		
 			
-		pointer		operator->() { return _p; }		
-		typename Iterator<const T>::pointer		operator->() const { return _p; }		
+		pointer		operator->() const  { return _p; }		
 		
-		reference	operator[](difference_type i) { return _p[i]; }
-		typename Iterator<const T>::reference	operator[](difference_type i) const { return _p[i]; }
+		reference	operator[](difference_type i) const { return _p[i]; }
 		
 		//^ operateur de conversion ^
 		operator Iterator< const T >() const {

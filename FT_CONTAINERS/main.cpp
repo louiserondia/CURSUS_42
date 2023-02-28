@@ -6,11 +6,12 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/27 15:26:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/28 14:04:47 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
+#include "stack.hpp"
 #include "V3.hpp"
 #include <list>
 
@@ -176,4 +177,11 @@ int	main(void)
 		std::cout << "begin : " << *vct.begin() << std::endl;
 		std::cout << "begin + 2 : " << *(vct.begin() + 2) << std::endl;
 		std::cout << "begin + 3 : " << *(vct.begin() + 3) << std::endl;
+
+	std::cout << "\n	| STACK |\n\n";
+		
+		stack<int>	stacos;
+
+		stacos.push(3);
+		std::cout << "stacos : " << stacos.top() << std::endl;
 }
