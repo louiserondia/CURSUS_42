@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 13:31:00 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/28 17:52:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/28 18:14:34 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ class stack
 		typedef typename Container::size_type	size_type;
 		typedef Container						container_type;
 
-		explicit	stack(const Container &c = Container()) : c(c) {}
+		explicit	stack(const Container &c = container_type()) : c(c) {}
 		
 		bool		empty() const { return c.empty(); }
 		size_type	size() const { return c.size(); }

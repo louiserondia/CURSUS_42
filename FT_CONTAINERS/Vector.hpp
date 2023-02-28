@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Vector.hpp                                         :+:      :+:    :+:   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/24 14:53:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/02/28 18:11:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ class vector
 {
 
 	public:
-
 
 	// ^----------------------------------------------------^
 	// ^													^
@@ -80,7 +79,7 @@ class vector
 		_size(0),
 		_capacity(0),
 		_allocator(alloc) {
-			reserve(2);
+			reserve(n);
 			assign(n, value);
 		}
 		
@@ -94,15 +93,16 @@ class vector
 		_capacity(0),
 		_allocator(alloc) {
 			reserve(std::distance(first, last));
-			for (InputIterator it = first; it != last; it++)
-				push_back(*it);
+			assign(first, last);
 		}
 		
-		vector(const vector<T, Allocator> &x) :
+		vector(const vector &x) :
 		_data(0),
 		_size(0),
 		_capacity(0),
 		_allocator(x._allocator) {
+			reserve(2);
+			reserve(x.size());
 			assign(x.begin(), x.end());
 		}
 
@@ -111,7 +111,7 @@ class vector
 			_allocator.deallocate(_data, _capacity);
 		}
 
-		vector<T, Allocator>	&operator=(const vector<T, Allocator> &x)	{
+		vector	&operator=(const vector &x)	{
 			assign(x.begin(), x.end());
 			_size = x._size;
 			_capacity = x._capacity;
@@ -143,7 +143,7 @@ class vector
 
 		iterator				begin() { return iterator(_data); }
 		const_iterator			begin() const { return const_iterator(_data); }
-		iterator				end() { return iterator(_data + _size); } //? est-ce qu'il envoie pas un trop tôt ?
+		iterator				end() { return iterator(_data + _size); }
 		const_iterator			end() const { return const_iterator(_data + _size); }
 		reverse_iterator		rbegin() { return reverse_iterator(_data + _size); }
 		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_data + _size); }
@@ -158,7 +158,7 @@ class vector
 	
 	
 		size_type		size() const { return _size; }
-		size_type		max_size() const { return std::numeric_limits<size_type>::max() / sizeof(size_type); }
+		size_type		max_size() const { return _allocator.max_size(); }
 		size_type		capacity() const { return _capacity; }
 		bool			empty() const { return (!_size); }
 
@@ -214,7 +214,7 @@ class vector
 		}
 		
 		const_reference	at(size_type n) const {
-			if (n < _size)
+			if (n > _size)
 				throw(std::out_of_range(""));
 			return _data[n];
 		}
@@ -305,53 +305,31 @@ class vector
 			position = begin() + index_pos;
 			for (diff_t i = 0; i < old_uninit; i++)
 				_allocator.construct(_data + _size + new_uninit + i, _data[index_pos + old_rest + i]);
-			for (diff_t j = 0; j < new_uninit; j++)
-				_allocator.construct(_data + _size + j, *(last - new_uninit + j));
+			std::advance(last, - new_uninit);
+			for (diff_t j = 0; j < new_uninit; j++, last++)
+				_allocator.construct(_data + _size + j, *last);
 			if (old_rest > 0)
 				std::copy_backward(position, end() - n, end());
-			for (diff_t k = index_pos; k != max; k++)
-				_data[k] = *(first + k - index_pos);
+			for (diff_t k = index_pos; k < max; k++, first++) {
+				_data[k] = *first;
+			}
 			_size += n;
 		}
 		
 		iterator		erase(iterator position) {
-			bool	is_end = false;
-			bool	is_last = false;
-
-			if (position == end() - 1) { is_last = true; }
-			if (position == end()) { is_end = true; }
-	
-			if (is_end)
-				return end();
-			_allocator.destroy(position.operator->());
-			if (_size)
-				_size--;
-			if (!is_last)
-				std::copy(position + 1, end() + 1, position);
-			return position + 1;
+			erase(position, position + 1);
+			return position;
 		}
 		
 		iterator		erase(iterator first, iterator last) {
-			bool		is_end = false;
-			bool		is_last = false;
-			
-			if (last == end() - 1) { is_last = true; }
-			if (last == end()) { is_end = true; }
-	
-			for (iterator it = first; it != last; it++) {
+			std::copy(last, end(), first);
+			for (iterator it = first + (end() - last); it != end(); it++) {
 				_allocator.destroy(it.operator->());
-				if (_size)
-					_size--;
 			}
-			if (!is_end) {
-				std::copy(last, end() + 1, first);
-				return first;
-			}
-			return end(); 
-			//^return le dernier et si last est + loin que end, alors return end
-			//? le mien ne segfault pas quand je return end alors que si j'essaie de print le vrai dans le main ca segfault
+			_size -= last - first;
+			return first;
 		}
-		
+
 		void	swap(vector<T, Allocator> &other) {
 			ft::swap(_data, other._data);
 			ft::swap(_size, other._size);
@@ -388,7 +366,7 @@ class vector
 
 template <class T, class Allocator>
 bool	operator==(const vector<T, Allocator> & x, const vector<T, Allocator> &y) {
-	return x._size == y._size && ft::equal(x.begin(), x.end(), y.begin());
+	return x.size() == y.size() && ft::equal(x.begin(), x.end(), y.begin());
 }
 
 template <class T, class Allocator>
@@ -408,12 +386,12 @@ bool	operator>(const vector<T, Allocator> &x, const vector<T, Allocator> &y) {
 
 template <class T, class Allocator>
 bool	operator<=(const vector<T, Allocator> &x, const vector<T, Allocator> &y) {
-	return !(x < y);
+	return !(y < x);
 }
 
 template <class T, class Allocator>
 bool	operator>=(const vector<T, Allocator> &x, const vector<T, Allocator> &y) {
-	return !(y < x);
+	return !(x < y);
 }
 
 template <class T, class Allocator>
