@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/28 18:41:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:49:37 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 #include <iostream>
 #include <map>
+#include <functional>
+#include <utility>
+#include "utility.hpp"
 #include "Allouloucator.hpp"
 
 // ^--------------------------------------------------------^
@@ -27,8 +30,8 @@
 
 namespace ft {
 
-template < class Key, class T, class Compare = less< Key >, 
-			class Allocator = Allouloucator< std::pair< const Key, T > > >
+template < class Key, class T, class Compare = std::less< Key >, 
+			class Allocator = Allouloucator< ft::pair< const Key, T > > >
 class map {
 
 	public :
@@ -41,7 +44,7 @@ class map {
 
 		typedef Key												key_type;
 		typedef	T												mapped_type;
-		typedef std::pair<const Key, T>							value_type;
+		typedef ft::pair<const Key, T>							value_type;
 		typedef Compare											key_compare;
 		typedef Allocator										allocator_type;
 		typedef typename Allocator::reference					reference;
@@ -191,5 +194,25 @@ class map {
 // ^													^
 // ^----------------------------------------------------^		
 
+	template <class Key, class T, class Compare, class Allocator>
+	bool	operator==(const map<Key, T, Compare, Allocator> &x, const map<Key, T, Compare, Allocator> &y) {}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool	operator!=(const map<Key, T, Compare, Allocator> &x, const map<Key, T, Compare, Allocator> &y) {}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool	operator<(const map<Key, T, Compare, Allocator> &x, const map<Key, T, Compare, Allocator> &y) {}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool	operator>(const map<Key, T, Compare, Allocator> &x, const map<Key, T, Compare, Allocator> &y) {}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool	operator<=(const map<Key, T, Compare, Allocator> &x, const map<Key, T, Compare, Allocator> &y) {}
+
+	template <class Key, class T, class Compare, class Allocator>
+	bool	operator>=(const map<Key, T, Compare, Allocator> &x, const map<Key, T, Compare, Allocator> &y) {}
+
+	template <class Key, class T, class Compare, class Allocator>
+	void	swap(map<Key, T, Compare, Allocator> &x, map<Key, T, Compare, Allocator> &y) {}
 	
 }

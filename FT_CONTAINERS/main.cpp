@@ -6,12 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/28 14:04:47 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/01 17:52:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "stack.hpp"
+#include "bst.hpp"
 #include "V3.hpp"
 #include <list>
 
@@ -134,6 +135,7 @@ int	main(void)
 		vector<int>	lol;
 		vector<int>	oui;
 		oui.push_back(1);
+		lol.push_back(555);
 		lol.push_back(666);
 		lol.push_back(777);
 		lol.push_back(888);
@@ -154,34 +156,48 @@ int	main(void)
 
 	std::cout << "\n	| INSERT WITH ITERATORS |\n\n";
 
-		new_tab.insert(new_tab.end(), oui.begin(), oui.end());
+		new_tab.insert(new_tab.end() - 4, oui.begin(), oui.end());
 		print_vector(new_tab, "new_tab after insert w/ iterators");
-
-	std::cout << "\n	| INSERT WITH ITERATORS |\n\n";
-	
-		// std::list<int> lst;
-		// std::list<int>::iterator lst_it;
-	
-		// lst_it = lst.begin();
-		// for (int i = 1; lst_it != lst.end(); ++i)
-		// 	*lst_it++ = i * 5;
-		// vct.assign(lst.begin(), lst.end());
-		//? pas d'operateur + avec la liste, doit etre géré ?
 		
-
-		vector<std::string> vct(10);
-
-		for (unsigned long int i = 0; i < vct.size(); i++)
-			vct[i] = std::string((vct.size() - i), i + 65);
-		print_vector(vct, "vct");
-		std::cout << "begin : " << *vct.begin() << std::endl;
-		std::cout << "begin + 2 : " << *(vct.begin() + 2) << std::endl;
-		std::cout << "begin + 3 : " << *(vct.begin() + 3) << std::endl;
 
 	std::cout << "\n	| STACK |\n\n";
 		
 		stack<int>	stacos;
 
-		stacos.push(3);
-		std::cout << "stacos : " << stacos.top() << std::endl;
+		for (int i = 0; i < 10 ; i += 2) {
+			stacos.push(i);
+			std::cout << "stacos : " << stacos.top() << std::endl;	
+		}
+		for (int i = 0; i < 10 ; i += 2) {
+			std::cout << "stacos : " << stacos.top() << std::endl;
+			stacos.pop();
+		}
+
+
+	std::cout << "\n	| PAIR |\n\n";
+	
+		pair<int, std::string>	pair1(1, "lol");
+		pair<std::string, vector<int> >	pair2("test", new_tab);
+		
+		std::cout << "1. pair first :		" << pair1.first << std::endl;
+		std::cout << "1. pair second :	" << pair1.second << std::endl << std::endl;
+
+		std::cout << "2. pair first :	 " << pair2.first << std::endl;
+		std::cout << "2. pair second";
+		print_vector(pair2.second, "");
+		std::cout << std::endl;
+
+
+	std::cout << "\n	| MAKE PAIR |\n\n";
+	
+		std::cout << ft::make_pair(2, std::string("yes"));
+
+	
+	std::cout << "\n	| BINARY SEARCH TREE |\n\n";
+
+		BstNode<int, int>	bst;
+		ft::pair<int, int>	lol1(1, 2);
+
+		// bst = bst.Insert(lol1);
+
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   utility.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 18:11:39 by lrondia           #+#    #+#             */
-/*   Updated: 2023/02/24 14:11:06 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:47:18 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,45 @@ namespace ft {
 				return true;
 		}
 		return (first2 != last2);
+	}
+	
+	template <class T1, class T2>
+	struct pair {
+		
+		public:
+			typedef T1	first_type;	
+			typedef T2	second_type;
+		
+			first_type	first;
+			second_type	second;
+
+			pair() : first(first_type()), second(second_type()) {}
+			pair(const first_type &x, const second_type &y) : first(x), second(y) {}
+			template <class U, class V>
+			pair(const pair <U, V> &p) : first(p.first), second(p.second) {}
+
+	};
+
+	template <class T1, class T2>
+	bool operator==(const pair<T1, T2> &x, const pair<T1, T2> &y) {
+		return x.first == y.first && x.second == y.second;
+	}
+
+	template <class T1, class T2>
+	bool operator<(const pair<T1, T2> &x, const pair<T1, T2> &y) {
+		return x.first < y.first || (!(y.first < x.first) && x.second < y.second);
+	}
+
+	template <class T1, class T2>
+	pair<T1, T2>	make_pair(const T1 &x, const T2 &y) {
+		return pair<T1, T2>(x, y);
+	}
+
+	template <class T1, class T2>
+	std::ostream	&operator<<(std::ostream &o, const pair<T1, T2> &rhs)	{
+		o << "pair first :	" << rhs.first << std::endl;
+		o << "pair second :	" << rhs.second << std::endl;
+		return o;
 	}
 }
 
