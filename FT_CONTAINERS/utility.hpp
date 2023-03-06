@@ -54,12 +54,25 @@ namespace ft {
 		
 			first_type	first;
 			second_type	second;
+			bool		is_empty;
 
-			pair() : first(first_type()), second(second_type()) {}
-			pair(const first_type &x, const second_type &y) : first(x), second(y) {}
+			pair() : first(first_type()), second(second_type()), is_empty(true) {}
+			pair(const first_type &x, const second_type &y) : first(x), second(y), is_empty(false) {}
 			template <class U, class V>
-			pair(const pair <U, V> &p) : first(p.first), second(p.second) {}
+			pair(const pair <U, V> &x) : first(x.first), second(x.second), is_empty(false) {}
 
+			bool	operator!() { return is_empty; }
+
+			pair<T1, T2>	&operator=(const pair<T1, T2> &other) {
+				// std::cout << "this : " << *this << std::endl;
+				// std::cout << "other : " << other << std::endl;
+				// std::cout << "empty : " << is_empty << std::endl;
+				first = other.first;
+				second = other.second;
+				is_empty = other.is_empty;
+				// std::cout << "empty : " << is_empty << std::endl;
+				return *this;
+			}
 	};
 
 	template <class T1, class T2>
@@ -68,8 +81,28 @@ namespace ft {
 	}
 
 	template <class T1, class T2>
+	bool operator!=(const pair<T1, T2> &x, const pair<T1, T2> &y) {
+		return !(x == y);
+	}
+
+	template <class T1, class T2>
 	bool operator<(const pair<T1, T2> &x, const pair<T1, T2> &y) {
-		return x.first < y.first || (!(y.first < x.first) && x.second < y.second);
+		return x.first < y.first || (!(x.first < y.first) && x.second < y.second);
+	}
+
+	template <class T1, class T2>
+	bool operator>(const pair<T1, T2> &x, const pair<T1, T2> &y) {
+		return (y < x);
+	}
+
+	template <class T1, class T2>
+	bool operator>=(const pair<T1, T2> &x, const pair<T1, T2> &y) {
+		return !(x < y);
+	}
+
+	template <class T1, class T2>
+	bool operator<=(const pair<T1, T2> &x, const pair<T1, T2> &y) {
+		return !(y < x);
 	}
 
 	template <class T1, class T2>

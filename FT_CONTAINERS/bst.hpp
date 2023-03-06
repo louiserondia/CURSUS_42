@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/06 16:40:02 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/06 19:33:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,62 +25,45 @@ struct BstNode {
 		typedef ft::pair<T1, T2>	pair_type;
 		typedef ft::BstNode<T1, T2>	bst_type;
 
-		bstNode() : data(NULL), left(NULL), right(NULL) {}
-		bstNode(const pair_type &pair) : data(NULL), left(NULL), right(NULL) {}
-		bstNode(const BstNode &other) : data(other.data), left(other.left), right(other.right) {}
+		BstNode() : data(), head(this), left(NULL), right(NULL) {}
+		BstNode(const pair_type &pair) : data(pair), head(this), left(NULL), right(NULL) {}
+		BstNode(const BstNode &other) : data(other.data), head(this), left(other.left), right(other.right) {}
 		//? creer un constructeur qui cree un arbre vide etc ?
 
 		ft::pair<T1, T2>	data;
+		BstNode				*head;
 		BstNode				*left;
 		BstNode				*right;
 
 		void	operator=(const bst_type &other) {
-			left = other.left;
-			right = other.right;
 			data = other.data;
-		}
-};
-
-template <class T1, class T2>
-struct Tree {
-
-	public:
-	
-		BstNode	*head;
-
-		Tree() : head(BstNode()) {}
-		Tree(const BstNode &x) : head(BstNode(x)) {}
-		Tree(const Tree &other) : head(other) {}
-		~Tree() {}
-
-		void	operator=(const Tree &other) {
-			head = ohter.head;
+			left = new BstNode(other.left);
+			right = new BstNode(other.right);
 		}
 
-		bst_type	GetNewNode(bst_type tree, pair_type newData) {
-			tree->data = newData;
-			tree->left = NULL;
-			tree->right = NULL;
-			return newNode;
+		void	GetNewNode(bst_type *bst, pair_type newData) {
+			bst->data = newData;
+			bst->left = new BstNode();
+			bst->right = new BstNode();
 		}
 
-		void	Insert(Tree *tree, pair_type newData) {
-			if (!tree->head->data)
-				GetNewNode(&tree->head->data, newData);
-			else if (newData.first <= data->first)
-				Insert(&tree->head->left, newData);
-			else if (newData.first > head->data->first)
-				Insert(&tree->head->right, newData);
+		void	Insert(bst_type *bst, pair_type newData) {
+			if (!bst->data)
+				GetNewNode(bst, newData);
+			else if (newData < bst->data)
+				Insert(left, newData);
+			else
+				Insert(right, newData);
 		}
 
-		bool	Search(Tree tree, pair_type newData) {
-			if (!head)
+		bool	Search(bst_type *bst, pair_type newData) {
+			if (!bst->data)
 				return false;
-			if (data == newData)
+			if (bst->data == newData)
 				return true;
-			else if (newData.first <= data.first)
+			else if (newData < bst->data)
 				return Search(left, newData);
-			else if (newData.first > data.first)
+			else
 				return Search(right, newData);
 		}
 
