@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/01 17:52:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/06 16:32:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,8 +195,12 @@ int	main(void)
 	
 	std::cout << "\n	| BINARY SEARCH TREE |\n\n";
 
-		BstNode<int, int>	bst;
+		Tree<int, int>	tree;
 		ft::pair<int, int>	lol1(1, 2);
+
+		tree.Insert(&tree, lol1);
+
+		// BstNode<int, int>	bst;
 
 		// bst = bst.Insert(lol1);
 
