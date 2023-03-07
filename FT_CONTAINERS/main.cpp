@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/06 19:57:18 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/07 18:29:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,48 +174,48 @@ int	main(void)
 		}
 
 
-	// std::cout << "\n	| PAIR |\n\n";
+	std::cout << "\n	| PAIR |\n\n";
 	
-	// 	pair<int, std::string>	pair1(1, "lol");
-	// 	pair<std::string, vector<int> >	pair2("test", new_tab);
+		pair<int, std::string>	pair1(1, "lol");
+		pair<std::string, vector<int> >	pair2("test", new_tab);
 		
-	// 	std::cout << "1. pair first :		" << pair1.first << std::endl;
-	// 	std::cout << "1. pair second :	" << pair1.second << std::endl << std::endl;
+		std::cout << "1. pair first :		" << pair1.first << std::endl;
+		std::cout << "1. pair second :	" << pair1.second << std::endl << std::endl;
 
-	// 	std::cout << "2. pair first :	 " << pair2.first << std::endl;
-	// 	std::cout << "2. pair second";
-	// 	print_vector(pair2.second, "");
-	// 	std::cout << std::endl;
+		std::cout << "2. pair first :	 " << pair2.first << std::endl;
+		std::cout << "2. pair second";
+		print_vector(pair2.second, "");
+		std::cout << std::endl;
 
 
 	std::cout << "\n	| MAKE PAIR |\n\n";
 	
-		// std::cout << ft::make_pair(2, std::string("yes"));
+		std::cout << ft::make_pair(2, std::string("yes"));
 
 	
 	std::cout << "\n	| BINARY SEARCH TREE w/ int |\n\n";
 
-		BstNode<int, int>	bst;
+		Tree<int, int>		tree;
 		ft::pair<int, int>	lol0(0, 0);
 		ft::pair<int, int>	lol1(1, 2);
 		ft::pair<int, int>	lol2(2, 2);
 
-		// bst.Insert(&bst, lol0);
-		bst.Insert(&bst, lol1);
-		bst.Insert(&bst, lol2);
-		std::cout << "search lol0 : "  << bst.Search(&bst, lol0) << std::endl;
+		tree.Insert(lol0);
+		tree.Insert(lol1);
+		tree.Insert(lol2);
+		std::cout << "search lol0 : "  << tree.Search(2) << std::endl;
 
 	
-	// std::cout << "\n	| BINARY SEARCH TREE w/ std::string |\n\n";
+	std::cout << "\n	| BINARY SEARCH TREE w/ std::string |\n\n";
 
-	// 	BstNode<std::string, std::string>	bst_str;
-	// 	ft::pair<std::string, std::string>	lol3("a", "oui");
-	// 	ft::pair<std::string, std::string>	lol4("b", "lol");
-	// 	ft::pair<std::string, std::string>	lol5("c", "prout");
+		Tree<std::string, std::string>	tree_str;
+		ft::pair<std::string, std::string>	lol3("a", "oui");
+		ft::pair<std::string, std::string>	lol4("b", "lol");
+		ft::pair<std::string, std::string>	lol5("c", "prout");
 
-	// 	bst_str.Insert(&bst_str, lol3);
-	// 	bst_str.Insert(&bst_str, lol4);
-	// 	std::cout << "search lol5 : " << bst_str.Search(&bst_str, lol5) << std::endl;
+		tree_str.Insert(lol3);
+		tree_str.Insert(lol4);
+		std::cout << "search lol5 : " << tree_str.Search("a") << std::endl;
 
 
 }

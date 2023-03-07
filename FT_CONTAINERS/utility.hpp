@@ -64,13 +64,9 @@ namespace ft {
 			bool	operator!() { return is_empty; }
 
 			pair<T1, T2>	&operator=(const pair<T1, T2> &other) {
-				// std::cout << "this : " << *this << std::endl;
-				// std::cout << "other : " << other << std::endl;
-				// std::cout << "empty : " << is_empty << std::endl;
 				first = other.first;
 				second = other.second;
 				is_empty = other.is_empty;
-				// std::cout << "empty : " << is_empty << std::endl;
 				return *this;
 			}
 	};
