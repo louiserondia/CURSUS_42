@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/07 18:29:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/10 17:54:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,15 @@ int	main(void)
 		tree_str.Insert(lol3);
 		tree_str.Insert(lol4);
 		std::cout << "search lol5 : " << tree_str.Search("a") << std::endl;
+
+	
+	std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
+	
+		Tree<int, int>		rbt;
+		rbt.Insert(lol2);
+		std::cout << "search before removing 0	: " << rbt.Search(2) << std::endl;
+		rbt.remove(rbt.first());
+		std::cout << "search after removing 0	:	" << rbt.Search(2) << std::endl;
 
 
 }

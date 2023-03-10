@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/08 14:43:52 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/10 18:06:43 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include "utility.hpp"
+#include "Allouloucator.hpp"
 
 namespace ft {
 
@@ -56,6 +57,7 @@ struct Node {
 			data = other.data;
 			left = new Node(other.left);
 			right = new Node(other.right);
+			red = other.red;
 		}
 
 };
@@ -84,7 +86,15 @@ struct Tree {
 	
 	// ^----------------------------------------------------^
 	// ^													^
-	// ^			MODIFIERS (insert, newnode)	 		 	^
+	// ^					  ACCESS					 	^
+	// ^													^
+	// ^----------------------------------------------------^
+	
+		node_type	*first() { return head; }
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^					  INSERT					 	^
 	// ^													^
 	// ^----------------------------------------------------^
 	
@@ -114,6 +124,7 @@ struct Tree {
 				//~ tante est noire
 				if (node == node->parent->left) {
 					//* triangle
+					//? est-ce que c sur que ca fait la meme chose que si je faisais node = node->p puis rotate_right(node) ?
 					rotate_right(node->parent);
 					node = node->right;
 				}
@@ -143,7 +154,7 @@ struct Tree {
 				node->parent.red = false;
 				node->parent->right.red = true;
 			}
-			head.red = false;
+			head->red = false;
 		}
 
 		void	Insert(pair_type newData) {
@@ -176,6 +187,110 @@ struct Tree {
 			
 	// ^----------------------------------------------------^
 	// ^													^
+	// ^					DELETE				 		 	^
+	// ^													^
+	// ^----------------------------------------------------^
+			
+		void	delete_node(node_type *node) {
+			delete node;
+			node = &nil;
+		}
+			
+		node_type	*get_biggest_node(node_type *node) {
+			node_type	*copy = node;
+
+			while (copy != &nil && copy->right != &nil) {
+				copy = copy->right;
+			}
+			return copy;
+		}
+
+		void	set_new_node(node_type *node, node_type *new_node) {
+			if (new_node == new_node->parent->right)
+				new_node->parent->right = &nil;
+			else
+				new_node->parent->left = &nil;
+			new_node->parent = &nil;
+			new_node->left = node->left;
+			new_node->right = node->right;
+			new_node->red = node->red;
+		}
+		
+		void	set_new_node(node_type *child_of_parent_of_node, node_type *node, node_type *new_node) {
+			child_of_parent_of_node = new_node;
+			if (new_node == new_node->parent->right)
+				new_node->parent->right = &nil;
+			else
+				new_node->parent->left = &nil;
+			new_node->parent = node->parent;
+			new_node->left = node->left;
+			new_node->right = node->right;
+			new_node->red = node->red;
+		}
+		
+		void	remove(node_type *node) {
+			// node_type	node_copy = node;
+			
+			if (node == &nil)
+				return ;
+			if (node == head) {	//~ la node est la tete
+				if (node->left == &nil && node->right == &nil)	//* pas de left ni right
+				{
+					delete node;
+					node = &nil;
+					// delete_node(node);
+					if (node == &nil)
+						std::cout << "ouiiii : \n";
+					else
+						std::cout << "nooooon : \n";
+					return;
+					
+				}
+				else if (node->left == &nil)					//* pas de left
+					node = node->right;
+				else if (node->right == &nil)					//* pas de right
+					node = node->left;
+				else											//* aller chercher l'enfant le plus grand parmi les plus petits
+					set_new_node(node, get_biggest_node(node->left));
+			}
+			else if (node == node->parent->right) {	//~ node est a droite de son parent
+				if (node->left == &nil && node->right == &nil)
+					node->parent->right = &nil;
+				else if (node->left == &nil) {
+					node->parent->right = node->right;
+					node = node->right;
+				}
+				else if (node->right == &nil) {
+					node->parent->right = node->left;
+					node = node->left;
+				}
+				else
+					set_new_node(node->parent->right, node, get_biggest_node(node->left));
+			}
+			else {									//~ node est a gauche de son parent
+				if (node->left == &nil && node->right == &nil)
+					node->parent->left = &nil;
+				else if (node->left == &nil) {
+					node->parent->left = node->right;
+					node = node->right;
+				}
+				else if (node->right == &nil) {
+					node->parent->left = node->left;
+					node = node->left;
+				}
+				else
+					set_new_node(node->parent->left, node, get_biggest_node(node->left));
+			}
+			//! comment delete ?????
+			// delete node;
+			// allocator.destroy(node);
+			// node_copy = nil;
+			// delete_node(&node_copy);
+		}
+
+			
+	// ^----------------------------------------------------^
+	// ^													^
 	// ^					SEARCH				 		 	^
 	// ^													^
 	// ^----------------------------------------------------^
@@ -185,8 +300,11 @@ struct Tree {
 		}
 
 		bool	Search(node_type *node, T1 key) {
-			if (node == &nil)
+			if (node == &nil) {
+				std::cout << "devrait venir ici \n";
 				return false;
+			}
+				std::cout << "NE devrait PAAAAS venir ici \n";
 			if (node->data.first == key)
 				return true;
 			if (key < node->data.first)

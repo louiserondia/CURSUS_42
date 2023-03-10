@@ -14,6 +14,8 @@
 
 #include <iostream>
 
+namespace ft {
+
 template <class T>
 class Allouloucator
 {
@@ -41,8 +43,7 @@ class Allouloucator
 		pointer			adress(reference x) const	{ return &x; }
 		const_pointer	adress(const_reference x) const	{ return &x; }
 
-		pointer			allocate(size_type n, const_pointer hint = 0)	{
-			(void) hint;
+		pointer			allocate(size_type n, const_pointer = 0)	{
 			if (n)
 				_n_alloc++;
 			return reinterpret_cast<pointer>(::operator new(n * sizeof(value_type)));
@@ -85,4 +86,6 @@ bool		operator==(const Allouloucator<T1> &A1, const Allouloucator<T2> &A2) throw
 template <class T1, class T2>
 bool		operator!=(const Allouloucator<T1> &A1, const Allouloucator<T2> &A2) throw() {
 	return (A1._n_alloc != A2._n_alloc || A1._n_constuct != A2._n_constuct);
+}
+
 }
