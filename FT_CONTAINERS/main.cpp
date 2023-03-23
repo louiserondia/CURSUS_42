@@ -6,13 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/10 17:54:03 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/23 12:13:16 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "stack.hpp"
-#include "bst.hpp"
+#include "Rbt.hpp"
 #include "V3.hpp"
 #include <list>
 
@@ -195,7 +195,7 @@ int	main(void)
 	
 	std::cout << "\n	| BINARY SEARCH TREE w/ int |\n\n";
 
-		Tree<int, int>		tree;
+		Rbt<int, int>		tree;
 		ft::pair<int, int>	lol0(0, 0);
 		ft::pair<int, int>	lol1(1, 2);
 		ft::pair<int, int>	lol2(2, 2);
@@ -208,7 +208,7 @@ int	main(void)
 	
 	std::cout << "\n	| BINARY SEARCH TREE w/ std::string |\n\n";
 
-		Tree<std::string, std::string>	tree_str;
+		Rbt<std::string, std::string>	tree_str;
 		ft::pair<std::string, std::string>	lol3("a", "oui");
 		ft::pair<std::string, std::string>	lol4("b", "lol");
 		ft::pair<std::string, std::string>	lol5("c", "prout");
@@ -220,7 +220,7 @@ int	main(void)
 	
 	std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
 	
-		Tree<int, int>		rbt;
+		Rbt<int, int>		rbt;
 		rbt.Insert(lol2);
 		std::cout << "search before removing 0	: " << rbt.Search(2) << std::endl;
 		rbt.remove(rbt.first());

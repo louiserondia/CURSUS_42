@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bst.hpp                                            :+:      :+:    :+:   */
+/*   Rbt.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/10 18:06:43 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/23 12:19:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,20 @@
 
 namespace ft {
 
-template  <class T1, class T2>
+template <	typename Key,
+			typename Value,
+			typename Comp = std::less<Key>,
+			typename Allocator = ft::Allouloucator<ft::pair<const Key, Value> > >
+class	Rbt {
+
 struct Node {
 	
 	public :
 
-		typedef ft::pair<T1, T2>	pair_type;
-		typedef ft::Node<T1, T2>	node_type;
+		typedef ft::pair<Key, Value>								pair_type;
+		typedef Node<Key, Value>									node_type;
+		typedef typename Allocator::template rebind<Node>::other	allocator_type; //? pas tout a fait sure de comprendre le ::template et les 3 valeurs
+        typedef typename allocator_type::pointer					pointer;
 
 		Node(bool is_red) : 
 			data(), 
@@ -47,11 +54,16 @@ struct Node {
 			parent(other.parent), 
 			red(other.red) {}
 
-		ft::pair<T1, T2>	data;
-		Node				*left;
-		Node				*right;
-		Node				*parent;
-		bool				red;
+ 		static void destroy(pointer node, allocator_type &allocator) {
+            allocator.destroy(node);
+            allocator.deallocate(node, 1);
+        }
+
+		ft::pair<Key, Value>	data;
+		Node					*left;
+		Node					*right;
+		Node					*parent;
+		bool					red;
 
 		void	operator=(const node_type &other) {
 			data = other.data;
@@ -62,26 +74,30 @@ struct Node {
 
 };
 
-template <class T1, class T2>
-struct Tree {
+//~~~~~~~~~~~~~~~~~~~
+//~		 TREE		~
+//~~~~~~~~~~~~~~~~~~~
 
 	public:
 	
-		typedef ft::pair<T1, T2>	pair_type;
-		typedef ft::Node<T1, T2>	node_type;
+		typedef ft::pair<Key, Value>	pair_type;
+		typedef Node<Key, Value>	node_type;
 	
-		node_type	nil;
-		node_type	*head;
+		//* Members
 
-		Tree() : nil(0), head(&nil) {} 
+		allocator_type	_allocator;
+		node_type		nil;
+		node_type		*head;
+
+		Rbt() : nil(0), head(&nil) {} 
 		
 		// constructeur avec iterator		
 		
-		Tree(const Tree &other) { 
+		Rbt(const Rbt &other) { 
 			(void) other;
 		}
 		
-		~Tree() {}
+		~Rbt() {}
 	
 	
 	// ^----------------------------------------------------^
@@ -181,7 +197,7 @@ struct Tree {
 			}
 			else
 				return;
-			//~ rééquilibrage
+			insert_fixup(node);	//~ rééquilibrage
 		}
 			
 			
@@ -233,11 +249,12 @@ struct Tree {
 			
 			if (node == &nil)
 				return ;
-			if (node == head) {	//~ la node est la tete
+			if (node == head) {									//~ la node est la tete
 				if (node->left == &nil && node->right == &nil)	//* pas de left ni right
 				{
-					delete node;
-					node = &nil;
+					Node::destroy(node);
+					// delete node;
+					// node = &nil;
 					// delete_node(node);
 					if (node == &nil)
 						std::cout << "ouiiii : \n";
@@ -295,11 +312,11 @@ struct Tree {
 	// ^													^
 	// ^----------------------------------------------------^
 
-		bool	Search(T1 key) {
+		bool	Search(Key key) {
 			return Search(head, key);
 		}
 
-		bool	Search(node_type *node, T1 key) {
+		bool	Search(node_type *node, Key key) {
 			if (node == &nil) {
 				std::cout << "devrait venir ici \n";
 				return false;
