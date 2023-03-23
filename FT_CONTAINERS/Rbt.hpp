@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/23 12:19:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/23 20:20:54 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,31 @@ template <	typename Key,
 			typename Allocator = ft::Allouloucator<ft::pair<const Key, Value> > >
 class	Rbt {
 
+	typedef Key                                     	key_type;
+	typedef Value										mapped_type;
+	typedef ft::pair< const key_type, mapped_type >		value_type;
+	typedef Comp										key_compare;
+	typedef Allocator									allocator_type;
+	typedef typename allocator_type::reference			reference;
+	typedef typename allocator_type::const_reference	const_reference;
+	typedef typename allocator_type::pointer			pointer;
+	typedef typename allocator_type::const_pointer		const_pointer;
+	typedef std::ptrdiff_t								difference_type;
+	typedef std::size_t									size_type;
+
 struct Node {
 	
 	public :
 
 		typedef ft::pair<Key, Value>								pair_type;
-		typedef Node<Key, Value>									node_type;
 		typedef typename Allocator::template rebind<Node>::other	allocator_type; //? pas tout a fait sure de comprendre le ::template et les 3 valeurs
-        typedef typename allocator_type::pointer					pointer;
+		typedef typename allocator_type::pointer					pointer;
 
-		Node(bool is_red) : 
-			data(), 
-			left(NULL), 
-			right(NULL), 
-			parent(NULL), 
+		Node(bool is_red) :
+			data(),
+			left(NULL),
+			right(NULL),
+			parent(NULL),
 			red(is_red) {}
 	
 		Node(const pair_type &pair, bool is_red) : 
@@ -55,9 +66,9 @@ struct Node {
 			red(other.red) {}
 
  		static void destroy(pointer node, allocator_type &allocator) {
-            allocator.destroy(node);
-            allocator.deallocate(node, 1);
-        }
+			allocator.destroy(node);
+			allocator.deallocate(node, 1);
+		}
 
 		ft::pair<Key, Value>	data;
 		Node					*left;
@@ -65,7 +76,7 @@ struct Node {
 		Node					*parent;
 		bool					red;
 
-		void	operator=(const node_type &other) {
+		void	operator=(const Node &other) {
 			data = other.data;
 			left = new Node(other.left);
 			right = new Node(other.right);
@@ -74,20 +85,23 @@ struct Node {
 
 };
 
+
 //~~~~~~~~~~~~~~~~~~~
 //~		 TREE		~
 //~~~~~~~~~~~~~~~~~~~
 
 	public:
 	
-		typedef ft::pair<Key, Value>	pair_type;
-		typedef Node<Key, Value>	node_type;
-	
+		typedef ft::pair<Key, Value>			pair_type;
+		typedef Node							node_type;
+		typedef typename Node::allocator_type	node_allocator_type;
+		typedef typename Node::pointer			node_pointer_type;
+
 		//* Members
 
-		allocator_type	_allocator;
-		node_type		nil;
-		node_type		*head;
+		node_allocator_type	_allocator;
+		node_type			nil;
+		node_type			*head;
 
 		Rbt() : nil(0), head(&nil) {} 
 		
@@ -123,52 +137,55 @@ struct Node {
 		}
 
 		void	insert_fixup(node_type *node) {
-			if (node == head || !node->parent.red) // si parent est noir ou node est la tete
+			if (node == head || !node->parent->red) // si parent est noir ou node est la tete
 				return;
-
 			if (node->parent == node->parent->parent->right) //~ tante de gauche
 			{
-				node_type	aunt = node->parent->parent->left;
-				
+				node_type	*aunt = node->parent->parent->left;
+
 				//~ tante est rouge
-				if (aunt.red) {
-					aunt.red = false;
-					node->parent->parent.red = true;
-					node->parent.red = false;
+				if (aunt->red) {
+					aunt->red = false;
+					node->parent->parent->red = true;
+					node->parent->red = false;
 					return insert_fixup(node->parent->parent);
 				}
-				//~ tante est noire
-				if (node == node->parent->left) {
-					//* triangle
-					//? est-ce que c sur que ca fait la meme chose que si je faisais node = node->p puis rotate_right(node) ?
-					rotate_right(node->parent);
-					node = node->right;
+				else {	//~ tante est noire
+					if (node == node->parent->left) {
+						//* triangle
+						//? est-ce que c sur que ca fait la meme chose que si je faisais node = node->p puis rotate_right(node) ?
+						rotate_right(node->parent);
+						node = node->right;
+					}
+					//* ligne
+				// std::cout << "should be 2 : " << node->data;
+				// std::cout << "2's grand parent : " << node->parent->parent->data;
+					rotate_left(node->parent->parent);
+					node->parent->red = false;
+					node->parent->left->red = true;
 				}
-				//* ligne
-				rotate_left(node->parent->parent);
-				node->parent.red = false;
-				node->parent->left.red = true;
 			}
 			else { //~ tante de droite
-				node_type	aunt = node->parent->parent->right;
+				node_type	*aunt = node->parent->parent->right;
 				
 				//~ tante est rouge
-				if (aunt.red) {
-					aunt.red = false;
-					node->parent->parent.red = true;
-					node->parent.red = false;
+				if (aunt->red) {
+					aunt->red = false;
+					node->parent->parent->red = true;
+					node->parent->red = false;
 					return insert_fixup(node->parent->parent);
 				}
-				//~ tante est noire
-				if (node == node->parent->right) {
-					//* triangle
-					rotate_left(node->parent);
-					node = node->left;
+				else {	//~ tante est noire
+					if (node == node->parent->right) {
+						//* triangle
+						rotate_left(node->parent);
+						node = node->left;
+					}
+					//* ligne
+					rotate_right(node->parent->parent);
+					node->parent->red = false;
+					node->parent->right->red = true;
 				}
-				//* ligne
-				rotate_right(node->parent->parent);
-				node->parent.red = false;
-				node->parent->right.red = true;
 			}
 			head->red = false;
 		}
@@ -177,10 +194,14 @@ struct Node {
 			Insert(head, newData);
 		}
 
-		void	Insert(node_type *node, pair_type newData) {
-			if (node == &nil) {
+		void	Insert(node_type *node, pair_type newData) { // :000
+			if (node == &nil && node == head) {
 				node = GetNewNode(newData, 0);
 				head = node;
+				return;
+			}
+			if (node == &nil && node->parent != &nil) {
+				node = GetNewNode(newData, 0);
 				return;
 			}
 			if (newData < node->data) {
@@ -188,22 +209,23 @@ struct Node {
 					return Insert(node->left, newData);
 				node->left = GetNewNode(newData, 1);
 				node->left->parent = node;
+				insert_fixup(node->left);
 			}
 			else if (newData > node->data) {
 				if (node->right != &nil)
 					return Insert(node->right, newData);
 				node->right = GetNewNode(newData, 1);
 				node->right->parent = node;
+				insert_fixup(node->right);
 			}
 			else
 				return;
-			insert_fixup(node);	//~ rééquilibrage
 		}
 			
 			
 	// ^----------------------------------------------------^
 	// ^													^
-	// ^					DELETE				 		 	^
+	// ^					REMOVE				 		 	^
 	// ^													^
 	// ^----------------------------------------------------^
 			
@@ -252,10 +274,7 @@ struct Node {
 			if (node == head) {									//~ la node est la tete
 				if (node->left == &nil && node->right == &nil)	//* pas de left ni right
 				{
-					Node::destroy(node);
-					// delete node;
-					// node = &nil;
-					// delete_node(node);
+					Node::destroy(node, _allocator);
 					if (node == &nil)
 						std::cout << "ouiiii : \n";
 					else
@@ -308,6 +327,21 @@ struct Node {
 			
 	// ^----------------------------------------------------^
 	// ^													^
+	// ^					HEIGHT				 		 	^
+	// ^													^
+	// ^----------------------------------------------------^
+
+		
+
+		size_type	height(Node *node) {
+    		if (node == &nil) {
+    		    return 0;
+    		}
+    		return 1 + std::max(height (node->left), height(node->right));
+		}
+
+	// ^----------------------------------------------------^
+	// ^													^
 	// ^					SEARCH				 		 	^
 	// ^													^
 	// ^----------------------------------------------------^
@@ -317,11 +351,8 @@ struct Node {
 		}
 
 		bool	Search(node_type *node, Key key) {
-			if (node == &nil) {
-				std::cout << "devrait venir ici \n";
+			if (node == &nil)
 				return false;
-			}
-				std::cout << "NE devrait PAAAAS venir ici \n";
 			if (node->data.first == key)
 				return true;
 			if (key < node->data.first)
@@ -346,11 +377,16 @@ struct Node {
 			node->parent->right = right_copy;
 		else
 			node->parent->left = right_copy;
-		node->parent = right_copy;
+		if (node->parent == NULL) //test pour probleme sans le if else si on est node == head
+			node->parent = &nil;
+		else
+			node->parent = right_copy;
 		node->right = right_copy->left;
-		if (right_copy->left != nil)
+		if (right_copy->left != &nil)
 			right_copy->left->parent = node;
 		right_copy->left = node;
+		// std::cout << "\nDEBUG RIGHT COPY :\n data \n" << right_copy->data << "\nleft \n" << right_copy->left->data << "\nright \n" << right_copy->right->data << "\n";
+		// std::cout << "\nDEBUG HEAD :\n data \n" << head->data << "\nleft \n" << head->left->data << "\nright \n" << head->right->data << "\n";
 	}
 
 	void	rotate_right(node_type *node) {
@@ -365,9 +401,27 @@ struct Node {
 			node->parent->right = left_copy;
 		node->parent = left_copy;
 		node->left = left_copy->right;
-		if (left_copy->right != nil)
+		if (left_copy->right != &nil)
 			left_copy->right->parent = node;
 		left_copy->right = node;
+	}
+
+	friend std::ostream	&operator<<(std::ostream &o, const Node &rhs)	{
+		o << "DATA :	" << rhs.data << std::endl;
+		// if (rhs.left != &(Rbt::nil))
+		o << "LEFT :	" << rhs.left << std::endl;
+		// else
+		// 	o << "LEFT == nil" << std::endl;
+		// if (rhs.right != &(Rbt::nil))
+			o << "RIGHT :	" << rhs.right << std::endl;
+		// else
+		// 	o << "RIGHT == nil" << std::endl;
+		// if (rhs.parent != &(Rbt::nil))
+			o << "PARENT :	" << rhs.parent << std::endl;
+		// else
+		// 	o << "PARENT == nil" << std::endl;
+		o << "RED :	" << rhs.red << std::endl;
+		return o;
 	}
 
 };
