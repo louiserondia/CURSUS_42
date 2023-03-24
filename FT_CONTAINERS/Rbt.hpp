@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/23 20:20:54 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/24 12:42:40 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -377,16 +377,16 @@ struct Node {
 			node->parent->right = right_copy;
 		else
 			node->parent->left = right_copy;
-		if (node->parent == NULL) //test pour probleme sans le if else si on est node == head
-			node->parent = &nil;
-		else
-			node->parent = right_copy;
+		node->parent = right_copy;
 		node->right = right_copy->left;
 		if (right_copy->left != &nil)
 			right_copy->left->parent = node;
 		right_copy->left = node;
 		// std::cout << "\nDEBUG RIGHT COPY :\n data \n" << right_copy->data << "\nleft \n" << right_copy->left->data << "\nright \n" << right_copy->right->data << "\n";
+		// std::cout << "\nDEBUG RIGHT COPY :\n parent nil\n" << "\nleft parent \n" << right_copy->left->parent->data << "\nright parent \n" << right_copy->right->parent->data << "\n";
 		// std::cout << "\nDEBUG HEAD :\n data \n" << head->data << "\nleft \n" << head->left->data << "\nright \n" << head->right->data << "\n";
+		// std::cout << "\nDEBUG HEAD suite :\n parent nil\n" << "\nleft parent \n" << head->left->parent->data << "\nright parent\n" << head->right->parent->data << "\n";
+		//? ca a l'air de marcher mais pourtant la height est pas la bonne
 	}
 
 	void	rotate_right(node_type *node) {
@@ -404,24 +404,6 @@ struct Node {
 		if (left_copy->right != &nil)
 			left_copy->right->parent = node;
 		left_copy->right = node;
-	}
-
-	friend std::ostream	&operator<<(std::ostream &o, const Node &rhs)	{
-		o << "DATA :	" << rhs.data << std::endl;
-		// if (rhs.left != &(Rbt::nil))
-		o << "LEFT :	" << rhs.left << std::endl;
-		// else
-		// 	o << "LEFT == nil" << std::endl;
-		// if (rhs.right != &(Rbt::nil))
-			o << "RIGHT :	" << rhs.right << std::endl;
-		// else
-		// 	o << "RIGHT == nil" << std::endl;
-		// if (rhs.parent != &(Rbt::nil))
-			o << "PARENT :	" << rhs.parent << std::endl;
-		// else
-		// 	o << "PARENT == nil" << std::endl;
-		o << "RED :	" << rhs.red << std::endl;
-		return o;
 	}
 
 };

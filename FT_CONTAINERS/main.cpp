@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/23 19:49:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/24 12:55:16 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,19 @@ int	main(void)
 		std::cout << ft::make_pair(2, std::string("yes"));
 
 	
+	std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
+
+		Rbt<std::string, std::string>	tree_str;
+		ft::pair<std::string, std::string>	str3("a", "oui");
+		ft::pair<std::string, std::string>	str4("b", "str");
+		ft::pair<std::string, std::string>	str5("c", "prout");
+
+		tree_str.Insert(str3);
+		tree_str.Insert(str4);
+		std::cout << "Searching something existing (a) : " << tree_str.Search("a") << std::endl;
+		std::cout << "Searching something else (y) : " << tree_str.Search("y") << std::endl;
+
+	
 	std::cout << "\n	| RED BLACK TREE w/ int |\n\n";
 
 		Rbt<int, int>		tree;
@@ -202,45 +215,38 @@ int	main(void)
 
 		std::cout << "height empty : " << tree.height(tree.head) << std::endl;
 		tree.Insert(lol0);
-		std::cout << "height with 1 element : " << tree.height(tree.head) << std::endl;
 		tree.Insert(lol1);
-		std::cout << "height with 2 elements : " << tree.height(tree.head) << std::endl;
 		tree.Insert(lol2);
-		// std::cout << "Added (0, 0), (1, 0) and (2, 0)\n";
-		// std::cout << "Searching key '2' : "  << tree.Search(2) << std::endl;
-		// std::cout << "Searching key '7' : "  << tree.Search(7) << std::endl;
+		std::cout << "Added (0, 0), (1, 0) and (2, 0)\n";
+		std::cout << "Searching key '2' : "  << tree.Search(2) << std::endl;
+		std::cout << "Searching key '7' : "  << tree.Search(7) << std::endl;
 
-	
-	// std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
+	std::cout << "\n	| TESTING RED BLACK TREE (int) INSERT WITH ITS HEIGHT |\n\n";
 
-	// 	Rbt<std::string, std::string>	tree_str;
-	// 	ft::pair<std::string, std::string>	str3("a", "oui");
-	// 	ft::pair<std::string, std::string>	str4("b", "str");
-	// 	ft::pair<std::string, std::string>	str5("c", "prout");
+		ft::pair<int, int>	lol3(3, 0);
+		ft::pair<int, int>	lol4(4, 0);
+		ft::pair<int, int>	lol5(5, 0);
+		ft::pair<int, int>	lol6(6, 0);
+		ft::pair<int, int>	lol7(7, 0);
+		ft::pair<int, int>	lol8(8, 0);
+		ft::pair<int, int>	lol9(9, 0);
+		ft::pair<int, int>	lol10(10, 0);
 
-	// 	tree_str.Insert(str3);
-	// 	tree_str.Insert(str4);
-	// 	std::cout << "Searching something existing (a) : " << tree_str.Search("a") << std::endl;
-	// 	std::cout << "Searching something else (y) : " << tree_str.Search("y") << std::endl;
-
-
-
-	// std::cout << "\n	| TESTING RED BLACK TREE (int) INSERT WITH ITS HEIGHT |\n\n";
-
-		// ft::pair<int, int>	lol3(3, 0);
-	// 	ft::pair<int, int>	lol4(4, 0);
-	// 	ft::pair<int, int>	lol5(5, 0);
-	// 	ft::pair<int, int>	lol6(6, 0);
-	// 	ft::pair<int, int>	lol7(7, 0);
-
-	// 	std::cout << "Old height : " << tree.height(tree.head) << std::endl;
-		// tree.Insert(lol3);
-	// 	tree.Insert(lol4);
-	// 	tree.Insert(lol5);
-	// 	tree.Insert(lol6);
-	// 	tree.Insert(lol7);
-		// std::cout << "Added (3, 0), (4, 0), (5, 0), (6, 0) and (7, 0)\n";
-		// std::cout << "New height : " <<  tree.height(tree.head) << std::endl;
+		std::cout << "Previous height with 3 elements in the tree : " << tree.height(tree.head) << std::endl << std::endl;
+		tree.Insert(lol3);
+		tree.Insert(lol4);
+		std::cout << "Added 3, 4.\n";
+		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
+		tree.Insert(lol5);
+		tree.Insert(lol6);
+		tree.Insert(lol7);
+		tree.Insert(lol8);
+		std::cout << "Added 5, 6, 7, 8.\n";
+		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
+		tree.Insert(lol9);
+		tree.Insert(lol10);
+		std::cout << "Added 9 and 10.\n";
+		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
 
 	
 	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
