@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/24 12:42:40 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/24 13:40:49 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ struct Node {
 		typedef ft::pair<Key, Value>			pair_type;
 		typedef Node							node_type;
 		typedef typename Node::allocator_type	node_allocator_type;
-		typedef typename Node::pointer			node_pointer_type;
+		typedef typename Node::pointer			node_pointer;
 
 		//* Members
 
@@ -114,6 +114,110 @@ struct Node {
 		~Rbt() {}
 	
 	
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^					ITERATOR					 	^
+	// ^													^
+	// ^----------------------------------------------------^
+	
+	template <typename T>
+	class Iterator {
+		
+		public:
+			typedef	T								value_type;
+			typedef	T &								reference;
+			typedef T *								pointer;
+			typedef std::ptrdiff_t					difference_type;
+			typedef std::bidirectional_iterator_tag	iterator_category;
+
+			Iterator() : _node(&nil) {}
+			Iterator(node_pointer node) : _node(node) {}
+			Iterator(const Iterator &other) : _node(other._node) {}
+			Iterator	&operator=(const Iterator &other) {
+				_node = other.node;
+				return *this;
+			}
+			
+			const node_pointer	&get_node() const { return _node; }
+
+			// pour avancer depuis une node, on va essayer d'aller à son enfant de droite et ensuite le plus à gauche possible
+			// si on n'a pas d'enfant de droite et qu'on est un enfant de gauche on va remonter au niveau du parent
+			// et si on n'a ni enfant de droite et qu'on est nous-même un enfant de droite, alors on va remonter 
+			// jusqu'à trouver une node qui est enfant de gauche et alors on se positione sur son parent (si il n'est pas nil)
+
+			Iterator	&operator++() {
+				if (_node->right != &nil) {
+					_node = _node->right;
+					while (_node->left != &nil)
+						_node = _node->left;
+				}
+				else {
+					if (_node == _node->parent->left)
+					_node = _node->parent;
+					else {
+						node_pointer	tmp = _node;
+						while (tmp->parent != &nil && tmp != tmp->parent->left)
+							tmp = tmp->parent;
+						if (tmp->parent != &nil)
+							_node = tmp->parent;
+					}
+				}		
+				return *this;
+			}
+				
+			Iterator	operator++(int) {
+				Iterator	tmp(*this);
+				
+				++*this;
+				return tmp;
+			}
+
+			Iterator	&operator--() {
+				if (_node->left != &nil) {
+					_node = _node->left;
+					while (_node->right != &nil)
+						_node = _node->right;
+				}
+				else {
+					if (_node == _node->parent->right)
+					_node = _node->parent;
+					else {
+						node_pointer	tmp = _node;
+						while (tmp->parent != &nil && tmp != tmp->parent->right)
+							tmp = tmp->parent;
+						if (tmp->parent != &nil)
+							_node = tmp->parent;
+					}
+				}
+				return *this;
+			}
+
+			Iterator	operator--(int) {
+				Iterator	tmp(*this);
+				
+				--*this;
+				return tmp;
+			}
+		
+		template <typename U>
+		bool	operator==(const Iterator<U> &other) const {
+			return _node == other.get_node;
+		}
+		
+		template <typename U>
+		bool	operator!=(const Iterator<U> &other) const {
+			return !(*this == other);
+		}
+
+		reference	operator*() const { return _node->data; }
+		pointer		operator->() const { return &_node->data; }
+
+		operator Iterator<const T>() const { return Iterator<const T>(_node); }
+
+		private:
+			node_pointer _node;
+	}
+
 	// ^----------------------------------------------------^
 	// ^													^
 	// ^					  ACCESS					 	^
@@ -153,13 +257,10 @@ struct Node {
 				else {	//~ tante est noire
 					if (node == node->parent->left) {
 						//* triangle
-						//? est-ce que c sur que ca fait la meme chose que si je faisais node = node->p puis rotate_right(node) ?
 						rotate_right(node->parent);
 						node = node->right;
 					}
 					//* ligne
-				// std::cout << "should be 2 : " << node->data;
-				// std::cout << "2's grand parent : " << node->parent->parent->data;
 					rotate_left(node->parent->parent);
 					node->parent->red = false;
 					node->parent->left->red = true;
@@ -317,11 +418,7 @@ struct Node {
 				else
 					set_new_node(node->parent->left, node, get_biggest_node(node->left));
 			}
-			//! comment delete ?????
-			// delete node;
-			// allocator.destroy(node);
-			// node_copy = nil;
-			// delete_node(&node_copy);
+			// /!\ delete
 		}
 
 			
@@ -382,11 +479,6 @@ struct Node {
 		if (right_copy->left != &nil)
 			right_copy->left->parent = node;
 		right_copy->left = node;
-		// std::cout << "\nDEBUG RIGHT COPY :\n data \n" << right_copy->data << "\nleft \n" << right_copy->left->data << "\nright \n" << right_copy->right->data << "\n";
-		// std::cout << "\nDEBUG RIGHT COPY :\n parent nil\n" << "\nleft parent \n" << right_copy->left->parent->data << "\nright parent \n" << right_copy->right->parent->data << "\n";
-		// std::cout << "\nDEBUG HEAD :\n data \n" << head->data << "\nleft \n" << head->left->data << "\nright \n" << head->right->data << "\n";
-		// std::cout << "\nDEBUG HEAD suite :\n parent nil\n" << "\nleft parent \n" << head->left->parent->data << "\nright parent\n" << head->right->parent->data << "\n";
-		//? ca a l'air de marcher mais pourtant la height est pas la bonne
 	}
 
 	void	rotate_right(node_type *node) {
