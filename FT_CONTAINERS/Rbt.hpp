@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/24 13:40:49 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/24 15:33:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,14 @@ struct Node {
 
 		//* Members
 
-		node_allocator_type	_allocator;
 		node_type			nil;
 		node_type			*head;
+		node_pointer		_begin;
+		node_pointer		_rbegin;
+		node_pointer		_end;
+		node_pointer		_rend;
+		size_type			_size;
+		node_allocator_type	_allocator;
 
 		Rbt() : nil(0), head(&nil) {} 
 		
@@ -119,7 +124,17 @@ struct Node {
 	// ^					ITERATOR					 	^
 	// ^													^
 	// ^----------------------------------------------------^
+
+
+	typedef	Iterator<value_type>					iterator;
+	typedef	Iterator<const value_type>				const_iterator;
+	typedef	ft::reverse_iterator<iterator>			reverse_iterator;
+	typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+
+	iterator				begin() { return ++iterator(_end); }
+	const_reverse_iterator	rend() const {}
 	
+
 	template <typename T>
 	class Iterator {
 		
@@ -217,6 +232,7 @@ struct Node {
 		private:
 			node_pointer _node;
 	}
+
 
 	// ^----------------------------------------------------^
 	// ^													^
@@ -343,82 +359,129 @@ struct Node {
 			}
 			return copy;
 		}
-
-		void	set_new_node(node_type *node, node_type *new_node) {
-			if (new_node == new_node->parent->right)
-				new_node->parent->right = &nil;
-			else
-				new_node->parent->left = &nil;
-			new_node->parent = &nil;
-			new_node->left = node->left;
-			new_node->right = node->right;
-			new_node->red = node->red;
-		}
 		
-		void	set_new_node(node_type *child_of_parent_of_node, node_type *node, node_type *new_node) {
-			child_of_parent_of_node = new_node;
-			if (new_node == new_node->parent->right)
-				new_node->parent->right = &nil;
+		//^ p-e mettre ca dans node
+		node_type	*get_smallest_node(node_type *node) {
+			node_type	*copy = node;
+
+			while (copy != &nil && copy->left != &nil) {
+				copy = copy->left;
+			}
+			return copy;
+		}
+
+		// void	set_new_node(node_type *node, node_type *new_node) {
+		// 	if (new_node == new_node->parent->right)
+		// 		new_node->parent->right = &nil;
+		// 	else
+		// 		new_node->parent->left = &nil;
+		// 	new_node->parent = &nil;
+		// 	new_node->left = node->left;
+		// 	new_node->right = node->right;
+		// 	new_node->red = node->red;
+		// }
+		
+		// void	set_new_node(node_type *child_of_parent_of_node, node_type *node, node_type *new_node) {
+		// 	child_of_parent_of_node = new_node;
+		// 	if (new_node == new_node->parent->right)
+		// 		new_node->parent->right = &nil;
+		// 	else
+		// 		new_node->parent->left = &nil;
+		// 	new_node->parent = node->parent;
+		// 	new_node->left = node->left;
+		// 	new_node->right = node->right;
+		// 	new_node->red = node->red;
+		// }
+		
+		// void	remove(node_type *node) {
+			// node_type	node_copy = node;
+			
+		// 	if (node == &nil)
+		// 		return ;
+		// 	if (node == head) {									//~ la node est la tete
+		// 		if (node->left == &nil && node->right == &nil)	//* pas de left ni right
+		// 		{
+		// 			Node::destroy(node, _allocator);
+		// 			node = &nil; //?
+		// 			return;
+					
+		// 		}
+		// 		else if (node->left == &nil)					//* pas de left
+		// 			node = node->right;
+		// 		else if (node->right == &nil)					//* pas de right
+		// 			node = node->left;
+		// 		else											//* aller chercher l'enfant le plus grand parmi les plus petits
+		// 			set_new_node(node, get_biggest_node(node->left));
+		// 	}
+		// 	else if (node == node->parent->right) {	//~ node est a droite de son parent
+		// 		if (node->left == &nil && node->right == &nil)
+		// 			node->parent->right = &nil;
+		// 		else if (node->left == &nil) {
+		// 			node->parent->right = node->right;
+		// 			node = node->right;
+		// 		}
+		// 		else if (node->right == &nil) {
+		// 			node->parent->right = node->left;
+		// 			node = node->left;
+		// 		}
+		// 		else
+		// 			set_new_node(node->parent->right, node, get_biggest_node(node->left));
+		// 	}
+		// 	else {									//~ node est a gauche de son parent
+		// 		if (node->left == &nil && node->right == &nil)
+		// 			node->parent->left = &nil;
+		// 		else if (node->left == &nil) {
+		// 			node->parent->left = node->right;
+		// 			node = node->right;
+		// 		}
+		// 		else if (node->right == &nil) {
+		// 			node->parent->left = node->left;
+		// 			node = node->left;
+		// 		}
+		// 		else
+		// 			set_new_node(node->parent->left, node, get_biggest_node(node->left));
+		// 	}
+		// }
+		
+		// /!\ delete
+
+		//^ a utiliser dans rotate
+		void	transplant(node_pointer from, node_pointer to) {
+			from->parent = to->parent;
+			if (to == head)
+				head = from;
+			else if (to ==  to->parent->left)
+				to->parent->left = from;
 			else
-				new_node->parent->left = &nil;
-			new_node->parent = node->parent;
-			new_node->left = node->left;
-			new_node->right = node->right;
-			new_node->red = node->red;
+				to->parent->right = from;
 		}
 		
 		void	remove(node_type *node) {
-			// node_type	node_copy = node;
+			node_pointer	z = node;
+			node_pointer	y = z;
+			node_pointer	x;
+			bool			y_origin_color = y->red;
 			
 			if (node == &nil)
-				return ;
-			if (node == head) {									//~ la node est la tete
-				if (node->left == &nil && node->right == &nil)	//* pas de left ni right
-				{
-					Node::destroy(node, _allocator);
-					if (node == &nil)
-						std::cout << "ouiiii : \n";
-					else
-						std::cout << "nooooon : \n";
-					return;
-					
-				}
-				else if (node->left == &nil)					//* pas de left
-					node = node->right;
-				else if (node->right == &nil)					//* pas de right
-					node = node->left;
-				else											//* aller chercher l'enfant le plus grand parmi les plus petits
-					set_new_node(node, get_biggest_node(node->left));
+				return;
+			if (z->left == &nil)
+				x = z->right;
+			else if (z->right == &nil)
+				x = z->left;
+			else {
+				y = get_smallest_node(z->right);
+				x = y->right;
+				transplant(x, y);
+				transplant(y, z);
+				y->left = z->left;
+				z->left->parent = y;
+				y->right = z->right;
+				z->right->parent = y;
+				y_origin_color = y->red;
+				y->red = z->red;
 			}
-			else if (node == node->parent->right) {	//~ node est a droite de son parent
-				if (node->left == &nil && node->right == &nil)
-					node->parent->right = &nil;
-				else if (node->left == &nil) {
-					node->parent->right = node->right;
-					node = node->right;
-				}
-				else if (node->right == &nil) {
-					node->parent->right = node->left;
-					node = node->left;
-				}
-				else
-					set_new_node(node->parent->right, node, get_biggest_node(node->left));
-			}
-			else {									//~ node est a gauche de son parent
-				if (node->left == &nil && node->right == &nil)
-					node->parent->left = &nil;
-				else if (node->left == &nil) {
-					node->parent->left = node->right;
-					node = node->right;
-				}
-				else if (node->right == &nil) {
-					node->parent->left = node->left;
-					node = node->left;
-				}
-				else
-					set_new_node(node->parent->left, node, get_biggest_node(node->left));
-			}
-			// /!\ delete
+			if (!y_origin_color) //y est noir
+				remove_fixup(x);
 		}
 
 			
