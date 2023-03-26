@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/24 15:33:50 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/26 19:10:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,19 +307,19 @@ struct Node {
 			head->red = false;
 		}
 
-		void	Insert(pair_type newData) {
+		pair_type	Insert(pair_type newData) {
 			Insert(head, newData);
 		}
 
-		void	Insert(node_type *node, pair_type newData) { // :000
+		pair_type	Insert(node_type *node, pair_type newData) { // :000
 			if (node == &nil && node == head) {
 				node = GetNewNode(newData, 0);
 				head = node;
-				return;
+				return newData; //~ return la pair qu'on a ajouté, à VERIFIER
 			}
 			if (node == &nil && node->parent != &nil) {
 				node = GetNewNode(newData, 0);
-				return;
+				return newData; //~ return la pair qu'on a ajouté
 			}
 			if (newData < node->data) {
 				if (node->left != &nil)
@@ -336,7 +336,7 @@ struct Node {
 				insert_fixup(node->right);
 			}
 			else
-				return;
+				return node->data; //~ renvoyer la pair = a celle qu'on a essayé d'ajouter.
 		}
 			
 			
