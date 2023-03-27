@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/27 16:12:21 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/27 18:56:50 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,57 +49,79 @@ public:
 // ~----------------------------------------------------~
 // ~----------------------------------------------------~
 
-	struct Node {
+private: 
+
+	struct _Node {
 
 	public :
 
-		typedef typename Allocator::template rebind<Node>::other	allocator_type; //? pas tout a fait sure de comprendre le ::template et les 3 valeurs
-		typedef typename allocator_type::pointer					pointer;
+		typedef typename Allocator::template rebind<_Node>::other	node_allocator_type; //? pas tout a fait sure de comprendre le ::template et les 3 valeurs
+		typedef typename node_allocator_type::pointer				node_pointer;
 
-		Node(bool is_red) :
+		_Node() :
+			data(value_type()),
+			left(0),
+			right(0),
+			parent(0),
+			red(false),
+			is_nil(false) {}
+
+		_Node(bool is_red, node_pointer left, node_pointer right) : 
 			data(),
-			left(NULL),
-			right(NULL),
-			parent(NULL),
+			left(left),
+			right(right),
+			parent(0),
 			red(is_red),
 			is_nil(false) {}
 
-		Node(const value_type &pair, bool is_red) : 
-			data(pair), 
-			left(NULL), 
-			right(NULL), 
-			parent(NULL), 
+		_Node(bool is_red, const value_type &value = value_type()) : 
+			data(value), 
+			left(0), 
+			right(0), 
+			parent(0), 
 			red(is_red),
 			is_nil(false) {}
 
-		Node(const Node &other) :
+		_Node(const _Node &other) :
 			data(other.data), 
 			left(other.left), 
 			right(other.right), 
 			parent(other.parent), 
 			red(other.red),
-			is_nil(false) {}
+			is_nil(other.is_nil) {}
 
-		static void destroy(pointer node, allocator_type &allocator) {
-			allocator.destroy(node);
-			allocator.deallocate(node, 1);
+		node_pointer	clone(node_allocator_type &alloc) {
+			node_pointer	node = alloc.allocate(1);
+			alloc.construct(node, *this);
+			return node;
+		}
+
+		static void destroy(pointer node, node_allocator_type &alloc) {
+			alloc.destroy(node);
+			alloc.deallocate(node, 1);
 		}
 
 		value_type	data;
-		Node		*left;
-		Node		*right;
-		Node		*parent;
+		_Node		*left;
+		_Node		*right;
+		_Node		*parent;
 		bool		red;
 		bool		is_nil;
 
-		void	operator=(const Node &other) {
+		void	operator=(const _Node &other) {
 			data = other.data;
-			left = new Node(other.left);
-			right = new Node(other.right);
+			left = new _Node(other.left);
+			right = new _Node(other.right);
 			red = other.red;
 		}
 	};
 
+
+public:
+
+	typedef _Node								node_type;
+	typedef typename _Node::node_allocator_type	node_allocator_type;
+	typedef typename _Node::node_pointer		node_pointer;
 
 
 // ~----------------------------------------------------~
@@ -113,26 +135,21 @@ public:
 // ~----------------------------------------------------~
 
 
-public:
-
-	typedef Node							node_type;
-	typedef typename Node::allocator_type	node_allocator_type;
-	typedef typename Node::pointer			node_pointer;
-
 // ^----------------------------------------------------^
 // ^													^
 // ^					MEMBERS						 	^
 // ^													^
 // ^----------------------------------------------------^
 
-	node_type			nil;
-	node_type			*head;
-	node_pointer		_begin;
-	node_pointer		_rbegin;
+private:
+
+	node_type			_nil;
+	node_pointer		_head;
+	node_allocator_type	_node_allocator;
+	allocator_type		_allocator;
 	node_pointer		_end;
 	node_pointer		_rend;
 	size_type			_size;
-	node_allocator_type	_allocator;
 
 // ^----------------------------------------------------^
 // ^													^
@@ -140,8 +157,10 @@ public:
 // ^													^
 // ^----------------------------------------------------^
 
-	Rbt() : nil(0), head(&nil) {
-		nil.is_nil = true;
+public:
+
+	Rbt() : _nil(), _head(&_nil), _node_allocator(node_allocator_type()), _allocator(allocator_type()), _end(node_type(false, &_nil, &_nil).clone(_node_allocator)) {
+		_nil.is_nil = true;
 	} 
 	
 	// constructeur avec iterator		
@@ -190,7 +209,7 @@ public:
 		// pour avancer depuis une node, on va essayer d'aller à son enfant de droite et ensuite le plus à gauche possible
 		// si on n'a pas d'enfant de droite et qu'on est un enfant de gauche on va remonter au niveau du parent
 		// et si on n'a ni enfant de droite et qu'on est nous-même un enfant de droite, alors on va remonter 
-		// jusqu'à trouver une node qui est enfant de gauche et alors on se positione sur son parent (si il n'est pas nil)
+		// jusqu'à trouver une node qui est enfant de gauche et alors on se positione sur son parent (si il n'est pas _nil)
 
 		Iterator	&operator++() {
 			if (_node->right->is_nil == false) {
@@ -280,27 +299,27 @@ public:
 // ^----------------------------------------------------^
 
 	value_type	insert(const value_type newData) {
-		return *_insert(head, newData);
+		return *_insert(_head, newData);
 	}
 
 	iterator	insert(iterator hint, const value_type newData) {
 		if (is_upper_bound(hint, newData))
 			return _insert(hint.get_node(), newData);
-		return _insert(head, newData);
+		return _insert(_head, newData);
 	}
 
 private:
 
 	node_type	*_add_new_node(value_type newData, bool is_red) {
-		node_type	*node = new node_type(newData, is_red);
+		node_type	*node = new node_type(is_red, newData);
 		
-		node->left = &nil;
-		node->right = &nil;
+		node->left = &_nil;
+		node->right = &_nil;
 		return node;
 	}
 
 	void	_insert_fixup(node_pointer node) {
-		if (node == head || !node->parent->red) // si parent est noir ou node est la tete
+		if (node == _head || !node->parent->red) // si parent est noir ou node est la tete
 			return;
 		if (node->parent == node->parent->parent->right) //~ tante de gauche
 		{
@@ -347,28 +366,28 @@ private:
 				node->parent->right->red = true;
 			}
 		}
-		head->red = false;
+		_head->red = false;
 	}
 	
 	iterator	_insert(node_pointer node, const value_type newData) { // :000
-		if (node == &nil && node == head) {
+		if (node == &_nil && node == _head) {
 			node = _add_new_node(newData, 0);
-			head = node;
+			_head = node;
 			return node; //~ return la pair qu'on a ajoutée, à VERIFIER
 		}
-		if (node == &nil && node->parent != &nil) {
+		if (node == &_nil && node->parent != &_nil) {
 			node = _add_new_node(newData, 0);
 			return node; //~ return la pair qu'on a ajoutée
 		}
 		if (newData.first < node->data.first) {
-			if (node->left != &nil)
+			if (node->left != &_nil)
 				return _insert(node->left, newData);
 			node->left = _add_new_node(newData, 1);
 			node->left->parent = node;
 			_insert_fixup(node->left);
 		}
 		else if (newData.first > node->data.first) {
-			if (node->right != &nil)
+			if (node->right != &_nil)
 				return _insert(node->right, newData);
 			node->right = _add_new_node(newData, 1);
 			node->right->parent = node;
@@ -388,13 +407,13 @@ public:
 
 	void	delete_node(node_pointer node) {
 		delete node;
-		node = &nil;
+		node = &_nil;
 	}
 		
 	node_type	*get_biggest_node(node_pointer node) {
 		node_type	*copy = node;
 
-		while (copy != &nil && copy->right != &nil) {
+		while (copy != &_nil && copy->right != &_nil) {
 			copy = copy->right;
 		}
 		return copy;
@@ -403,7 +422,7 @@ public:
 	node_type	*get_smallest_node(node_pointer node) {
 		node_type	*copy = node;
 
-		while (copy != &nil && copy->left != &nil) {
+		while (copy != &_nil && copy->left != &_nil) {
 			copy = copy->left;
 		}
 		return copy;
@@ -412,8 +431,8 @@ public:
 	//^ a utiliser dans rotate
 	void	transplant(node_pointer from, node_pointer to) {
 		from->parent = to->parent;
-		if (to == head)
-			head = from;
+		if (to == _head)
+			_head = from;
 		else if (to ==  to->parent->left)
 			to->parent->left = from;
 		else
@@ -423,7 +442,7 @@ public:
 private:
 
 	void	_remove_fixup(node_pointer x) {
-		if (x == head || x->red) {
+		if (x == _head || x->red) {
 			x->red = false;
 			return;
 		}
@@ -488,11 +507,11 @@ private:
 		node_pointer	x;
 		bool			y_origin_color = y->red;
 		
-		if (node == &nil)
+		if (node == &_nil)
 			return;
-		if (z->left == &nil)
+		if (z->left == &_nil)
 			x = z->right;
-		else if (z->right == &nil)
+		else if (z->right == &_nil)
 			x = z->left;
 		else {
 			y = get_smallest_node(z->right);
@@ -519,11 +538,15 @@ private:
 
 public:
 
-	size_type	height(Node *node) {
-		if (node == &nil) {
+	size_type	height() { return _height(_head); }
+
+private:
+
+	size_type	_height(_Node *node) {
+		if (node == &_nil) {
 			return 0;
 		}
-		return 1 + std::max(height (node->left), height(node->right));
+		return 1 + std::max(_height (node->left), _height(node->right));
 	}
 
 // ^----------------------------------------------------^
@@ -532,12 +555,14 @@ public:
 // ^													^
 // ^----------------------------------------------------^
 
+public:
+
 	iterator	find(const key_type key) {
-		return find(head, key);
+		return find(_head, key);
 	}
 
 	iterator	find(node_pointer node, const key_type key) {
-		if (node == &nil)
+		if (node == &_nil)
 			return _end;
 		if (node->data.first == key)
 			return node;
@@ -547,11 +572,11 @@ public:
 	}
 
 	const_iterator	find(const key_type key) const {
-		return find(head, key);
+		return find(_head, key);
 	}
 
 	const_iterator	find(node_pointer node, const key_type key) const {
-		if (node == &nil)
+		if (node == &_nil)
 			return _end;
 		if (node->data.first == key)
 			return node;
@@ -561,16 +586,16 @@ public:
 	}
 
 	size_type	count(const key_type key) const {
-		return *find(head, key) == _end ? false : true;
+		return *find(_head, key) == _end ? false : true;
 	}
 
 	iterator	lower_bound(const key_type key) {
-		return lower_bound(head, key, nil);
+		return lower_bound(_head, key, _nil);
 	}
 
 	iterator	lower_bound(node_pointer node, const key_type key, node_pointer prev) {
-		if (node == &nil)
-			return prev == nil ? _end : prev;
+		if (node == &_nil)
+			return prev == _nil ? _end : prev;
 		if (node->data.first <= key)
 			return lower_bound(node->right, key, prev);
 		prev = node;
@@ -578,12 +603,12 @@ public:
 	}
 
 	const_iterator	lower_bound(const key_type key) const {
-		return lower_bound(head, key);
+		return lower_bound(_head, key);
 	}
 
 	const_iterator	lower_bound(node_pointer node, const key_type key, node_pointer prev) const {
-		if (node == &nil)
-			return prev == nil ? _end : prev;
+		if (node == &_nil)
+			return prev == _nil ? _end : prev;
 		if (node->data.first <= key)
 			return lower_bound(node->right, key, prev);
 		prev = node;
@@ -591,12 +616,12 @@ public:
 	}
 
 	iterator	upper_bound(const key_type key) {
-		return _upper_bound(head, key, nil);
+		return _upper_bound(_head, key, _nil);
 	}
 
 	iterator	_upper_bound(node_pointer node, const key_type key, node_pointer prev) {
-		if (node == &nil)
-			return prev == nil ? _end : prev;
+		if (node == &_nil)
+			return prev == _nil ? _end : prev;
 		if (node->data.first > key)
 			return upper_bound(node->right, key, prev);
 		prev = node;
@@ -604,12 +629,12 @@ public:
 	}
 
 	const_iterator	upper_bound(const key_type key) const {
-		return upper_bound(head, key);
+		return upper_bound(_head, key);
 	}
 
 	const_iterator	upper_bound(node_pointer node, const key_type key, node_pointer prev) const {
-		if (node == &nil)
-			return prev == nil ? _end : prev;
+		if (node == &_nil)
+			return prev == _nil ? _end : prev;
 		if (node->data.first > key)
 			return upper_bound(node->right, key, prev);
 		prev = node;
@@ -648,14 +673,14 @@ public:
 		
 		right_copy->parent = node->parent;
 		if (node->parent == NULL)
-			head = right_copy;
+			_head = right_copy;
 		else if (node == node->parent->right)
 			node->parent->right = right_copy;
 		else
 			node->parent->left = right_copy;
 		node->parent = right_copy;
 		node->right = right_copy->left;
-		if (right_copy->left != &nil)
+		if (right_copy->left != &_nil)
 			right_copy->left->parent = node;
 		right_copy->left = node;
 	}
@@ -665,14 +690,14 @@ public:
 		
 		left_copy->parent = node->parent;
 		if (node->parent == NULL)
-			head = left_copy;
+			_head = left_copy;
 		else if (node == node->parent->left)
 			node->parent->left = left_copy;
 		else
 			node->parent->right = left_copy;
 		node->parent = left_copy;
 		node->left = left_copy->right;
-		if (left_copy->right != &nil)
+		if (left_copy->right != &_nil)
 			left_copy->right->parent = node;
 		left_copy->right = node;
 	}

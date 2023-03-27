@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/27 15:52:32 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/27 18:57:59 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ int	main(void)
 		ft::pair<int, int>	lol1(1, 0);
 		ft::pair<int, int>	lol2(2, 0);
 
-		std::cout << "height empty : " << tree.height(tree.head) << std::endl;
+		std::cout << "height empty : " << tree.height() << std::endl;
 		tree.insert(lol0);
 		tree.insert(lol1);
 		tree.insert(lol2);
@@ -232,21 +232,21 @@ int	main(void)
 		ft::pair<int, int>	lol9(9, 0);
 		ft::pair<int, int>	lol10(10, 0);
 
-		std::cout << "Previous height with 3 elements in the tree : " << tree.height(tree.head) << std::endl << std::endl;
+		std::cout << "Previous height with 3 elements in the tree : " << tree.height() << std::endl << std::endl;
 		tree.insert(lol3);
 		tree.insert(lol4);
 		std::cout << "Added 3, 4.\n";
-		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
+		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
 		tree.insert(lol5);
 		tree.insert(lol6);
 		tree.insert(lol7);
 		tree.insert(lol8);
 		std::cout << "Added 5, 6, 7, 8.\n";
-		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
+		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
 		tree.insert(lol9);
 		tree.insert(lol10);
 		std::cout << "Added 9 and 10.\n";
-		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
+		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
 
 	
 	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
