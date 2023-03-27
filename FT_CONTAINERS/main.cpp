@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/24 12:55:16 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/27 15:52:32 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	main(void)
 		print_vector(oui, "oui");
 
 
-	std::cout << "\n	| INSERT n TIMES A VALUE INSIDE VECTOR |\n\n";
+	std::cout << "\n	| insert n TIMES A VALUE INSIDE VECTOR |\n\n";
 	
 		vector<int> new_tab(it_tab);
 
@@ -154,7 +154,7 @@ int	main(void)
 		print_vector(new_tab, "new_tab after insert");
 
 
-	std::cout << "\n	| INSERT WITH ITERATORS |\n\n";
+	std::cout << "\n	| insert WITH ITERATORS |\n\n";
 
 		new_tab.insert(new_tab.end() - 4, oui.begin(), oui.end());
 		print_vector(new_tab, "new_tab after insert w/ iterators");
@@ -200,10 +200,10 @@ int	main(void)
 		ft::pair<std::string, std::string>	str4("b", "str");
 		ft::pair<std::string, std::string>	str5("c", "prout");
 
-		tree_str.Insert(str3);
-		tree_str.Insert(str4);
-		std::cout << "Searching something existing (a) : " << tree_str.Search("a") << std::endl;
-		std::cout << "Searching something else (y) : " << tree_str.Search("y") << std::endl;
+		tree_str.insert(str3);
+		tree_str.insert(str4);
+		std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
+		std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
 
 	
 	std::cout << "\n	| RED BLACK TREE w/ int |\n\n";
@@ -214,14 +214,14 @@ int	main(void)
 		ft::pair<int, int>	lol2(2, 0);
 
 		std::cout << "height empty : " << tree.height(tree.head) << std::endl;
-		tree.Insert(lol0);
-		tree.Insert(lol1);
-		tree.Insert(lol2);
+		tree.insert(lol0);
+		tree.insert(lol1);
+		tree.insert(lol2);
 		std::cout << "Added (0, 0), (1, 0) and (2, 0)\n";
-		std::cout << "Searching key '2' : "  << tree.Search(2) << std::endl;
-		std::cout << "Searching key '7' : "  << tree.Search(7) << std::endl;
+		std::cout << "finding key '2' : "  << *tree.find(2) << std::endl;
+		std::cout << "finding key '7' : "  << *tree.find(7) << std::endl;
 
-	std::cout << "\n	| TESTING RED BLACK TREE (int) INSERT WITH ITS HEIGHT |\n\n";
+	std::cout << "\n	| TESTING RED BLACK TREE (int) insert WITH ITS HEIGHT |\n\n";
 
 		ft::pair<int, int>	lol3(3, 0);
 		ft::pair<int, int>	lol4(4, 0);
@@ -233,18 +233,18 @@ int	main(void)
 		ft::pair<int, int>	lol10(10, 0);
 
 		std::cout << "Previous height with 3 elements in the tree : " << tree.height(tree.head) << std::endl << std::endl;
-		tree.Insert(lol3);
-		tree.Insert(lol4);
+		tree.insert(lol3);
+		tree.insert(lol4);
 		std::cout << "Added 3, 4.\n";
 		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
-		tree.Insert(lol5);
-		tree.Insert(lol6);
-		tree.Insert(lol7);
-		tree.Insert(lol8);
+		tree.insert(lol5);
+		tree.insert(lol6);
+		tree.insert(lol7);
+		tree.insert(lol8);
 		std::cout << "Added 5, 6, 7, 8.\n";
 		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
-		tree.Insert(lol9);
-		tree.Insert(lol10);
+		tree.insert(lol9);
+		tree.insert(lol10);
 		std::cout << "Added 9 and 10.\n";
 		std::cout << " New height : " <<  tree.height(tree.head) << std::endl << std::endl;
 
@@ -252,10 +252,10 @@ int	main(void)
 	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
 	
 	// 	Rbt<int, int>		rbt;
-	// 	rbt.Insert(lol2);
-	// 	std::cout << "search before removing 0	: " << rbt.Search(2) << std::endl;
-	// 	rbt.remove(rbt.first());
-	// 	std::cout << "search after removing 0	:	" << rbt.Search(2) << std::endl;
+	// 	rbt.insert(lol2);
+	// 	std::cout << "find before removing 0	: " << rbt.find(2) << std::endl;
+	// 	rbt.remove(rbt.);
+	// 	std::cout << "find after removing 0	:	" << rbt.find(2) << std::endl;
 
 
 }

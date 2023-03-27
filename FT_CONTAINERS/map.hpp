@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/26 19:26:00 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/27 12:06:26 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,11 +178,11 @@ class map {
 	// ^													^
 	// ^----------------------------------------------------^
 
-		iterator	find(const key_type &x) { return _tree.find(x); }
+		iterator		find(const key_type &x) { return _tree.find(x); }
 		
 		const_iterator	find(const key_type &x) const { return _tree.find(x); }
 		
-		size_type	count(const key_type &x) const { return _tree.count(x); }
+		size_type		count(const key_type &x) const { return _tree.count(x); }
 
 		iterator		lower_bound(const key_type &x) { return _tree.lower_bound(x); }
 		
