@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/27 18:56:50 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/30 12:43:21 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include "utility.hpp"
 #include "Allouloucator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft {
 
@@ -137,19 +138,66 @@ public:
 
 // ^----------------------------------------------------^
 // ^													^
+// ^				EXTENDED KEY COMPARE	 		 	^
+// ^													^
+// ^----------------------------------------------------^
+
+// We use key_compare to compare different element instead of using their < and > operators
+// Extended key compare uses key_compare but also compare _end and _rend which
+// will always be bigger and smaller than what we try to compare, 
+// that way they stay on the very left and right side of the tree
+// It is a functor so we use its operator() to do the comparison
+
+
+struct	extended_key_compare {
+	private:
+
+		node_pointer	_end;
+		node_pointer	_rend;
+		key_compare		_comp;
+
+	public:
+	
+		extended_key_compare(node_pointer end, node_pointer rend, const key_compare &comp = key_compare()) :
+			_end(end), _rend(rend), _comp(comp) {}
+		
+		bool	operator()(const key_type &a, const key_type &b) const { return _comp(a, b); }
+
+		bool	operator()( const key_type &a, const node_pointer &b ) const {
+            if ( b == _end )
+				return true;
+            if ( b == _rend )
+				return false;
+            return _comp( a, b->data->first );
+        }
+        bool	operator()( const node_pointer &a, const key_type &b ) const {
+            if (a == _end)
+				return false;
+            if (a == _rend)
+				return true;
+            return _comp( a->data->first, b );
+        }
+		
+        const key_compare	&key_comp() const { return _comp; }
+
+};
+
+// ^----------------------------------------------------^
+// ^													^
 // ^					MEMBERS						 	^
 // ^													^
 // ^----------------------------------------------------^
 
 private:
 
-	node_type			_nil;
-	node_pointer		_head;
-	node_allocator_type	_node_allocator;
-	allocator_type		_allocator;
-	node_pointer		_end;
-	node_pointer		_rend;
-	size_type			_size;
+	node_type				_nil;
+	node_allocator_type		_node_allocator;
+	allocator_type			_allocator;
+	node_pointer			_end;
+	node_pointer			_rend;
+	node_pointer			_head;
+	extended_key_compare	_key_compare;
+	size_type				_size;
 
 // ^----------------------------------------------------^
 // ^													^
@@ -159,15 +207,32 @@ private:
 
 public:
 
-	Rbt() : _nil(), _head(&_nil), _node_allocator(node_allocator_type()), _allocator(allocator_type()), _end(node_type(false, &_nil, &_nil).clone(_node_allocator)) {
+	Rbt(const key_compare &comp = key_compare()) :
+		_nil(), 
+		_node_allocator(node_allocator_type()), 
+		_allocator(allocator_type()), 
+		_end(node_type(false, &_nil, &_nil).clone(_node_allocator)),
+		_rend(node_type(false, &_nil, &_nil).clone(_node_allocator)),
+		_head(_end),
+		_key_compare(extended_key_compare(_end, _rend, comp)),
+		_size(0) {
 		_nil.is_nil = true;
 	} 
 	
 	// constructeur avec iterator		
 	
-	Rbt(const Rbt &other) { 
-		(void) other;
+	Rbt(const Rbt &other) :
+		_nil(), 
+		_node_allocator(other._node_allocator), 
+		_allocator(other._allocator), 
+		_end(node_type(false, &_nil, &_nil).clone(_node_allocator)),
+		_rend(node_type(false, &_nil, &_nil).clone(_node_allocator)),
+		_head(_end),
+		_key_compare(extended_key_compare(_end, _rend, other._key_compare.key_comp())),
+		_size(0) {
+		insert(other.begin(), other.end());
 	}
+	//? pourquoi valentin met _root->left a rend ?
 	
 	~Rbt() {}
 
@@ -267,7 +332,7 @@ public:
 		
 		template <typename U>
 		bool	operator==(const Iterator<U> &other) const {
-			return _node == other.get_node;
+			return _node == other.get_node();
 		}
 		
 		template <typename U>
@@ -288,8 +353,14 @@ public:
 	typedef	ft::reverse_iterator<iterator>			reverse_iterator;
 	typedef	ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
-	iterator				begin() { return ++iterator(_end); }
-	const_reverse_iterator	rend() const {}
+	iterator				begin() { return ++iterator(_rend); }
+	const_iterator			begin() const { return ++iterator(_rend); }
+	iterator				end() { return _end; }
+	const_iterator			end() const { return _end; }
+	reverse_iterator		rbegin() { return end(); }
+	const_reverse_iterator	rbegin() const { return end(); }
+	reverse_iterator		rend() { return begin(); }
+	const_reverse_iterator	rend() const { return begin(); }
 
 
 // ^----------------------------------------------------^
@@ -306,6 +377,12 @@ public:
 		if (is_upper_bound(hint, newData))
 			return _insert(hint.get_node(), newData);
 		return _insert(_head, newData);
+	}
+
+	template <class InputIterator>
+ 	void	insert(InputIterator first, InputIterator last) {
+		for ( ; first != last; first++)
+			insert(*first);
 	}
 
 private:
@@ -501,14 +578,14 @@ private:
 		}
 	}
 	
-	void	_remove(node_pointer node) {
+	size_type	_remove(node_pointer node) {
 		node_pointer	z = node;
 		node_pointer	y = z;
 		node_pointer	x;
 		bool			y_origin_color = y->red;
 		
 		if (node == &_nil)
-			return;
+			return 1;
 		if (z->left == &_nil)
 			x = z->right;
 		else if (z->right == &_nil)
@@ -527,6 +604,7 @@ private:
 		}
 		if (!y_origin_color) //y est noir
 			remove_fixup(x);
+		return 1;
 	}
 
 		
@@ -701,6 +779,37 @@ public:
 			left_copy->right->parent = node;
 		left_copy->right = node;
 	}
+
+// ^----------------------------------------------------^
+// ^													^
+// ^					MODIFIERS			 		 	^
+// ^													^
+// ^----------------------------------------------------^
+
+	size_type	erase(const key_type &key) { return _remove(find(key).get_node()); }
+
+	void		erase(iterator it) { _remove(it.get_node()); }
+	
+	void		erase(iterator first, iterator last) { 
+		for (size_type i = 0; i < last - first; i++) {
+			iterator	it(first + i);
+			_remove(it.get_node());
+		}
+	}
+	
+	void	swap(Rbt &other) {
+		ft::swap(_nil, other._nil);
+		ft::swap(_end, other._end);
+		ft::swap(_rend, other._rend);
+		ft::swap(_head, other._head);
+		ft::swap(_key_compare, other._key_compare);
+		ft::swap(_node_allocator, other._node_allocator);
+		ft::swap(_allocator, other._allocator);
+		ft::swap(_size, other._size);
+	}
+
+	void	clear() { erase(begin(), end()); }
+
 };
 
 }                    
