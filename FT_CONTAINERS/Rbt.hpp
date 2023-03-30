@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/30 17:48:44 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/30 18:39:24 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft {
 template <	typename Key,
 			typename Value,
 			typename Comp = std::less<Key>,
-			typename Allocator = ft::Allouloucator<ft::pair<const Key, Value> > >
+			typename Allocator = std::allocator<ft::pair<const Key, Value> > >
 
 class	Rbt {
 
@@ -309,7 +309,7 @@ public:
 				while (_node->left->is_nil == false)
 					_node = _node->left;
 			}
-			else {
+			else if (_node->parent->is_nil == false) {
 				if (_node == _node->parent->left)
 				_node = _node->parent;
 				else {
