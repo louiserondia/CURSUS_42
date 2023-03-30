@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/27 18:57:59 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/30 17:46:54 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,59 +196,61 @@ int	main(void)
 	std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
 
 		Rbt<std::string, std::string>	tree_str;
-		ft::pair<std::string, std::string>	str3("a", "oui");
-		ft::pair<std::string, std::string>	str4("b", "str");
-		ft::pair<std::string, std::string>	str5("c", "prout");
+		// ft::pair<std::string, std::string>	str3("a", "oui");
+		// ft::pair<std::string, std::string>	str4("b", "str");
+		// ft::pair<std::string, std::string>	str5("c", "prout");
 
-		tree_str.insert(str3);
-		tree_str.insert(str4);
-		std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
-		std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
-
-	
-	std::cout << "\n	| RED BLACK TREE w/ int |\n\n";
-
-		Rbt<int, int>		tree;
-		ft::pair<int, int>	lol0(0, 0);
-		ft::pair<int, int>	lol1(1, 0);
-		ft::pair<int, int>	lol2(2, 0);
-
-		std::cout << "height empty : " << tree.height() << std::endl;
-		tree.insert(lol0);
-		tree.insert(lol1);
-		tree.insert(lol2);
-		std::cout << "Added (0, 0), (1, 0) and (2, 0)\n";
-		std::cout << "finding key '2' : "  << *tree.find(2) << std::endl;
-		std::cout << "finding key '7' : "  << *tree.find(7) << std::endl;
-
-	std::cout << "\n	| TESTING RED BLACK TREE (int) insert WITH ITS HEIGHT |\n\n";
-
-		ft::pair<int, int>	lol3(3, 0);
-		ft::pair<int, int>	lol4(4, 0);
-		ft::pair<int, int>	lol5(5, 0);
-		ft::pair<int, int>	lol6(6, 0);
-		ft::pair<int, int>	lol7(7, 0);
-		ft::pair<int, int>	lol8(8, 0);
-		ft::pair<int, int>	lol9(9, 0);
-		ft::pair<int, int>	lol10(10, 0);
-
-		std::cout << "Previous height with 3 elements in the tree : " << tree.height() << std::endl << std::endl;
-		tree.insert(lol3);
-		tree.insert(lol4);
-		std::cout << "Added 3, 4.\n";
-		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
-		tree.insert(lol5);
-		tree.insert(lol6);
-		tree.insert(lol7);
-		tree.insert(lol8);
-		std::cout << "Added 5, 6, 7, 8.\n";
-		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
-		tree.insert(lol9);
-		tree.insert(lol10);
-		std::cout << "Added 9 and 10.\n";
-		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
+		// tree_str.insert(str3);
+		// tree_str.insert(str4);
+		// std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
+		// std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
 
 	
+	// std::cout << "\n	| RED BLACK TREE w/ int |\n\n";
+
+	// 	Rbt<int, int>		tree;
+	// 	ft::pair<int, int>	lol0(0, 0);
+	// 	ft::pair<int, int>	lol1(1, 0);
+	// 	ft::pair<int, int>	lol2(2, 0);
+
+	// 	std::cout << "height empty : " << tree.height() << std::endl;
+	// 	tree.insert(lol0);
+	// 	tree.insert(lol1);
+	// 	tree.insert(lol2);
+	// 	std::cout << "Added (0, 0), (1, 0) and (2, 0)\n";
+	// 	std::cout << "finding key '2' : "  << *tree.find(2) << std::endl;
+	// 	std::cout << "finding key '7' : "  << *tree.find(7) << std::endl;
+
+	// std::cout << "\n	| TESTING RED BLACK TREE (int) insert WITH ITS HEIGHT |\n\n";
+
+	// 	ft::pair<int, int>	lol3(3, 0);
+	// 	ft::pair<int, int>	lol4(4, 0);
+	// 	ft::pair<int, int>	lol5(5, 0);
+	// 	ft::pair<int, int>	lol6(6, 0);
+	// 	ft::pair<int, int>	lol7(7, 0);
+	// 	ft::pair<int, int>	lol8(8, 0);
+	// 	ft::pair<int, int>	lol9(9, 0);
+	// 	ft::pair<int, int>	lol10(10, 0);
+
+	// 	std::cout << "Previous height with 3 elements in the tree : " << tree.height() << std::endl << std::endl;
+	// 	tree.insert(lol3);
+	// 	tree.insert(lol4);
+	// 	std::cout << "Added 3, 4.\n";
+	// 	std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
+	// 	tree.insert(lol5);
+	// 	tree.insert(lol6);
+	// 	tree.insert(lol7);
+	// 	tree.insert(lol8);
+	// 	std::cout << "Added 5, 6, 7, 8.\n";
+	// 	std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
+	// 	tree.insert(lol9);
+	// 	tree.insert(lol10);
+	// 	std::cout << "Added 9 and 10.\n";
+	// 	std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
+
+	// Rbt<int, int>::Yo it;
+	// for (Rbt<int, int>::iterator it = tree.begin(); it != tree.end(); it++)
+		// std::cout << "lol\n";
 	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
 	
 	// 	Rbt<int, int>		rbt;

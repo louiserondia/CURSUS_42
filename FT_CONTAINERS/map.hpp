@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/30 12:55:05 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/30 17:25:07 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,17 @@ class map {
 	// ^													^
 	// ^----------------------------------------------------^	
 
+	public:
+
 		explicit map(const Compare &comp = Compare(), const Allocator &alloc = Allocator()) :
 			_tree(tree_type(comp, alloc))
 		{}
 		
 		template <class InputIterator>
-		map(InputIterator first, InputIterator last, 
-			const Compare &comp = Compare(), const Allocator &alloc = Allocator()) : _tree( tree_type(comp, alloc)) {
-				insert(first, last);
-			}
+		map(InputIterator first, InputIterator last, const Compare &comp = Compare(), const Allocator &alloc = Allocator()) : 
+			_tree(tree_type(comp, alloc)) {
+			insert(first, last);
+		}
 
 		map(const map &other) : _tree(other._tree) {}
 
@@ -228,7 +230,7 @@ class map {
 		iterator	insert(iterator position, const value_type &x) { return _tree.insert(position, x).first; }
 		
 		template <class InputIterator>
-		void	insert(InputIterator first, InputIterator last) { return _tree.insert(first, last).first; }
+		void	insert(InputIterator first, InputIterator last) { _tree.insert(first, last); }
 		
 		void	erase(iterator position) { return _tree.erase(position->first); }
 
@@ -288,24 +290,38 @@ class map {
 // ^----------------------------------------------------^		
 
 	template <class Key, class Value, class Compare, class Allocator>
-	bool	operator==(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {}
+	bool	operator==(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {
+		return x._tree == y._tree;
+	}
 
 	template <class Key, class Value, class Compare, class Allocator>
-	bool	operator!=(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {}
+	bool	operator!=(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {
+		return x._tree != y._tree;
+	}
 
 	template <class Key, class Value, class Compare, class Allocator>
-	bool	operator<(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {}
+	bool	operator<(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {
+		return x._tree != y._tree;
+	}
 
 	template <class Key, class Value, class Compare, class Allocator>
-	bool	operator>(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {}
+	bool	operator>(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {
+		return x._tree != y._tree;
+	}
 
 	template <class Key, class Value, class Compare, class Allocator>
-	bool	operator<=(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {}
+	bool	operator<=(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {
+		return x._tree != y._tree;
+	}
 
 	template <class Key, class Value, class Compare, class Allocator>
-	bool	operator>=(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {}
+	bool	operator>=(const map<Key, Value, Compare, Allocator> &x, const map<Key, Value, Compare, Allocator> &y) {
+		return x._tree != y._tree;
+	}
 
 	template <class Key, class Value, class Compare, class Allocator>
-	void	swap(map<Key, Value, Compare, Allocator> &x, map<Key, T, Compare, Allocator> &y) {}
+	void	swap(map<Key, Value, Compare, Allocator> &x, map<Key, Value, Compare, Allocator> &y) {
+		ft::swap(x._tree, y._tree);
+	}
 	
 }
