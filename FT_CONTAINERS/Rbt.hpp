@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/30 18:39:24 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/03/31 19:10:56 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,18 @@ public:
 			return tmp;
 		}
 
+		Iterator			operator+(difference_type n) { 
+			for (difference_type i = 0; i < n; i++)
+				++*this;
+			return *this;
+		}
+
+		friend Iterator		operator+(difference_type lhs, const Iterator &rhs) {
+			for (difference_type i = 0; i < lhs; i++)
+				++rhs;
+			return rhs;
+		}
+
 		Iterator	&operator--() {
 			if (_node->left->is_nil == false) {
 				_node = _node->left;
@@ -397,12 +409,12 @@ public:
 // *													*
 // *----------------------------------------------------*
 
-	value_type	insert(const value_type newData) {
-		return *_insert(_head, newData);
+	ft::pair<iterator, bool>	insert(const value_type newData) {
+		return _insert(_head, newData);
 	}
 
-	iterator	insert(iterator hint, const value_type newData) {
-		if (is_upper_bound(hint, newData))
+	ft::pair<iterator, bool>	insert(iterator hint, const value_type &newData) {
+		if (_is_upper_bound(hint, newData.first))
 			return _insert(hint.get_node(), newData);
 		return _insert(_head, newData);
 	}
@@ -412,6 +424,22 @@ public:
 		for ( ; first != last; first++)
 			insert(*first);
 	}
+
+	// value_type	insert(const value_type newData) {
+	// 	return *_insert(_head, newData);
+	// }
+
+	// iterator	insert(iterator hint, const value_type newData) {
+	// 	if (is_upper_bound(hint, newData))
+	// 		return _insert(hint.get_node(), newData);
+	// 	return _insert(_head, newData);
+	// }
+
+	// template <class InputIterator>
+ 	// void	insert(InputIterator first, InputIterator last) {
+	// 	for ( ; first != last; first++)
+	// 		insert(*first);
+	// }
 
 private:
 
@@ -475,15 +503,15 @@ private:
 		_head->red = false;
 	}
 	
-	iterator	_insert(node_pointer node, const value_type newData) { // :000
+	ft::pair<node_pointer, bool>	_insert(node_pointer node, const value_type newData) { // :000
 		if (node == _nil && node == _head) {
 			node = _add_new_node(newData, 0);
 			_head = node;
-			return node; //~ return la pair qu'on a ajoutée, à VERIFIER
+			return ft::make_pair(node, true); //~ return la pair qu'on a ajoutée, à VERIFIER
 		}
 		if (node == _nil && node->parent != _nil) {
 			node = _add_new_node(newData, 0);
-			return node; //~ return la pair qu'on a ajoutée
+			return ft::make_pair(node, true); //~ return la pair qu'on a ajoutée
 		}
 		if (newData.first < node->data.first) {
 			if (node->left != _nil)
@@ -499,7 +527,7 @@ private:
 			node->right->parent = node;
 			_insert_fixup(node->right);
 		}
-		return node; //~ renvoyer la pair égale à celle qu'on a essayer d'ajouter.
+		return ft::make_pair(node, false); //~ renvoyer la pair égale à celle qu'on a essayer d'ajouter.
 	}
 
 
@@ -560,12 +588,12 @@ private:
 				sista->red = false;
 				x->parent->red = true;
 				rotate_left(x->parent);
-				return remove_fixup(x);
+				return _remove_fixup(x);
 			}
 			// soeur est noire
 			if (!sista->left->red && !sista->right->red) { // les enfants de la soeur sont noirs
 				sista->red = true;
-				return remove_fixup(x->parent);
+				return _remove_fixup(x->parent);
 			}
 			if (!sista->right->red) { // si le neveu proche est rouge et lointain est noir
 				sista->red = true;
@@ -586,12 +614,12 @@ private:
 				sista->red = false;
 				x->parent->red = true;
 				rotate_right(x->parent);
-				return remove_fixup(x);
+				return _remove_fixup(x);
 			}
 			// soeur est noire
 			if (!sista->right->red && !sista->left->red) { // enfants de la soeur sont noirs
 				sista->red = true;
-				return remove_fixup(x->parent);
+				return _remove_fixup(x->parent);
 			}
 			if (!sista->left->red) { // neveu proche est rouge et lointain est noir
 				sista->red = true;
@@ -632,7 +660,7 @@ private:
 			y->red = z->red;
 		}
 		if (!y_origin_color) //y est noir
-			remove_fixup(x);
+			_remove_fixup(x);
 		_size--;
 		return 1;
 	}
@@ -687,7 +715,7 @@ public:
 	}
 
 	size_type	count(const key_type key) const {
-		return *_find(_head, key) == _end ? false : true;
+		return _find(_head, key).get_node() == _end ? false : true;
 	}
 
 // *----------------------------------------------------*
@@ -800,7 +828,7 @@ public:
 	void		erase(iterator it) { _remove(it.get_node()); }
 	
 	void		erase(iterator first, iterator last) { 
-		for (size_type i = 0; i < last - first; i++) {
+		for (difference_type i = 0; i < std::distance(first, last); i++) {
 			iterator	it(first + i);
 			_remove(it.get_node());
 		}
