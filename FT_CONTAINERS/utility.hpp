@@ -69,6 +69,32 @@ namespace ft {
 				is_empty = other.is_empty;
 				return *this;
 			}
+
+	bool operator==(const first_type &other) {
+		return !key_compare(other, first) && !key_compare(other, first);
+	}
+
+	bool operator!=(const first_type &other) {
+		return key_compare(other, first) || key_compare(other, first);
+	}
+
+	bool operator<(const first_type &other) {
+		std::cout << "first :" << first << std::endl;
+		return key_compare(first, other);
+	}
+
+	bool operator>(const first_type &other) {
+		return key_compare(other, first);
+	}
+
+	bool operator<=(const first_type &other) {
+		return key_compare(first, other) || (first == other);
+	}
+
+	bool operator>=(const first_type &other) {
+		return key_compare(other, first) || (first == other);
+	}
+
 	};
 
 	template <class T1, class T2>

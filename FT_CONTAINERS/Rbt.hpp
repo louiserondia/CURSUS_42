@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/31 19:10:56 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/03 18:46:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,27 @@ public:
 // ~----------------------------------------------------~
 // ~----------------------------------------------------~
 // ~													~
-// ~				  CON/DESTRUCTORS			 	 	~
+// ~					  MEMBERS			 		 	~
 // ~													~
 // ~----------------------------------------------------~
 // ~----------------------------------------------------~
-	
+
 private: 
-
+	
 	struct _Node {
-
+	
+		value_type	data;
+		_Node		*left;
+		_Node		*right;
+		_Node		*parent;
+		bool		red;
+		bool		is_nil;
+// ~----------------------------------------------------~
+// ~													~
+// ~				  CON/DESTRUCTORS			 	 	~
+// ~													~
+// ~----------------------------------------------------~
+	
 	public :
 
 		typedef typename Allocator::template rebind<_Node>::other	node_allocator_type; //? pas tout a fait sure de comprendre le ::template et les 3 valeurs
@@ -102,9 +114,9 @@ private:
 			return node;
 		}
 
-		static void destroy(pointer node, node_allocator_type &alloc) {
-			alloc.destroy(node);
-			alloc.deallocate(node, 1);
+		static void destroy(node_pointer node, node_allocator_type &node_alloc) {
+			node_alloc.destroy(node);
+			node_alloc.deallocate(node, 1);
 		}
 
 		void	operator=(const _Node &other) {
@@ -113,19 +125,6 @@ private:
 			right = new _Node(other.right);
 			red = other.red;
 		}
-	
-// ~----------------------------------------------------~
-// ~													~
-// ~					  MEMBERS			 		 	~
-// ~													~
-// ~----------------------------------------------------~
-
-		value_type	data;
-		_Node		*left;
-		_Node		*right;
-		_Node		*parent;
-		bool		red;
-		bool		is_nil;
 
 // ~----------------------------------------------------~
 // ~													~
@@ -172,8 +171,7 @@ public:
 // Extended key compare uses key_compare but also compare _end and _rend which
 // will always be bigger and smaller than what we try to compare, 
 // that way they stay on the very left and right side of the tree
-// It is a functor so we use its operator() to do the comparison
-
+// It is a functor so we use its operator() to do the comparison	
 
 struct	extended_key_compare {
 	private:
@@ -194,14 +192,14 @@ struct	extended_key_compare {
 				return true;
             if ( b == _rend )
 				return false;
-            return _comp( a, b->data->first );
+            return _comp( a, b->data.first );
         }
         bool	operator()( const node_pointer &a, const key_type &b ) const {
             if (a == _end)
 				return false;
             if (a == _rend)
 				return true;
-            return _comp( a->data->first, b );
+            return _comp( a->data.first, b );
         }
 		
         const key_compare	&key_comp() const { return _comp; }
@@ -243,7 +241,11 @@ public:
 		_head(_end),
 		_key_compare(extended_key_compare(_end, _rend, comp)),
 		_size(0) {
+		_head->left = _rend;
+		_rend->red = true;
+		_rend->parent = _head;
 		_nil->is_nil = true;
+		std::cout << "are end's children nil ? \nleft : " << _end->left->is_nil << "right : " << _end->right->is_nil << "\n";
 	} 
 	
 	// constructeur avec iterator		
@@ -258,11 +260,18 @@ public:
 		_key_compare(extended_key_compare(_end, _rend, other._key_compare.key_comp())),
 		_size(0) {
 		_nil->is_nil = true;
+		_head->left = _rend;
+		_rend->red = true;
+		_rend->parent = _head;
 		insert(other.begin(), other.end());
 	}
-	//? pourquoi valentin met _root->left a rend ?
 	
-	~Rbt() {}
+	~Rbt() {
+		// clear();
+		_Node::destroy(_nil, _node_allocator);
+		_Node::destroy(_end, _node_allocator);
+		_Node::destroy(_rend, _node_allocator);
+	}
 
 
 // *----------------------------------------------------*
@@ -309,17 +318,18 @@ public:
 				while (_node->left->is_nil == false)
 					_node = _node->left;
 			}
-			else if (_node->parent->is_nil == false) {
-				if (_node == _node->parent->left)
-				_node = _node->parent;
-				else {
+			else {
+				// if (_node == _node->parent->left)
+				// 	_node = _node->parent;
+				// else {
 					node_pointer	tmp = _node;
 					while (tmp->parent->is_nil == false && tmp != tmp->parent->left)
 						tmp = tmp->parent;
-					if (tmp->parent->is_nil == false)
+					if (tmp->parent->is_nil == false) {
 						_node = tmp->parent;
-				}
-			}		
+					}
+				// }
+			}
 			return *this;
 		}
 			
@@ -349,15 +359,15 @@ public:
 					_node = _node->right;
 			}
 			else {
-				if (_node == _node->parent->right)
-				_node = _node->parent;
-				else {
+				// if (_node == _node->parent->right)
+				// _node = _node->parent;
+				// else {
 					node_pointer	tmp = _node;
 					while (tmp->parent->is_nil == false && tmp != tmp->parent->right)
 						tmp = tmp->parent;
 					if (tmp->parent->is_nil == false)
 						_node = tmp->parent;
-				}
+				// }
 			}
 			return *this;
 		}
@@ -425,22 +435,6 @@ public:
 			insert(*first);
 	}
 
-	// value_type	insert(const value_type newData) {
-	// 	return *_insert(_head, newData);
-	// }
-
-	// iterator	insert(iterator hint, const value_type newData) {
-	// 	if (is_upper_bound(hint, newData))
-	// 		return _insert(hint.get_node(), newData);
-	// 	return _insert(_head, newData);
-	// }
-
-	// template <class InputIterator>
- 	// void	insert(InputIterator first, InputIterator last) {
-	// 	for ( ; first != last; first++)
-	// 		insert(*first);
-	// }
-
 private:
 
 	node_type	*_add_new_node(value_type newData, bool is_red) {
@@ -502,34 +496,37 @@ private:
 		}
 		_head->red = false;
 	}
-	
-	ft::pair<node_pointer, bool>	_insert(node_pointer node, const value_type newData) { // :000
-		if (node == _nil && node == _head) {
+	//iiiiiiii
+	ft::pair<node_pointer, bool>	_insert(node_pointer node, const value_type newData) {
+		if (node == _head && _head == _end) {
 			node = _add_new_node(newData, 0);
 			_head = node;
-			return ft::make_pair(node, true); //~ return la pair qu'on a ajoutée, à VERIFIER
+			_head->left = _rend;
+			_rend->parent = _head;
+			_head->right = _end;
+			_end->parent = _head;
+			return ft::make_pair(node, true);
 		}
 		if (node == _nil && node->parent != _nil) {
 			node = _add_new_node(newData, 0);
-			return ft::make_pair(node, true); //~ return la pair qu'on a ajoutée
+			return ft::make_pair(node, true);
 		}
-		if (newData.first < node->data.first) {
+		if (_key_compare(newData.first, node)) { // same as 'newData.first < node->data.first'
 			if (node->left != _nil)
 				return _insert(node->left, newData);
 			node->left = _add_new_node(newData, 1);
 			node->left->parent = node;
 			_insert_fixup(node->left);
 		}
-		else if (newData.first > node->data.first) {
+		else if (_key_compare(node, newData.first)) {
 			if (node->right != _nil)
 				return _insert(node->right, newData);
 			node->right = _add_new_node(newData, 1);
 			node->right->parent = node;
 			_insert_fixup(node->right);
 		}
-		return ft::make_pair(node, false); //~ renvoyer la pair égale à celle qu'on a essayer d'ajouter.
+		return ft::make_pair(node, false);
 	}
-
 
 // *----------------------------------------------------*
 // *													*
@@ -538,11 +535,6 @@ private:
 // *----------------------------------------------------*
 
 public:
-
-	// void	delete_node(node_pointer node) {
-	// 	delete node;
-	// 	node = _nil;
-	// }
 		
 	node_type	*get_biggest_node(node_pointer node) {
 		node_type	*copy = node;
@@ -709,7 +701,7 @@ public:
 			return _end;
 		if (node->data.first == key)
 			return node;
-		if (key < node->data.first)
+		if (_key_compare(key, node->data.first))
 			return _find(node->left, key);
 		return _find(node->right, key);
 	}
@@ -846,7 +838,7 @@ public:
 	}
 
 	void	clear() { erase(begin(), end()); }
-
+	//!segfault dans erase j'imagine
 		
 // *----------------------------------------------------*
 // *													*

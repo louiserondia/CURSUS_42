@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/31 19:33:14 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/03 18:46:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,31 +193,32 @@ int	main(void)
 		std::cout << ft::make_pair(2, std::string("yes"));
 
 	
-	std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
+	// std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
 
-		Rbt<std::string, std::string>	tree_str;
-		ft::pair<std::string, std::string>	str3("a", "oui");
-		ft::pair<std::string, std::string>	str4("b", "str");
-		ft::pair<std::string, std::string>	str5("c", "prout");
+	// 	Rbt<std::string, std::string>	tree_str;
+	// 	ft::pair<std::string, std::string>	str3("a", "oui");
+	// 	ft::pair<std::string, std::string>	str4("b", "str");
+	// 	ft::pair<std::string, std::string>	str5("c", "prout");
 
-		tree_str.insert(str3);
-		tree_str.insert(str4);
-		std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
-		std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
+	// 	tree_str.insert(str3);
+	// 	tree_str.insert(str4);
+	// 	std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
+	// 	std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
 
 	
 	std::cout << "\n	| RED BLACK TREE w/ int |\n\n";
 
 		Rbt<int, int>		tree;
-		ft::pair<int, int>	lol0(0, 0);
+		ft::pair<int, int>	lol0(-1, 0);
 		ft::pair<int, int>	lol1(1, 0);
 		ft::pair<int, int>	lol2(2, 0);
 
 		std::cout << "height empty : " << tree.height() << std::endl;
 		tree.insert(lol0);
-		tree.insert(lol1);
+		std::cout << "iterator begin() : " << *tree.begin() << std::endl;
+ 		tree.insert(lol1);
 		tree.insert(lol2);
-		std::cout << "Added (0, 0), (1, 0) and (2, 0)\n";
+		std::cout << "Added (40, 0), (1, 0) and (2, 0)\n";
 		std::cout << "finding key '2' : "  << *tree.find(2) << std::endl;
 		std::cout << "finding key '7' : "  << *tree.find(7) << std::endl;
 
@@ -247,10 +248,19 @@ int	main(void)
 		tree.insert(lol10);
 		std::cout << "Added 9 and 10.\n";
 		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
+	
+	
+	std::cout << "\n	| ITERATORS OF RED BLACK TREE |\n\n";
 
-	Rbt<int, int>::iterator it;
-	for (Rbt<int, int>::iterator it = tree.begin(); it != tree.end(); it++)
-		std::cout << "lol\n";
+		std::cout << "iterator begin() : " << *tree.begin() << std::endl;
+		std::cout << "iterator ++begin() : " << *(++tree.begin()) << std::endl;
+		std::cout << "iterator end() : " << *tree.end() << std::endl;
+		std::cout << "iterator --end() : " << *(--tree.end()) << std::endl;
+
+		//! end marche pas, cmt faire pour qu'il reste a droite de head quand on insert ?
+		Rbt<int, int>::iterator it;
+		// for (Rbt<int, int>::iterator it = tree.begin(); it != tree.end(); it++)
+		// 	std::cout << "iterator : "<< *it << "\n";
 	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
 	
 	// 	Rbt<int, int>		rbt;
