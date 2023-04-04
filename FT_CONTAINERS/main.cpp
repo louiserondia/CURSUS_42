@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/03 18:46:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/04 12:38:38 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,10 +257,13 @@ int	main(void)
 		std::cout << "iterator end() : " << *tree.end() << std::endl;
 		std::cout << "iterator --end() : " << *(--tree.end()) << std::endl;
 
+		std::cout << "\n-----------------------------------------\n " << std::endl;
+
 		//! end marche pas, cmt faire pour qu'il reste a droite de head quand on insert ?
-		Rbt<int, int>::iterator it;
-		// for (Rbt<int, int>::iterator it = tree.begin(); it != tree.end(); it++)
-		// 	std::cout << "iterator : "<< *it << "\n";
+		// Rbt<int, int>::iterator it;
+		for (Rbt<int, int>::const_iterator it = tree.begin(); it != tree.end(); ++it)
+			std::cout << "iterator : "<< *it << "\n";
+		std::cout << "iterator begin() : " << *tree.begin() << std::endl;
 	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
 	
 	// 	Rbt<int, int>		rbt;

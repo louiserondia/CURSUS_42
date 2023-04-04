@@ -134,8 +134,8 @@ namespace ft {
 
 	template <class T1, class T2>
 	std::ostream	&operator<<(std::ostream &o, const pair<T1, T2> &rhs)	{
-		o << "key :	" << rhs.first << std::endl;
-		o << "value :	" << rhs.second << std::endl;
+		o << "	key : " << rhs.first;
+		o << " | value : " << rhs.second << std::endl;
 		return o;
 	}
 }

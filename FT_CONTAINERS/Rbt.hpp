@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/03 18:46:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/04 14:44:21 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ private:
 
 		static void destroy(node_pointer node, node_allocator_type &node_alloc) {
 			node_alloc.destroy(node);
-			node_alloc.deallocate(node, 1);
+			// node_alloc.deallocate(node, 1);
 		}
 
 		void	operator=(const _Node &other) {
@@ -241,11 +241,13 @@ public:
 		_head(_end),
 		_key_compare(extended_key_compare(_end, _rend, comp)),
 		_size(0) {
+		_head->parent = _nil;
 		_head->left = _rend;
 		_rend->red = true;
 		_rend->parent = _head;
 		_nil->is_nil = true;
-		std::cout << "are end's children nil ? \nleft : " << _end->left->is_nil << "right : " << _end->right->is_nil << "\n";
+		// std::cout << "are head/end's parent nil : " << _end->parent->is_nil << "\n";
+		// std::cout << "are Rend's children nil ? \nleft : " << _rend->left->is_nil << ", right : " << _rend->right->is_nil << "\n";
 	} 
 	
 	// constructeur avec iterator		
@@ -259,6 +261,7 @@ public:
 		_head(_end),
 		_key_compare(extended_key_compare(_end, _rend, other._key_compare.key_comp())),
 		_size(0) {
+		_head->parent = _nil;
 		_nil->is_nil = true;
 		_head->left = _rend;
 		_rend->red = true;
@@ -323,11 +326,12 @@ public:
 				// 	_node = _node->parent;
 				// else {
 					node_pointer	tmp = _node;
-					while (tmp->parent->is_nil == false && tmp != tmp->parent->left)
+					while (tmp->parent->is_nil == false && tmp != tmp->parent->left) //! segfault ici askip
+																					// jsp si c parce que je suis dans la tete, 
+																					//quand je print tmp, son parent, gp et enfants g des trucs bizarres
 						tmp = tmp->parent;
-					if (tmp->parent->is_nil == false) {
+					if (tmp->parent->is_nil == false)
 						_node = tmp->parent;
-					}
 				// }
 			}
 			return *this;
@@ -407,9 +411,9 @@ public:
 	const_iterator			begin() const { return ++iterator(_rend); }
 	iterator				end() { return _end; }
 	const_iterator			end() const { return _end; }
-	reverse_iterator		rbegin() { return end(); }
+	reverse_iterator		rbegin() { return reverse_iterator(end()); }
 	const_reverse_iterator	rbegin() const { return end(); }
-	reverse_iterator		rend() { return begin(); }
+	reverse_iterator		rend() { return reverse_iterator(begin()); }
 	const_reverse_iterator	rend() const { return begin(); }
 
 
@@ -505,6 +509,7 @@ private:
 			_rend->parent = _head;
 			_head->right = _end;
 			_end->parent = _head;
+			_end->left = _nil;
 			return ft::make_pair(node, true);
 		}
 		if (node == _nil && node->parent != _nil) {
@@ -815,6 +820,7 @@ public:
 // *													*
 // *----------------------------------------------------*
 
+#include <map>
 	size_type	erase(const key_type &key) { return _remove(find(key).get_node()); }
 
 	void		erase(iterator it) { _remove(it.get_node()); }
@@ -822,7 +828,7 @@ public:
 	void		erase(iterator first, iterator last) { 
 		for (difference_type i = 0; i < std::distance(first, last); i++) {
 			iterator	it(first + i);
-			_remove(it.get_node());
+				_remove(it.get_node());
 		}
 	}
 	

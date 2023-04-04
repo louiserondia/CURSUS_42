@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/31 19:17:05 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/04 13:58:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,13 @@ class map {
 	// ^													^
 	// ^----------------------------------------------------^
 	
-		mapped_type	&operator[](const key_type &k) { return _tree.insert( value_type( k, mapped_type() ) ).first->second; }
+		mapped_type	&operator[](const key_type &k) {
+			//? quand on assogne plusieurs fois une value a une key, ca marche une fois sur deux (ex map['a'] = 2;)
+			//? ca doit etre un probleme avec l'operateur=, mais impossible de trouver ??? quand on assigne une value a une key
+			//? sinon ou ??
+			return _tree.insert(value_type(k, mapped_type())).first->second; }
+		// insert renvoie une pair avec un iterateur et un boolean, 
+		// on va donc chercher la valeur (donc second) de l'iterateur (qui est first)
 		
 		mapped_type	&at(const key_type& k) {
 			iterator	find = find(k);
