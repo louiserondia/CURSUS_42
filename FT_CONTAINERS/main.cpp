@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/04 12:38:38 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/05 16:58:15 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <list>
 
 using namespace ft;
+
 
 class A
 {
@@ -193,17 +194,17 @@ int	main(void)
 		std::cout << ft::make_pair(2, std::string("yes"));
 
 	
-	// std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
+	std::cout << "\n	| RED BLACK TREE w/ std::string |\n\n";
 
-	// 	Rbt<std::string, std::string>	tree_str;
-	// 	ft::pair<std::string, std::string>	str3("a", "oui");
-	// 	ft::pair<std::string, std::string>	str4("b", "str");
-	// 	ft::pair<std::string, std::string>	str5("c", "prout");
+		Rbt<std::string, std::string>	tree_str;
+		ft::pair<std::string, std::string>	str3("a", "oui");
+		ft::pair<std::string, std::string>	str4("b", "str");
+		ft::pair<std::string, std::string>	str5("c", "prout");
 
-	// 	tree_str.insert(str3);
-	// 	tree_str.insert(str4);
-	// 	std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
-	// 	std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
+		tree_str.insert(str3);
+		tree_str.insert(str4);
+		std::cout << "finding something existing (a) : " << *tree_str.find("a") << std::endl;
+		std::cout << "finding something else (y) : " << *tree_str.find("y") << std::endl;
 
 	
 	std::cout << "\n	| RED BLACK TREE w/ int |\n\n";
@@ -264,13 +265,19 @@ int	main(void)
 		for (Rbt<int, int>::const_iterator it = tree.begin(); it != tree.end(); ++it)
 			std::cout << "iterator : "<< *it << "\n";
 		std::cout << "iterator begin() : " << *tree.begin() << std::endl;
-	// std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
+	std::cout << "\n	| TESTING REMOVE ON RBT |\n\n";
 	
-	// 	Rbt<int, int>		rbt;
-	// 	rbt.insert(lol2);
-	// 	std::cout << "find before removing 0	: " << rbt.find(2) << std::endl;
-	// 	rbt.remove(rbt.);
-	// 	std::cout << "find after removing 0	:	" << rbt.find(2) << std::endl;
+		Rbt<int, int>		rbt;
+		rbt.insert(lol2);
+		std::cout << "find before removing 0	: " << rbt.find(2) << std::endl;
+		rbt.remove(rbt.);
+		std::cout << "find after removing 0	:	" << rbt.find(2) << std::endl;
 
-
+	Rbt<std::string, std::string> v;
+	for (int i =0 ; i < 10; i++) {
+		
+		v.insert(Rbt<std::string,std::string>::value_type(std::string(1,(char)('a' + i)), "yooo"));
+	}
+	v.erase(++v.begin(), --v.end());
+	std::cout << v.size() << std::endl;
 }

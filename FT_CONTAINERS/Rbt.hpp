@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/04 14:44:21 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/05 17:00:11 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ private:
 	
 	public :
 
-		typedef typename Allocator::template rebind<_Node>::other	node_allocator_type; //? pas tout a fait sure de comprendre le ::template et les 3 valeurs
+		typedef typename Allocator::template rebind<_Node>::other	node_allocator_type;
 		typedef typename node_allocator_type::pointer				node_pointer;
 
 		_Node() :
@@ -119,12 +119,12 @@ private:
 			// node_alloc.deallocate(node, 1);
 		}
 
-		void	operator=(const _Node &other) {
-			data = other.data;
-			left = new _Node(other.left);
-			right = new _Node(other.right);
-			red = other.red;
-		}
+		// void	operator=(const _Node &other) {
+		// 	data = other.data;
+		// 	left = new _Node(other.left);
+		// 	right = new _Node(other.right);
+		// 	red = other.red;
+		// }
 
 // ~----------------------------------------------------~
 // ~													~
@@ -269,6 +269,14 @@ public:
 		insert(other.begin(), other.end());
 	}
 	
+	Rbt &operator=(const Rbt& other) {
+		clear();
+		for (const_iterator it = other.begin(); it != other.end(); it++) {
+			insert(*it);
+		}
+		return *this;
+	}
+	
 	~Rbt() {
 		// clear();
 		_Node::destroy(_nil, _node_allocator);
@@ -322,17 +330,11 @@ public:
 					_node = _node->left;
 			}
 			else {
-				// if (_node == _node->parent->left)
-				// 	_node = _node->parent;
-				// else {
 					node_pointer	tmp = _node;
-					while (tmp->parent->is_nil == false && tmp != tmp->parent->left) //! segfault ici askip
-																					// jsp si c parce que je suis dans la tete, 
-																					//quand je print tmp, son parent, gp et enfants g des trucs bizarres
+					while (tmp->parent->is_nil == false && tmp != tmp->parent->left)
 						tmp = tmp->parent;
 					if (tmp->parent->is_nil == false)
 						_node = tmp->parent;
-				// }
 			}
 			return *this;
 		}
@@ -363,15 +365,11 @@ public:
 					_node = _node->right;
 			}
 			else {
-				// if (_node == _node->parent->right)
-				// _node = _node->parent;
-				// else {
 					node_pointer	tmp = _node;
 					while (tmp->parent->is_nil == false && tmp != tmp->parent->right)
 						tmp = tmp->parent;
 					if (tmp->parent->is_nil == false)
 						_node = tmp->parent;
-				// }
 			}
 			return *this;
 		}
@@ -500,8 +498,11 @@ private:
 		}
 		_head->red = false;
 	}
+
 	//iiiiiiii
 	ft::pair<node_pointer, bool>	_insert(node_pointer node, const value_type newData) {
+		node_pointer	copy;
+		
 		if (node == _head && _head == _end) {
 			node = _add_new_node(newData, 0);
 			_head = node;
@@ -509,7 +510,9 @@ private:
 			_rend->parent = _head;
 			_head->right = _end;
 			_end->parent = _head;
-			_end->left = _nil;
+			_end->red = true;
+			_end->left = _nil; 
+			//? remplacer par _insert_fixup ?
 			return ft::make_pair(node, true);
 		}
 		if (node == _nil && node->parent != _nil) {
@@ -521,14 +524,18 @@ private:
 				return _insert(node->left, newData);
 			node->left = _add_new_node(newData, 1);
 			node->left->parent = node;
+			copy = node->left;
 			_insert_fixup(node->left);
+			return ft::make_pair(copy, true);
 		}
 		else if (_key_compare(node, newData.first)) {
 			if (node->right != _nil)
 				return _insert(node->right, newData);
 			node->right = _add_new_node(newData, 1);
 			node->right->parent = node;
+			copy = node->right;
 			_insert_fixup(node->right);
+			return ft::make_pair(copy, true);
 		}
 		return ft::make_pair(node, false);
 	}
@@ -564,7 +571,7 @@ public:
 		from->parent = to->parent;
 		if (to == _head)
 			_head = from;
-		else if (to ==  to->parent->left)
+		else if (to == to->parent->left)
 			to->parent->left = from;
 		else
 			to->parent->right = from;
@@ -592,6 +599,7 @@ private:
 				sista->red = true;
 				return _remove_fixup(x->parent);
 			}
+
 			if (!sista->right->red) { // si le neveu proche est rouge et lointain est noir
 				sista->red = true;
 				sista->left->red = false;
@@ -631,19 +639,25 @@ private:
 			rotate_right(x->parent);
 		}
 	}
-	
+
+	//rrrrrrr
 	size_type	_remove(node_pointer node) {
 		node_pointer	z = node;
 		node_pointer	y = z;
 		node_pointer	x;
 		bool			y_origin_color = y->red;
 		
-		if (node == _nil)
-			return 1;
-		if (z->left == _nil)
+		if (node == _nil) {
+			return 0;
+		}
+		if (z->left == _nil) {
 			x = z->right;
-		else if (z->right == _nil)
+			_transplant(x, z);
+		}
+		else if (z->right == _nil) {
 			x = z->left;
+			_transplant(x, z);
+		}
 		else {
 			y = get_smallest_node(z->right);
 			x = y->right;
@@ -704,15 +718,15 @@ public:
 	iterator	_find(node_pointer node, const key_type key) const {
 		if (node == _nil)
 			return _end;
-		if (node->data.first == key)
-			return node;
-		if (_key_compare(key, node->data.first))
+		if (_key_compare(key, node))
 			return _find(node->left, key);
-		return _find(node->right, key);
+		if (_key_compare(node, key))
+			return _find(node->right, key);
+		return node;
 	}
 
 	size_type	count(const key_type key) const {
-		return _find(_head, key).get_node() == _end ? false : true;
+		return _find(_head, key).get_node() == _end;
 	}
 
 // *----------------------------------------------------*
@@ -820,16 +834,16 @@ public:
 // *													*
 // *----------------------------------------------------*
 
-#include <map>
 	size_type	erase(const key_type &key) { return _remove(find(key).get_node()); }
 
 	void		erase(iterator it) { _remove(it.get_node()); }
 	
 	void		erase(iterator first, iterator last) { 
-		for (difference_type i = 0; i < std::distance(first, last); i++) {
-			iterator	it(first + i);
-				_remove(it.get_node());
-		}
+		while ( first != last ) {
+           	iterator tmp = ++( iterator( first ) );
+            erase( first );
+            first = tmp;
+        }
 	}
 	
 	void	swap(Rbt &other) {
@@ -843,8 +857,11 @@ public:
 		ft::swap(_size, other._size);
 	}
 
-	void	clear() { erase(begin(), end()); }
-	//!segfault dans erase j'imagine
+	void	clear() { 
+		while (_size) {
+			_remove(_head);
+		}
+	 }
 		
 // *----------------------------------------------------*
 // *													*
