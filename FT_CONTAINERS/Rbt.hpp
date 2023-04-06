@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/05 17:00:11 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/06 13:35:57 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -503,7 +503,7 @@ private:
 	ft::pair<node_pointer, bool>	_insert(node_pointer node, const value_type newData) {
 		node_pointer	copy;
 		
-		if (node == _head && _head == _end) {
+		if (!_size) {
 			node = _add_new_node(newData, 0);
 			_head = node;
 			_head->left = _rend;
@@ -511,12 +511,9 @@ private:
 			_head->right = _end;
 			_end->parent = _head;
 			_end->red = true;
-			_end->left = _nil; 
+			_end->left = _nil;
+			_rend->right = _nil;
 			//? remplacer par _insert_fixup ?
-			return ft::make_pair(node, true);
-		}
-		if (node == _nil && node->parent != _nil) {
-			node = _add_new_node(newData, 0);
 			return ft::make_pair(node, true);
 		}
 		if (_key_compare(newData.first, node)) { // same as 'newData.first < node->data.first'
@@ -775,14 +772,14 @@ private:
 		const_iterator	prev(current);
 
 		prev--;
-		return (current == begin() || (prev->first > key && current->first < key));
+		return (current == begin() || (_key_compare(prev.get_node(), key))) && !_key_compare(current.get_node(), key);
 	}
 
 	bool	_is_upper_bound(const_iterator current, const key_type &key) const {
 		const_iterator	prev(current);
 
 		prev--;
-		return (current == begin() || (prev->first < key && current->first > key));
+		return (current == begin() || _key_compare(prev.get_node(), key)) && _key_compare(key, current.get_node());
 	}
 
 
