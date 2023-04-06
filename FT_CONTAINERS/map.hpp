@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/05 16:44:07 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/06 16:33:41 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ class map {
 		
 		void	erase(iterator first, iterator last) { _tree.erase(first, last); }
 		
-		void	swap(map &other) { ft::swap(_tree, other._tree); }
+		void	swap(map &other) { _tree.swap(other._tree); }
 
 		void	clear() { _tree.clear(); }
 
@@ -323,19 +323,19 @@ class map {
 	}
 
 	bool	operator<(const map &other) const {
-		return _tree != other._tree;
+		return _tree < other._tree;
 	}
 
 	bool	operator>(const map &other) const {
-		return _tree != other._tree;
+		return _tree > other._tree;
 	}
 
 	bool	operator<=(const map &other) const {
-		return _tree != other._tree;
+		return _tree <= other._tree;
 	}
 
 	bool	operator>=(const map &other) const {
-		return _tree != other._tree;
+		return _tree >= other._tree;
 	}
 
 

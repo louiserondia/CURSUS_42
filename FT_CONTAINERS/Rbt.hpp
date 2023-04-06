@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 13:35:57 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/06 16:33:30 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -644,7 +644,7 @@ private:
 		node_pointer	x;
 		bool			y_origin_color = y->red;
 		
-		if (node == _nil) {
+		if (node == _nil || node == _end) {
 			return 0;
 		}
 		if (z->left == _nil) {
@@ -723,7 +723,7 @@ public:
 	}
 
 	size_type	count(const key_type key) const {
-		return _find(_head, key).get_node() == _end;
+		return _find(_head, key).get_node() != _end;
 	}
 
 // *----------------------------------------------------*
@@ -870,16 +870,21 @@ public:
     bool operator==(const Rbt &other) const {
         return size() == other.size() && ft::equal(begin(), end(), other.begin());
     }
+	
     bool operator<(const Rbt &other) const {
         return ft::lexicographical_compare(begin(), end(), other.begin(), other.end());
     }
+	
     bool operator!=(const Rbt &other) const {
         return !(*this == other);
     }
+	
     bool operator>(const Rbt &other) const { return other < *this; }
-    bool operator<=(const Rbt &other) const {
+    
+	bool operator<=(const Rbt &other) const {
         return !(*this > other);
     }
+	
     bool operator>=(const Rbt &other) const {
         return !(*this < other);
     }
