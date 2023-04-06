@@ -6,13 +6,15 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 12:44:58 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/06 18:28:12 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
 #include "stack.hpp"
 #include "Rbt.hpp"
+#include "set.hpp"
+#include "map.hpp"
 #include "V3.hpp"
 #include <list>
 

@@ -6,14 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 16:33:41 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/06 18:20:24 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
-#include <map>
 #include <functional>
 #include <utility>
 #include "utility.hpp"
@@ -60,7 +59,7 @@ class map {
 		typedef typename tree_type::const_pointer					const_pointer;
 		typedef typename std::size_t								size_type;
 		typedef typename std::ptrdiff_t								difference_type;
-		//? pas ici les iterators ?
+
 
 		
 		struct value_compare {//} : public std::binary_function< value_type, value_type, bool> {
@@ -223,10 +222,8 @@ class map {
 	// ^----------------------------------------------------^
 	
 		mapped_type	&operator[](const key_type &k) {
-			//? quand on assogne plusieurs fois une value a une key, ca marche une fois sur deux (ex map['a'] = 2;)
-			//? ca doit etre un probleme avec l'operateur=, mais impossible de trouver ??? quand on assigne une value a une key
-			//? sinon ou ??
-			return _tree.insert(value_type(k, mapped_type())).first->second; }
+			return _tree.insert(value_type(k, mapped_type())).first->second;
+		}
 		// insert renvoie une pair avec un iterateur et un boolean, 
 		// on va donc chercher la valeur (donc second) de l'iterateur (qui est first)
 		
@@ -244,7 +241,13 @@ class map {
 			return find->second;
 		}
 
-	//!
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^			 		ALLOCATOR			 		 	^
+	// ^													^
+	// ^----------------------------------------------------^
+
+		allocator_type	get_allocator() const { return _tree.get_allocator(); }
 	
 	// ^----------------------------------------------------^
 	// ^													^

@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 16:33:30 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/06 20:22:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -733,37 +733,35 @@ public:
 // *----------------------------------------------------*
 
 	iterator	lower_bound(const key_type &key) {
-		return _lower_bound(_head, key, _nil);
+		return _lower_bound(_head, key);
 	}
 
 	const_iterator	lower_bound(const key_type &key) const {
-		return _lower_bound(_head, key, _nil);
+		return _lower_bound(_head, key);
 	}
 	
-	iterator	_lower_bound(node_pointer node, const key_type &key, node_pointer prev) const {
-		if (node == _nil)
-			return prev == _nil ? _end : prev;
-		if (node->data.first <= key)
-			return _lower_bound(node->right, key, prev);
-		prev = node;
-		return _lower_bound(node->left, key, prev);
+	iterator	_lower_bound(node_pointer node, const key_type &key) const {
+		if (_is_lower_bound(node, key))
+			return node;
+		if (!_key_compare(key, node))
+			return _lower_bound(node->right, key);
+		return _lower_bound(node->left, key);
 	}
 
 	iterator	upper_bound(const key_type &key) {
-		return _upper_bound(_head, key, _nil);
+		return _upper_bound(_head, key);
 	}
 
 	const_iterator	upper_bound(const key_type &key) const {
-		return _upper_bound(_head, key, _nil);
+		return _upper_bound(_head, key);
 	}
 
-	iterator	_upper_bound(node_pointer node, const key_type &key, node_pointer prev) const {
-		if (node == _nil)
-			return prev == _nil ? _end : prev;
-		if (node->data.first > key)
-			return _upper_bound(node->right, key, prev);
-		prev = node;
-		return _upper_bound(node->left, key, prev);
+	iterator	_upper_bound(node_pointer node, const key_type &key) const {
+		if (_is_upper_bound(node, key))
+			return node;
+		if (!_key_compare(key, node))
+			return _upper_bound(node->right, key);
+		return _upper_bound(node->left, key);
 	}
 
 private:
@@ -824,7 +822,14 @@ public:
 			left_copy->right->parent = node;
 		left_copy->right = node;
 	}
+// *----------------------------------------------------*
+// *													*
+// *			 		ALLOCATOR			 		 	*
+// *													*
+// *----------------------------------------------------*
 
+		allocator_type	get_allocator() const { return _node_allocator; }
+	
 // *----------------------------------------------------*
 // *													*
 // *					MODIFIERS			 		 	*
