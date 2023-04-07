@@ -17,17 +17,17 @@
 namespace ft {
 
 template <class T>
-class Allouloucator
+struct Allouloucator
 {
 	public:
 
-		typedef size_t		size_type;
-		typedef	ptrdiff_t	difference_type;
-		typedef	T*			pointer;
-		typedef const T*	const_pointer;
-		typedef T&			reference;
-		typedef	const T&	const_reference;
-		typedef	T			value_type;
+		typedef std::size_t			size_type;
+		typedef	std::ptrdiff_t		difference_type;
+		typedef	T					value_type;
+		typedef	value_type			*pointer;
+		typedef const value_type	*const_pointer;
+		typedef value_type			&reference;
+		typedef	const value_type	&const_reference;
 
 		template <class U>
 		struct rebind {
@@ -35,9 +35,12 @@ class Allouloucator
 		};
 
 		Allouloucator() throw() : _n_alloc(0), _n_construct(0) {}
-		Allouloucator(const Allouloucator &copy) throw() : _n_alloc(copy._n_alloc), _n_construct(copy._n_construct) {};
+
+		Allouloucator(const Allouloucator &copy) throw() : _n_alloc(copy._n_alloc), _n_construct(copy._n_construct) {}
+
 		template <typename U>
-		Allouloucator(const Allouloucator<U> &) throw();
+		Allouloucator(const Allouloucator<U> &) throw() {}
+
 		~Allouloucator() throw() {}
 
 		pointer			adress(reference x) const	{ return &x; }

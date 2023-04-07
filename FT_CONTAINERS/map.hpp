@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 18:20:24 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 14:44:33 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ namespace ft {
 template <	class Key,
 			class Value,
 			class Compare = std::less< Key >, 
-			class Allocator = std::allocator< ft::pair< const Key, Value > > >
+			class Allocator = ft::Allouloucator< ft::pair< const Key, Value > > >
 class map {
 
 	// ^----------------------------------------------------^

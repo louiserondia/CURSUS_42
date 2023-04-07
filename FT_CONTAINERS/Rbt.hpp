@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 20:22:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 15:39:28 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -739,7 +739,7 @@ public:
 	const_iterator	lower_bound(const key_type &key) const {
 		return _lower_bound(_head, key);
 	}
-	
+
 	iterator	_lower_bound(node_pointer node, const key_type &key) const {
 		if (_is_lower_bound(node, key))
 			return node;
@@ -777,7 +777,7 @@ private:
 		const_iterator	prev(current);
 
 		prev--;
-		return (current == begin() || _key_compare(prev.get_node(), key)) && _key_compare(key, current.get_node());
+		return (current == begin() || !_key_compare(key, prev.get_node())) && _key_compare(key, current.get_node());
 	}
 
 
