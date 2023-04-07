@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 16:54:24 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 20:06:09 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:24:03 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,30 @@
 #include "utility.hpp"
 #include "Rbt.hpp"
 
+
+// ^--------------------------------------------------------^
+// ^				   ___     ___    _____  				^
+// ^				  / __|   | __|  |_   _| 				^
+// ^				  \__ \   | _|     | |   				^
+// ^				  |___/   |___|   _|_|_  				^
+// ^				_|"""""|_|"""""|_|"""""| 				^
+// ^				"`-0-0-'"`-0-0-'"`-0-0-' 				^
+// ^--------------------------------------------------------^
+
+
 namespace ft {
 	
 template <class Key, class Compare = std::less<Key>, class Allocator = std::allocator<Key> >
 class set {
-public:
-	// types:
+
+	public:
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^			 		TYPEDEFS			 		 	^
+	// ^													^
+	// ^----------------------------------------------------^
+
 	typedef Rbt<Key, Key, Compare, typename Allocator::template 
 			rebind< ft::pair<const Key, Key> >::other>	tree_type;
 	typedef typename tree_type::iterator				tree_iterator;						
@@ -108,11 +126,31 @@ public:
     typedef ft::reverse_iterator< iterator >		reverse_iterator;
     typedef ft::reverse_iterator< const_iterator >	const_reverse_iterator;
 
+	iterator				begin() { return _tree.begin(); }
+	const_iterator			begin() const { return _tree.begin(); }
+	iterator				end() { return _tree.end(); }
+	const_iterator			end() const { return _tree.end(); }
+	reverse_iterator		rbegin() { return _tree.rbegin(); }
+	const_reverse_iterator	rbegin() const { return _tree.rbegin(); }
+	reverse_iterator		rend() { return _tree.rend(); }
+	const_reverse_iterator	rend() const { return _tree.rend(); }
+
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^			 		 MEMBER				 		 	^
+	// ^													^
+	// ^----------------------------------------------------^
+
 private:
 
 	tree_type	_tree;
 
-// 23.3.3.1 construct/copy/destroy:
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^			 	 DE/CONSTRUCTORS					^
+	// ^													^
+	// ^----------------------------------------------------^
 
 public:
 
@@ -132,27 +170,30 @@ public:
 		return *this;
 	}
 
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 			ALLOCATOR						^
+	// ^													^
+	// ^----------------------------------------------------^
+
 	allocator_type	get_allocator() const { return _tree.get_allocator(); }
 
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 			CAPACITY						^
+	// ^													^
+	// ^----------------------------------------------------^
 
-	// iterators:
-	
-	iterator				begin() { return _tree.begin(); }
-	const_iterator			begin() const { return _tree.begin(); }
-	iterator				end() { return _tree.end(); }
-	const_iterator			end() const { return _tree.end(); }
-	reverse_iterator		rbegin() { return _tree.rbegin(); }
-	const_reverse_iterator	rbegin() const { return _tree.rbegin(); }
-	reverse_iterator		rend() { return _tree.rend(); }
-	const_reverse_iterator	rend() const { return _tree.rend(); }
-
-
-	// capacity:
 	bool empty() const { return !size(); }
 	size_type size() const { return _tree.size(); }
 	size_type max_size() const { return _tree.max_size(); }
 
-	// modifiers:
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 			MODIFIERS						^
+	// ^													^
+	// ^----------------------------------------------------^
 	
 	ft::pair<iterator,bool> insert(const value_type& x) { 
 		return _tree.insert(ft::make_pair(x, x));
@@ -183,16 +224,22 @@ public:
 	void swap(set<Key,Compare,Allocator> &other) { _tree.swap(other._tree); }
 	
 	void clear() { _tree.clear(); }
-	
-	
-	// observers:
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 		KEY/VALUE COMP						^
+	// ^													^
+	// ^----------------------------------------------------^
 
 	key_compare key_comp() const { return key_compare(); }
 	
-	value_compare value_comp() const { return value_compare(); }
-	
-	
-	// set operations:
+	value_compare value_comp() const { return value_compare(); }	
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 		SET OPERATIONS						^
+	// ^													^
+	// ^----------------------------------------------------^
 	
 	iterator	find(const key_type& x) const { return _tree.find(x); }
 	
@@ -206,7 +253,11 @@ public:
 		return ft::pair<iterator, iterator>(lower_bound(x), upper_bound(x));
 	}
 
-// relational operators
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 		COMPARISON OPERATORS				^
+	// ^													^
+	// ^----------------------------------------------------^
 
 	bool	operator==(const set &other) const {
 		return _tree == other._tree;
@@ -231,20 +282,18 @@ public:
 	bool	operator>=(const set &other) const {
 		return _tree >= other._tree;
 	}
-	
 
 };
 
-// specialized algorithms:
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^		 		SPECIALIZED ALGORITHM				^
+	// ^													^
+	// ^----------------------------------------------------^
 
 	template <class Key, class Compare, class Allocator>
 	void swap(set<Key,Compare,Allocator> &x, set<Key,Compare,Allocator>& y) {
 		x.swap(y);
 	}
-
-	// explicit set(const Compare& comp = Compare(), const Allocator& = Allocator());
-
-	// template <class InputIterator>
-	// set(InputIterator first, InputIterator last, const Compare& comp = Compare(), const Allocator& = Allocator()) {}
 
 }

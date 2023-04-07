@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:08:03 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/07 14:44:33 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:24:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,8 +341,8 @@ class map {
 		return _tree >= other._tree;
 	}
 
-
 };
+
 	template <class Key, class Value, class Compare, class Allocator>
 	void	swap(map< Key, Value, Compare, Allocator> &x, map< Key, Value, Compare, Allocator> &y) {
 		x.swap(y);

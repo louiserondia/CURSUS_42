@@ -6,14 +6,13 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/03/27 12:06:26 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 17:43:10 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include "Allouloucator.hpp"
-#include "Iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "iterator_traits.hpp"
 #include "type_traits.hpp"
@@ -30,15 +29,114 @@
 // ^	_| """"|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| 	^
 // ^	"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 	^
 // ^--------------------------------------------------------^
-	
+
 namespace ft {
 
 template < class T, class Allocator = Allouloucator<T> >
 
-class vector
-{
+class vector {
 
-	public:
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^					ITERATOR			 		 	^
+	// ^													^
+	// ^----------------------------------------------------^
+
+	template <class U>
+	class Iterator {
+
+		public:
+
+			typedef U								value_type;
+			typedef	value_type						*pointer;
+			typedef	value_type 						&reference;
+			typedef	std::ptrdiff_t					difference_type;
+			typedef	std::random_access_iterator_tag	iterator_category;
+
+		private:
+		
+			pointer _p;
+
+		public:
+		
+			Iterator(void) : _p(0) {}
+			Iterator(pointer p) : _p(p) {}
+			Iterator(const Iterator &other) : _p(other._p) {}
+			~Iterator(void) {}
+
+			Iterator	&operator=(const Iterator &other) {
+				_p = other._p;
+				return *this;
+			}
+
+			Iterator	operator++(int) {
+				Iterator	tmp(*this);
+				_p++;
+				return tmp;
+			}
+			
+			Iterator	&operator++() {
+				_p++;
+				return *this;
+			}
+
+			Iterator	operator--(int) {
+				Iterator	tmp(*this);
+				_p--;
+				return tmp;
+			}
+			
+			Iterator	&operator--() {
+				_p--;
+				return *this;
+			}
+			
+			Iterator	&operator+=(difference_type n) { 
+				_p += n;
+				return *this;
+			}
+			
+			Iterator	&operator-=(difference_type n) { 
+				_p -= n;
+				return *this;
+			}
+			
+			Iterator			operator+(difference_type n) const{ return _p + n; }
+			friend Iterator		operator+(difference_type lhs, const Iterator &rhs) { return rhs + lhs; }
+			Iterator			operator-(difference_type n) const { return _p - n; }
+			template <class V>
+			difference_type		operator-(const Iterator<V> &rhs) const { return _p - rhs.operator->(); }
+			friend Iterator		operator-(difference_type lhs, const Iterator &rhs) { return rhs - lhs; }
+		
+			template <class V>
+			bool	operator==(const Iterator<V> &other) const { return _p == other.operator->(); }
+			
+			template <class V>
+			bool	operator!=(const Iterator<V> &other) const { return _p != other.operator->(); }
+			
+			template <class V>
+			bool	operator<=(const Iterator<V> &other) const { return _p <= other.operator->(); }
+			
+			template <class V>
+			bool	operator>=(const Iterator<V> &other) const { return _p >= other.operator->(); }
+			
+			template <class V>
+			bool	operator<(const Iterator<V> &other) const { return _p < other.operator->(); }
+			
+			template <class V>
+			bool	operator>(const Iterator<V> &other) const { return _p > other.operator->(); }
+			
+			reference	operator*() const { return *_p; }		
+				
+			pointer		operator->() const  { return _p; }		
+			
+			reference	operator[](difference_type i) const { return _p[i]; }
+			
+			// operateur de conversion
+			operator Iterator< const U >() const {
+				return ( Iterator< const U >(_p) );
+			}
+	};
 
 	// ^----------------------------------------------------^
 	// ^													^
@@ -46,26 +144,42 @@ class vector
 	// ^													^
 	// ^----------------------------------------------------^
 	
-		typedef	T										value_type;
-		typedef	Allocator								allocator_type;
-		typedef	typename Allocator::reference			reference;
-		typedef	typename Allocator::const_reference		const_reference;
-		typedef	typename Allocator::pointer				pointer;
-		typedef	typename Allocator::const_pointer		const_pointer;
-		typedef	Iterator<value_type>					iterator;
-		typedef	Iterator<const value_type>				const_iterator;
-		typedef ft::reverse_iterator<iterator>			reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
-		typedef	std::size_t								size_type;
-		typedef	std::ptrdiff_t							difference_type;
+	public:
 
+		typedef	T											value_type;
+		typedef	Allocator									allocator_type;
+		typedef	typename allocator_type::reference			reference;
+		typedef	typename allocator_type::const_reference	const_reference;
+		typedef	typename allocator_type::pointer			pointer;
+		typedef	typename allocator_type::const_pointer		const_pointer;
+		typedef	std::size_t									size_type;
+		typedef	std::ptrdiff_t								difference_type;
+		typedef	Iterator<value_type>						iterator;
+		typedef	Iterator<const value_type>					const_iterator;
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 
 	// ^----------------------------------------------------^
 	// ^													^
-	// ^		 CONSTRUCTOR / DESTRUCTOR / ASSIGN		 	^
+	// ^			 		MEMBERS							^
+	// ^													^
+	// ^----------------------------------------------------^
+
+	protected:
+
+		T			*_data;
+		size_t		_size;
+		size_t		_capacity;
+		Allocator	_allocator;
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^			 CONSTRUCTOR / DESTRUCTOR			 	^
 	// ^													^
 	// ^----------------------------------------------------^
 	
+	public:
+
 		explicit vector(const Allocator &alloc = Allocator()):
 		_data(0),
 		_size(0),
@@ -119,8 +233,6 @@ class vector
 			return *this;
 		}
 
-		allocator_type	get_allocator() const { return _allocator; }
-		
 		template <class InputIterator>
 		void	assign(InputIterator first,
 						InputIterator last, 
@@ -140,7 +252,6 @@ class vector
 	// ^													^
 	// ^----------------------------------------------------^
 
-
 		iterator				begin() { return iterator(_data); }
 		const_iterator			begin() const { return const_iterator(_data); }
 		iterator				end() { return iterator(_data + _size); }
@@ -148,6 +259,14 @@ class vector
 		reverse_iterator		rbegin() { return reverse_iterator(_data + _size); }
 		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_data + _size); }
 		reverse_iterator		rend() { return reverse_iterator(_data); }
+
+	// ^----------------------------------------------------^
+	// ^													^
+	// ^			 		 ALLOCATOR					 	^
+	// ^													^
+	// ^----------------------------------------------------^
+		
+		allocator_type	get_allocator() const { return _allocator; }
 		const_reverse_iterator	rend() const { return const_reverse_iterator(_data); }
 
 	// ^----------------------------------------------------^
@@ -155,7 +274,6 @@ class vector
 	// ^			 		CAPACITY			 		 	^
 	// ^													^
 	// ^----------------------------------------------------^
-	
 	
 		size_type		size() const { return _size; }
 		size_type		max_size() const { return _allocator.max_size(); }
@@ -187,13 +305,11 @@ class vector
 			}
 		}
 
-
 	// ^----------------------------------------------------^
 	// ^													^
 	// ^			 	ELEMENT ACCESS			 		 	^
 	// ^													^
 	// ^----------------------------------------------------^
-	
 	
 		reference		operator[](size_type n)	{ 
 			if (n >= _size)
@@ -230,7 +346,6 @@ class vector
 		const_reference	back() const {
 			return _data[size() - 1];
 		}
-
 
 	// ^----------------------------------------------------^
 	// ^													^
@@ -343,18 +458,6 @@ class vector
 				_size--;
 			}
 		}
-
-	// ^----------------------------------------------------^
-	// ^													^
-	// ^			 	PRIVATE INSTANCES					^
-	// ^													^
-	// ^----------------------------------------------------^
-
-	private:
-		T			*_data;
-		size_t		_size;
-		size_t		_capacity;
-		Allocator	_allocator;
 };
 
 

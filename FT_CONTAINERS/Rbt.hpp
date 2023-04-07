@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/07 15:39:28 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:27:08 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,30 @@
 
 namespace ft {
 
+
+// *-------------------------------------------------------------------------------------------------------------------------*
+// *																														 *
+// *	   ___     ___     ___              ___     _       ___     ___    _  __            _____    ___     ___     ___  	 *
+// *	  | _ \   | __|   |   \     o O O  | _ )   | |     /   \   / __|  | |/ /     o O O |_   _|  | _ \   | __|   | __| 	 *
+// *	  |   /   | _|    | |) |   o       | _ \   | |__   | - |  | (__   | ' <     o        | |    |   /   | _|    | _|  	 *
+// *	  |_|_\   |___|   |___/   TS__[O]  |___/   |____|  |_|_|   \___|  |_|\_\   TS__[O]  _|_|_   |_|_\   |___|   |___| 	 *
+// *	_|"""""|_|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""|	 *
+// *	"`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'	 *
+// *																														 *
+// *-------------------------------------------------------------------------------------------------------------------------*
+
 template <	typename Key,
 			typename Value,
 			typename Comp = std::less<Key>,
 			typename Allocator = std::allocator<ft::pair<const Key, Value> > >
 
 class	Rbt {
+
+// *----------------------------------------------------*
+// *													*
+// *					  TYPEDEFS	 		 			*
+// *													*
+// *----------------------------------------------------*
 
 public:
 
@@ -65,6 +83,7 @@ private:
 		_Node		*parent;
 		bool		red;
 		bool		is_nil;
+
 // ~----------------------------------------------------~
 // ~													~
 // ~				  CON/DESTRUCTORS			 	 	~
@@ -116,15 +135,8 @@ private:
 
 		static void destroy(node_pointer node, node_allocator_type &node_alloc) {
 			node_alloc.destroy(node);
-			// node_alloc.deallocate(node, 1);
+			node_alloc.deallocate(node, 1);
 		}
-
-		// void	operator=(const _Node &other) {
-		// 	data = other.data;
-		// 	left = new _Node(other.left);
-		// 	right = new _Node(other.right);
-		// 	red = other.red;
-		// }
 
 // ~----------------------------------------------------~
 // ~													~
@@ -143,7 +155,6 @@ private:
 		
 	};
 
-
 public:
 
 	typedef _Node								node_type;
@@ -158,9 +169,6 @@ public:
 // *													*
 // *													*
 // *----------------------------------------------------*
-// *----------------------------------------------------*
-
-
 // *----------------------------------------------------*
 // *													*
 // *				EXTENDED KEY COMPARE	 		 	*
@@ -206,7 +214,6 @@ struct	extended_key_compare {
 
 };
 
-
 // *----------------------------------------------------*
 // *													*
 // *					MEMBERS						 	*
@@ -246,11 +253,7 @@ public:
 		_rend->red = true;
 		_rend->parent = _head;
 		_nil->is_nil = true;
-		// std::cout << "are head/end's parent nil : " << _end->parent->is_nil << "\n";
-		// std::cout << "are Rend's children nil ? \nleft : " << _rend->left->is_nil << ", right : " << _rend->right->is_nil << "\n";
-	} 
-	
-	// constructeur avec iterator		
+	}		
 	
 	Rbt(const Rbt &other) :
 		_node_allocator(other._node_allocator), 
@@ -278,7 +281,7 @@ public:
 	}
 	
 	~Rbt() {
-		// clear();
+		clear();
 		_Node::destroy(_nil, _node_allocator);
 		_Node::destroy(_end, _node_allocator);
 		_Node::destroy(_rend, _node_allocator);
@@ -292,7 +295,7 @@ public:
 // *----------------------------------------------------*
 
 	template <typename T>
-	class Iterator {
+	struct Iterator {
 
 	public:
 	
@@ -499,7 +502,6 @@ private:
 		_head->red = false;
 	}
 
-	//iiiiiiii
 	ft::pair<node_pointer, bool>	_insert(node_pointer node, const value_type newData) {
 		node_pointer	copy;
 		
@@ -513,10 +515,9 @@ private:
 			_end->red = true;
 			_end->left = _nil;
 			_rend->right = _nil;
-			//? remplacer par _insert_fixup ?
 			return ft::make_pair(node, true);
 		}
-		if (_key_compare(newData.first, node)) { // same as 'newData.first < node->data.first'
+		if (_key_compare(newData.first, node)) {
 			if (node->left != _nil)
 				return _insert(node->left, newData);
 			node->left = _add_new_node(newData, 1);
@@ -563,7 +564,6 @@ public:
 		return copy;
 	}
 
-	//^ a utiliser dans rotate
 	void	_transplant(node_pointer from, node_pointer to) {
 		from->parent = to->parent;
 		if (to == _head)
@@ -637,7 +637,6 @@ private:
 		}
 	}
 
-	//rrrrrrr
 	size_type	_remove(node_pointer node) {
 		node_pointer	z = node;
 		node_pointer	y = z;
@@ -669,25 +668,27 @@ private:
 		}
 		if (!y_origin_color) //y est noir
 			_remove_fixup(x);
+		_Node::destroy(z, _node_allocator);
 		_size--;
 		return 1;
 	}
 
 
-	// ^----------------------------------------------------^
-	// ^													^
-	// ^			 		CAPACITY			 		 	^
-	// ^													^
-	// ^----------------------------------------------------^
+// *----------------------------------------------------*
+// *													*
+// *			 		CAPACITY			 		 	*
+// *													*
+// *----------------------------------------------------*
 
 public:
 
-	size_type	height() { return _height(_head); }
 	size_type	size() const { return _size; }
 	size_type	max_size() const { return _allocator.max_size(); }
 
 private:
 
+	// to check the height of the red back tree
+	// size_type	height() { return _height(_head); }
 	size_type	_height(_Node *node) {
 		if (node == _nil) {
 			return 0;
@@ -787,18 +788,13 @@ private:
 // *													*
 // *----------------------------------------------------*
 
-public:
+private:
 
 	void	rotate_left(node_pointer node) {
 		node_type	*right_copy = node->right;
 		
 		right_copy->parent = node->parent;
-		if (node->parent == NULL)
-			_head = right_copy;
-		else if (node == node->parent->right)
-			node->parent->right = right_copy;
-		else
-			node->parent->left = right_copy;
+		_transplant(right_copy, node);
 		node->parent = right_copy;
 		node->right = right_copy->left;
 		if (right_copy->left != _nil)
@@ -810,12 +806,7 @@ public:
 		node_type	*left_copy = node->left;
 		
 		left_copy->parent = node->parent;
-		if (node->parent == NULL)
-			_head = left_copy;
-		else if (node == node->parent->left)
-			node->parent->left = left_copy;
-		else
-			node->parent->right = left_copy;
+		_transplant(left_copy, node);
 		node->parent = left_copy;
 		node->left = left_copy->right;
 		if (left_copy->right != _nil)
@@ -827,6 +818,8 @@ public:
 // *			 		ALLOCATOR			 		 	*
 // *													*
 // *----------------------------------------------------*
+
+public:
 
 		allocator_type	get_allocator() const { return _node_allocator; }
 	
@@ -841,9 +834,9 @@ public:
 	void		erase(iterator it) { _remove(it.get_node()); }
 	
 	void		erase(iterator first, iterator last) { 
-		while ( first != last ) {
-           	iterator tmp = ++( iterator( first ) );
-            erase( first );
+		while (first != last) {
+           	iterator tmp = ++(iterator(first));
+            erase(first);
             first = tmp;
         }
 	}
@@ -859,11 +852,7 @@ public:
 		ft::swap(_size, other._size);
 	}
 
-	void	clear() { 
-		while (_size) {
-			_remove(_head);
-		}
-	 }
+	void	clear() { erase(begin(), end()); }
 		
 // *----------------------------------------------------*
 // *													*

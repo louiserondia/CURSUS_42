@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:22:29 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/06 18:28:12 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/07 18:54:29 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,41 @@
 #include "Rbt.hpp"
 #include "set.hpp"
 #include "map.hpp"
+#include "set.hpp"
 #include "V3.hpp"
-#include <list>
 
 using namespace ft;
 
+// ^--------------------------------------------------------^
+// ^			 __  __    ___     ___    _  _   			^
+// ^			|  \/  |  /   \   |_ _|  | \| |  			^
+// ^			| |\/| |  | - |    | |   | .` |  			^
+// ^			|_|__|_|  |_|_|   |___|  |_|\_|  			^
+// ^			_|"""""|_|"""""|_|"""""|_|"""""| 			^
+// ^			"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 			^
+// ^--------------------------------------------------------^
+
+// ^----------------------------------------------------^
+// ^													^
+// ^			 PRINT VECTOR AND STUFF		 		 	^
+// ^													^
+// ^----------------------------------------------------^
+
+template < typename T>
+void	print_vector(vector<T> v, std::string name) {
+	std::cout << name << " : | ";
+	for (typename vector<T>::iterator it = v.begin(); it != v.end(); it ++)
+		std::cout << *it << " | ";
+	std::cout << std::endl << std::endl;
+}
+
+void print_v(Rbt<std::string, std::string> v) {
+	std::cout << "\n	------- Print v -------\n";
+	for (Rbt<std::string, std::string>::iterator it = v.begin(); it != v.end(); ++it)
+		std::cout << *it;
+	std::cout << "	v size : " << v.size() << std::endl;
+	std::cout << "	-----------------------\n\n";
+}
 
 class A
 {
@@ -30,16 +60,13 @@ class A
 		~A() { std::cout << "Destructor\n"; }
 };
 
-template < typename T>
-void	print_vector(vector<T> vector, std::string name) {
-	std::cout << name << " : | ";
-	for (Iterator<T> it = vector.begin(); it != vector.end(); it ++)
-		std::cout << *it << " | ";
-	std::cout << std::endl << std::endl;
-}
+// ^----------------------------------------------------^
+// ^													^
+// ^						MAIN			 		 	^
+// ^													^
+// ^----------------------------------------------------^
 
-int	main(void)
-{
+int	main(void) {
 	Allouloucator<std::string>		allocator;
 	
 	vector<V3, Allouloucator<V3> >	vect;
@@ -122,7 +149,7 @@ int	main(void)
 	std::cout << "\n	| REVERSE ITERATORS |\n\n";
 		
 		std::cout << " int_tab reverse iterator : | ";
-		for (ft::reverse_iterator<Iterator<int> > jt = int_tab.rbegin(); jt != int_tab.rend(); jt++)
+		for (vector<int>::reverse_iterator jt = int_tab.rbegin(); jt != int_tab.rend(); jt++)
 		std::cout << *jt << " | ";
 		std::cout << std::endl << std::endl;
 
@@ -216,7 +243,7 @@ int	main(void)
 		ft::pair<int, int>	lol1(1, 0);
 		ft::pair<int, int>	lol2(2, 0);
 
-		std::cout << "height empty : " << tree.height() << std::endl;
+		std::cout << "height empty : 0" << std::endl;
 		tree.insert(lol0);
 		std::cout << "iterator begin() : " << *tree.begin();
  		tree.insert(lol1);
@@ -236,21 +263,18 @@ int	main(void)
 		ft::pair<int, int>	lol9(9, 0);
 		ft::pair<int, int>	lol10(10, 0);
 
-		std::cout << "Previous height with 3 elements in the tree : " << tree.height() << std::endl << std::endl;
+		// std::cout << "Previous height with 3 elements in the tree : " << tree.height() << std::endl << std::endl;
 		tree.insert(lol3);
 		tree.insert(lol4);
 		std::cout << "Added 3, 4.\n";
-		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
 		tree.insert(lol5);
 		tree.insert(lol6);
 		tree.insert(lol7);
 		tree.insert(lol8);
 		std::cout << "Added 5, 6, 7, 8.\n";
-		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
 		tree.insert(lol9);
 		tree.insert(lol10);
 		std::cout << "Added 9 and 10.\n";
-		std::cout << " New height : " <<  tree.height() << std::endl << std::endl;
 	
 	
 	std::cout << "\n	| ITERATORS OF RED BLACK TREE |\n\n";
@@ -264,13 +288,43 @@ int	main(void)
 
 		for (Rbt<int, int>::const_iterator it = tree.begin(); it != tree.end(); ++it)
 			std::cout << "iterator : "<< *it;
-		std::cout << "\niterator begin() : " << *tree.begin() << std::endl;
+		std::cout << "\niterator begin() (to check that begin didn't change) : " << *tree.begin() << std::endl;
 
-	Rbt<std::string, std::string> v;
-	for (int i =0 ; i < 10; i++) {
-		
-		v.insert(Rbt<std::string,std::string>::value_type(std::string(1,(char)('a' + i)), "yooo"));
-	}
-	v.erase(++v.begin(), --v.end());
-	std::cout << v.size() << std::endl;
+		Rbt<std::string, std::string> v;
+		for (int i = 0 ; i < 26; i++)	
+			v.insert(Rbt<std::string, std::string>::value_type(std::string(1,(char)('a' + i)), "yooo"));
+
+	std::cout << "\n	| ERASE W/ RED BLACK TREE |\n\n";
+
+		std::cout << "\n1. erasing first element of v (a, yooo) -> ";
+		v.erase(std::string(1,(char)('a')));
+		print_v(v);
+
+		std::cout << "\n2. erasing all elements except begin and end -> ";
+		v.erase(++v.begin(), --v.end());
+		print_v(v);
+	
+		std::cout << "3. erasing the rest ";
+		v.erase(v.begin(), v.end());
+		print_v(v);
+
+	std::cout << "\n	| TEST INSERT 1000 ELEMENTS TO MAP |\n\n";
+
+	map<int, int>	map1;
+
+	for (int i = 0; i < 1000; i++)
+		map1.insert(ft::make_pair(i, i * i));
+
+	std::cout << "first element of map1 : " << *map1.begin();
+
+	std::cout << "\n	| TEST INSERT 100 ELEMENTS TO SET |\n\n";
+
+	set<int>	set1;
+
+	for (int i = 0; i < 100000; i++)
+		set1.insert(i);
+
+	std::cout << "last element of set1 : " << *--set1.end() << std::endl;
+	
+	// system("leaks ft_containers");
 }
