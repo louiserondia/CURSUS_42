@@ -70,30 +70,29 @@ namespace ft {
 				return *this;
 			}
 
-	bool operator==(const first_type &other) {
-		return !key_compare(other, first) && !key_compare(other, first);
-	}
+		bool operator==(const first_type &other) const {
+			return !key_compare(other, first) && !key_compare(other, first);
+		}
 
-	bool operator!=(const first_type &other) {
-		return key_compare(other, first) || key_compare(other, first);
-	}
+		bool operator!=(const first_type &other) const {
+			return key_compare(other, first) || key_compare(other, first);
+		}
 
-	bool operator<(const first_type &other) {
-		std::cout << "first :" << first << std::endl;
-		return key_compare(first, other);
-	}
+		bool operator<(const first_type &other) const {
+			return key_compare(first, other);
+		}
 
-	bool operator>(const first_type &other) {
-		return key_compare(other, first);
-	}
+		bool operator>(const first_type &other) const {
+			return key_compare(other, first);
+		}
 
-	bool operator<=(const first_type &other) {
-		return key_compare(first, other) || (first == other);
-	}
+		bool operator<=(const first_type &other) const {
+			return key_compare(first, other) || (first == other);
+		}
 
-	bool operator>=(const first_type &other) {
-		return key_compare(other, first) || (first == other);
-	}
+		bool operator>=(const first_type &other) const {
+			return key_compare(other, first) || (first == other);
+		}
 
 	};
 
@@ -132,11 +131,5 @@ namespace ft {
 		return pair<T1, T2>(x, y);
 	}
 
-	template <class T1, class T2>
-	std::ostream	&operator<<(std::ostream &o, const pair<T1, T2> &rhs)	{
-		o << "	key : " << rhs.first;
-		o << " | value : " << rhs.second << std::endl;
-		return o;
-	}
 }
 

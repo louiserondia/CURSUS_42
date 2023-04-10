@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 12:11:44 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/07 17:43:10 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/10 12:20:21 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,7 @@ class vector {
 		reverse_iterator		rbegin() { return reverse_iterator(_data + _size); }
 		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_data + _size); }
 		reverse_iterator		rend() { return reverse_iterator(_data); }
+		const_reverse_iterator	rend() const { return const_reverse_iterator(_data); }
 
 	// ^----------------------------------------------------^
 	// ^													^
@@ -267,7 +268,6 @@ class vector {
 	// ^----------------------------------------------------^
 		
 		allocator_type	get_allocator() const { return _allocator; }
-		const_reverse_iterator	rend() const { return const_reverse_iterator(_data); }
 
 	// ^----------------------------------------------------^
 	// ^													^

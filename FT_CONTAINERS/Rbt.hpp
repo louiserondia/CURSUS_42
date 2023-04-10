@@ -6,7 +6,7 @@
 /*   By: lrondia <lrondia@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 16:57:46 by lrondia           #+#    #+#             */
-/*   Updated: 2023/04/07 18:27:08 by lrondia          ###   ########.fr       */
+/*   Updated: 2023/04/10 16:24:58 by lrondia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -429,7 +429,7 @@ public:
 	}
 
 	ft::pair<iterator, bool>	insert(iterator hint, const value_type &newData) {
-		if (_is_upper_bound(hint, newData.first))
+		if (_is_upper_bound(newData.first, hint))
 			return _insert(hint.get_node(), newData);
 		return _insert(_head, newData);
 	}
@@ -779,6 +779,15 @@ private:
 
 		prev--;
 		return (current == begin() || !_key_compare(key, prev.get_node())) && _key_compare(key, current.get_node());
+	}
+	
+	bool	_is_upper_bound(const key_type &key, const_iterator comp) const {
+		const_iterator	next(comp);
+
+		next++;
+		if (comp == end())
+			return false;
+		return (_key_compare(key, next.get_node()) && _key_compare(comp.get_node(), key));
 	}
 
 
