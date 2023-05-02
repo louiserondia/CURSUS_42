@@ -1,0 +1,38 @@
+version: '3'
+services:
+  mariadb:
+    build: requirements/mariadb/.
+    image: mariadb
+    networks:
+      - net
+    env_file:
+      - .env
+
+  nginx:
+    build: requirements/nginx/.
+    image: nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    networks:
+      - net
+    volumes:
+      - wp:/var/www/html
+    depends_on:
+      - wordpress
+    restart: always
+
+  wordpress:
+    build: requirements/wordpress/.
+    image: wordpress
+    networks:
+      - net
+    volumes:
+      - wp:/var/www/html
+    restart: always
+
+networks:
+  net:
+
+volumes:
+  wp:
