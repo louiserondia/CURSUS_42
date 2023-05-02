@@ -10,14 +10,29 @@
 #                                                                              #
 # **************************************************************************** #
 
-all: docker-compose up -d
+DIR = srcs
 
-clean:
-	rm -f $(OBJS)
+all: up
 
-fclean: clean
-	rm -f $(NAME)
+dir:
+	mkdir -p /home/lrondia/data/wp
+	mkdir -p /home/lrondia/data/db
 
-re: fclean all
+up: dir
+	docker-compose --project-directory $(DIR) up -d
+
+build: dir
+	docker-compose --project-directory $(DIR) up -d --build
+
+down:
+	docker-compose --project-directory $(DIR) down
+
+prune:
+	docker system prune -fa --volumes
+
+destroy:
+	./destroy.sh
+
+re: down prune build
 
 .PHONY: all clean fclean re test

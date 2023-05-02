@@ -7,6 +7,8 @@ services:
       - net
     env_file:
       - .env
+    volumes:
+      - db:/var/lib/mysql
 
   nginx:
     build: requirements/nginx/.
@@ -25,14 +27,29 @@ services:
   wordpress:
     build: requirements/wordpress/.
     image: wordpress
+    depends_on:
+      - mariadb
     networks:
       - net
     volumes:
       - wp:/var/www/html
     restart: always
+    env_file:
+      - .env
 
 networks:
   net:
 
 volumes:
   wp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lrondia/data/wp
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lrondia/data/db
