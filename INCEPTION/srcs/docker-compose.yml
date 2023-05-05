@@ -9,13 +9,13 @@ services:
       - .env
     volumes:
       - db:/var/lib/mysql
+    restart: always
 
   nginx:
     build: requirements/nginx/.
     image: nginx
     ports:
       - "443:443"
-      - "80:80"
     networks:
       - net
     volumes:
