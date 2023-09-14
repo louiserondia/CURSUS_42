@@ -19,7 +19,7 @@ typedef struct client_s {
 	int id;
 	int size;
 	char *acc;
-}	t_client;
+}	client_t;
 
 client_t client_create() {
 	static int	id;
@@ -31,7 +31,7 @@ client_t client_create() {
 
 void	broadcast(int fd, char *msg, fd_set *wfds) {
 	for (int i = 0; i < FD_SETSIZE; i++) {
-		if (i != fd && FD_ISSET(i, wfsd)) {
+		if (i != fd && FD_ISSET(i, wfds)) {
 			send(i, msg, strlen(msg), 0);
 		}
 	}
@@ -68,10 +68,10 @@ int main(int argc, char **argv) {
 	FD_ZERO(&fds);
 	FD_SET(fd, &fds);
 	client_t clients[FD_SETSIZE] = {0};
-	char msg[65000];
+	char msg = malloc(1000000);
 
 // WHILE :
-
+ 
 // 1 - CREER FDS LECTURE ET ECRITURE
 // 2 - SELECT ATTEND
 // 3 - NV CLIENT (accepter le nv fd, creer client, ajouter a fds et broadcast)
@@ -92,21 +92,21 @@ int main(int argc, char **argv) {
 			clients[cfd] = client_create();
 			FD_SET(cfd, &fds);
 
-			sprintf(msg, "client %d arrived", cliend[cfd].id);
+			sprintf(msg, "server: client %d just arrived\n", clients[cfd].id);
 			broadcast(cfd, msg, &wfds);
 			continue;
 		}
 
 		// on lit sur tous les fds à part le notre et ceux qui sont pas dans rfds
 		for (int i = 0; i < FD_SETSIZE; i++) {
-			if (i == fd || !FD_ISSET(fd, &rfds)) continue;
+			if (i == fd || !FD_ISSET(i, &rfds)) continue;
 
 		// on lit depuis fd (i) sur le buffer
 			char buff[1024];
 			ssize_t n = recv(i, buff, sizeof buff, 0);
 
 			if (n <= 0) { // CLIENT PART
-				sprintf(msg, "client %d left\n", clients[i].id);
+				sprintf(msg, "server: client %d just left\n", clients[i].id);
 				broadcast(i, msg, &wfds);
 				free(clients[i].acc);
 				close(i);
@@ -115,12 +115,12 @@ int main(int argc, char **argv) {
 			}
 
 	// On reçoit, on ajoute une lettre a la fois puis on broadcast et remet size à 0
-			for ( int j = 0; j < n; j++) {
-				client_t    *c = clients + i; // on pourrait pas mettre ça avant la boucle ?
+			for ( ssize_t j = 0; j < n; j++) {
+				client_t    *c = clients + i;
 				c->acc[c->size++] = buff[j];
-				if (buff[i] == '\n') {
+				if (buff[j] == '\n') {
 					c->acc[c->size] = '\0';
-					sprintf(msg, "client %d: %s\n", c->id, c->acc);
+					sprintf(msg, "client %d: %s", c->id, c->acc);
 					broadcast(i, msg, &wfds),
 					c->size = 0;
 				}
@@ -128,5 +128,3 @@ int main(int argc, char **argv) {
 		}
 	}
 }
-
-// les copyrights vont à vrogiste
