@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  frontend:
+    build: frontend
+    ports:
+      - 8080:80
+    networks:
+      - net
+    restart: always
+    env_file:
+      - .env
+
+  backend:
+    build: backend
+    ports:
+      - 9000:3000
+    depends_on:
+      - postgres
+    networks:
+      - net
+    restart: always
+    env_file:
+      - .env
+
+  postgres:
+    image: postgres
+    env_file:
+      - .env
+    networks:
+      - net
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+
+networks:
+  net:
+
+volumes:
+  db:
