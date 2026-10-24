@@ -19,7 +19,8 @@
   <ol>
     <li><a href="#ft_transcendence">ft_transcendence</a></li>
     <li><a href="#ft_containers">ft_containers</a></li>
-    <li><a href="#cub3d">Cub3d</a></li>
+    <li><a href="#cub3d">cub3d</a></li>
+    <li><a href="#so_long">so_long</a></li>
     <li><a href="#minishell">Minishell</a></li>
     <li><a href="#philosophers">Philosophers</a></li>
     <li><a href="#push_swap">Push_swap</a></li>
@@ -30,13 +31,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## ft_transcendence
-**Languages: C++, Typescript, Svelte, Docker**
+**Languages: C++, TypeScript, Svelte, Docker**
 
-Building a multi-users website with user accounts, private and group chat and the game pong.
+Build a multi-user website with user accounts, private and group chat and the game pong.
 - Windows 95 style with variant amount of tabs open and live update of chat
 - Paint
 - Pong with rollback networking
-- 2FA authentification
+- Two-factor authentication (2FA)
 
 <img width="1006" height="889" alt="transcendence" src="https://github.com/user-attachments/assets/8cdab0b4-ffbf-4ef1-86c2-5adde1269c45" />
 
@@ -48,7 +49,7 @@ Building a multi-users website with user accounts, private and group chat and th
 **Language: C++**
 
 Recreate containers of the C++ Standard Library.
-- Map and set, using a Red-Black Tree
+- Map and set, using a red-black tree
 - Vector
 - Iterators and Reverse Iterators
 - Stack
@@ -58,7 +59,7 @@ Recreate containers of the C++ Standard Library.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Cub3d
+## cub3d
 **Language: C**
 
 Creating a 3D-style game inspired by Wolfenstein 3D, using raycasting to render a first-person view from a custom 2D map (read from file).
@@ -74,8 +75,8 @@ Creating a 3D-style game inspired by Wolfenstein 3D, using raycasting to render 
 **Texture, enemies, different weapons, health and minimap**
 
 
-<img width="1614" height="1079" alt="Screen Shot 2024-09-25 at 3 20 07 PM" src="https://github.com/user-attachments/assets/be79a578-4f2e-419c-930b-ac8d82a17d2a" />\
-<img width="1613" height="1079" alt="Screen Shot 2024-09-25 at 3 20 01 PM" src="https://github.com/user-attachments/assets/f660b7c8-bb97-4e6c-8621-1066ded1c926" />
+<img width="1613" height="1079" alt="Screen Shot 2024-09-25 at 3 20 01 PM" src="https://github.com/user-attachments/assets/f660b7c8-bb97-4e6c-8621-1066ded1c926" />\
+<img width="1614" height="1079" alt="Screen Shot 2024-09-25 at 3 20 07 PM" src="https://github.com/user-attachments/assets/be79a578-4f2e-419c-930b-ac8d82a17d2a" />
 
 
 **Game over**
@@ -88,7 +89,7 @@ Creating a 3D-style game inspired by Wolfenstein 3D, using raycasting to render 
 ## so_long
 **Language: C**
 
-Escape the maze by collecting all the flowers to bring to your loved one, but careful! A wild chimera in on the hunt (fortunately you have a shotgun, i think you'll be fine)
+Escape the maze by collecting all the flowers to bring to your loved one, but careful! A wild chimera is on the hunt (fortunately you have a shotgun, I think you'll be fine)
 
 
 <img width="1024" height="702" alt="Screen Shot 2022-04-11 at 4 03 28 PM" src="https://github.com/user-attachments/assets/166d52fb-8b4f-4a44-888f-1eb75c393d15" />
@@ -108,14 +109,14 @@ Recreated a basic Unix shell in C.\
 ## Philosophers
 **Language: C**
 
-Management of multiple threads (using mutexes) and processes (using semaphores). 
+Manage multiple threads (using mutexes) and processes (using semaphores). 
 Simulate philosophers sitting around a table, sharing forks and switching between eating, sleeping, and thinking. 
-Avoid data races, deadlocks, protect shared resources while keeping track of each philosopher's state.
+Avoid data races and deadlocks, and protect shared resources while keeping track of each philosopher's state.
 
 ## Push_swap
 **Language: C**
 
-Creation of a sorting algorithm to apply on a list of integers using two stacks and a limited set of operations. 
+Create of a sorting algorithm to apply on a list of integers using two stacks and a limited set of operations. 
 The algorithm has to find the most efficient sequence of moves.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
