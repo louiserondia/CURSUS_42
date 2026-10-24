@@ -99,7 +99,7 @@ Escape the maze by collecting all the flowers to bring to your loved one, but ca
 ## Minishell
 **Language: C**
 
-Recreated a basic Unix shell in C.\
+Recreate a basic Unix shell in C.
 - run commands
 - use pipes and redirections
 - handle environment variables
