@@ -55,6 +55,13 @@ Recreate containers of the C++ Standard Library.
 - Stack
 - Allocator (Allouloucator)
 
+### red-black tree
+a red–black tree is a self-balancing binary search tree data structure noted for fast storage and retrieval of ordered information.\
+The nodes in a red-black tree hold an extra "color" bit, often drawn as red and black, which help ensure that the tree is always approximately balanced.\
+The (re-)balancing is not perfect, but guarantees searching in O(log ⁡ n) time, where n is the number of entries in the tree. The insert and delete operations, along with tree rearrangement and recoloring, also execute in O(log ⁡ n) time.
+
+[Wikipedia red–black tree](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree)
+
 <img width="1464" height="1167" alt="image" src="https://github.com/user-attachments/assets/0dc22a92-98fd-4e0e-8c81-13e84151fe6b" />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -72,7 +79,7 @@ Creating a 3D-style game inspired by Wolfenstein 3D, using raycasting to render 
 
 
 
-**Texture, enemies, different weapons, health and minimap**
+**Texture, enemies, different weapons, health and minimap (top-left)**
 
 
 <img width="1613" height="1079" alt="Screen Shot 2024-09-25 at 3 20 01 PM" src="https://github.com/user-attachments/assets/f660b7c8-bb97-4e6c-8621-1066ded1c926" />\
